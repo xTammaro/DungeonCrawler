@@ -1,0 +1,16 @@
+gradle-build:
+  stage: build
+  script: ./gradlew assemble
+  tags:
+    - comp2100
+
+gradle-test:
+  stage: test
+  script:
+    - ./gradlew test
+  tags:
+    - comp2100
+  artifacts:
+    when: always
+    reports:
+      junit: build/test-results/test/**/TEST-*.xml
