@@ -4,6 +4,10 @@ package org.example;
  * Represents an enemy on the board.
  */
 public class Enemy extends Actor {
+    private int targetX;
+    private int targetY;
+    private static final int MOVE_DISTANCE = 5;
+    private EnemyMode currentMode;
     /**
      * Enemy constructor.
      *
