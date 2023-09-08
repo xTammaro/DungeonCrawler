@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -47,50 +48,59 @@ public class Enemy extends Actor {
     }
 
     /**
-     * Called when the enemy is in RoamMode. Should set the enemy towards the target location.
+     * Called when the enemy is in RoamMode. Generates a new random location for the enemy to move.
      *
      * @author Jake Tammaro
      */
 
     void newRandomLocation() {
         Random rand = new Random();
-        int direction = rand.nextInt(8);  // 0 to 7 representing 8 possible directions
-
-        switch (direction) {
-            case 0:  // North
-                targetX = getX();
-                targetY = getY() - LOCATION_DISTANCE;
+        Board board = GameState.getInstance().board;
+        Tile[][] map = board.getTiles();
+        while (true) {
+            int direction = rand.nextInt(8);  // 0 to 7 representing 8 possible directions
+            switch (direction) {
+                case 0:  // North
+                    targetX = getX();
+                    targetY = getY() - LOCATION_DISTANCE;
+                    break;
+                case 1:  // South
+                    targetX = getX();
+                    targetY = getY() + LOCATION_DISTANCE;
+                    break;
+                case 2:  // East
+                    targetX = getX() + LOCATION_DISTANCE;
+                    targetY = getY();
+                    break;
+                case 3:  // West
+                    targetX = getX() - LOCATION_DISTANCE;
+                    targetY = getY();
+                    break;
+                case 4:  // North-East
+                    targetX = getX() + LOCATION_DISTANCE;
+                    targetY = getY() - LOCATION_DISTANCE;
+                    break;
+                case 5:  // North-West
+                    targetX = getX() - LOCATION_DISTANCE;
+                    targetY = getY() - LOCATION_DISTANCE;
+                    break;
+                case 6:  // South-East
+                    targetX = getX() + LOCATION_DISTANCE;
+                    targetY = getY() + LOCATION_DISTANCE;
+                    break;
+                case 7:  // South-West
+                    targetX = getX() - LOCATION_DISTANCE;
+                    targetY = getY() + LOCATION_DISTANCE;
+                    break;
+            }
+            // Check if the target location is out of bounds or not an empty tile
+            if (!board.isOutOfBounds(targetX, targetY) && board.isEmptyTile(map[targetX][targetY])) {
                 break;
-            case 1:  // South
-                targetX = getX();
-                targetY = getY() + LOCATION_DISTANCE;
-                break;
-            case 2:  // East
-                targetX = getX() + LOCATION_DISTANCE;
-                targetY = getY();
-                break;
-            case 3:  // West
-                targetX = getX() - LOCATION_DISTANCE;
-                targetY = getY();
-                break;
-            case 4:  // North-East
-                targetX = getX() + LOCATION_DISTANCE;
-                targetY = getY() - LOCATION_DISTANCE;
-                break;
-            case 5:  // North-West
-                targetX = getX() - LOCATION_DISTANCE;
-                targetY = getY() - LOCATION_DISTANCE;
-                break;
-            case 6:  // South-East
-                targetX = getX() + LOCATION_DISTANCE;
-                targetY = getY() + LOCATION_DISTANCE;
-                break;
-            case 7:  // South-West
-                targetX = getX() - LOCATION_DISTANCE;
-                targetY = getY() + LOCATION_DISTANCE;
-                break;
+            }
         }
     }
+
+
 
     /**
      * Called when the enemy dies. Should remove the enemy from the GameState.
@@ -99,7 +109,7 @@ public class Enemy extends Actor {
      * @author Tal Shy-Tielen
      */
     @Override
-    void onZeroHealth() {
+    public void onZeroHealth() {
         GameState.getInstance().enemies.remove(this);
 
         // This makes it so the last enemy will drop a key
@@ -108,7 +118,6 @@ public class Enemy extends Actor {
         }
     }
 
-
     private int getY() {
         return y;
     }
@@ -116,4 +125,8 @@ public class Enemy extends Actor {
     private int getX() {
         return x;
     }
+
+
+
+
 }
