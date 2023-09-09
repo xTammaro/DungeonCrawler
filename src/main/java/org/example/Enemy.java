@@ -32,6 +32,7 @@ public class Enemy extends Actor {
      * @param y  The initial Y position
      * @param hp The initial health
      * @author Alex Boxall
+     * @author Jake Tammaro
      */
     Enemy(int x, int y, int hp) {
         super(x, y, hp);
@@ -55,14 +56,15 @@ public class Enemy extends Actor {
     }
 
     /**
-     * @author Jake Tammaro
      * Method to generate a random location for enemy to move to.
+     * @author Jake Tammaro
      * @param initialDistance The initial distance to check for a valid location
      * @return A random valid location for the enemy to move to.
      */
 
     public Point getNewRandomLocation(int initialDistance) {
         List<Point> locations = getPossibleLocations(initialDistance);
+        // If no valid locations are found, decrease the distance and try again.
         while (locations.isEmpty() && initialDistance > 0) {
             initialDistance--;
             locations = getPossibleLocations(initialDistance);
@@ -77,8 +79,8 @@ public class Enemy extends Actor {
     }
 
     /**
-     * @author Jake Tammaro
      * Method to generate all possible locations that the enemy can move to, given a distance.
+     * @author Jake Tammaro
      * @param distance The Manhattan distance from the enemy to the possible locations
      * @return A list of all possible locations
      */
@@ -99,8 +101,8 @@ public class Enemy extends Actor {
     }
 
     /**
-     * @author Jake Tammaro
      * Calculates the Manhattan distance between two points.
+     * @author Jake Tammaro
      * @param x1 The x coordinate of the first point
      * @param y1 The y coordinate of the first point
      * @param x2 The x coordinate of the second point
@@ -131,7 +133,6 @@ public class Enemy extends Actor {
     private int getX() {
         return x;
     }
-
 
 
 
