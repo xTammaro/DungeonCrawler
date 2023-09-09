@@ -21,4 +21,21 @@ public class Node {
     The estimated cost to target node, calculated with Manhattan distance.
      */
     public int costToGoal;
+    /*
+    The total cost of the node, calculated by adding costFromStart and costToGoal.
+     */
+    public int totalCost;
+
+    /**
+     * Node constructor.
+     * @author Jake Tammaro
+     * @param x The x coordinate of the node.
+     * @param y The y coordinate of the node.
+     * @param parent The node that was traversed to get to this node.
+     */
+    public Node(int x, int y, Node parent) {
+        this.x = x;
+        this.y = y;
+        this.parent = parent;
+    }
 }
