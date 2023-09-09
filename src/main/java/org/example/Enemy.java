@@ -1,6 +1,8 @@
 package org.example;
 
+import java.awt.Point;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -14,7 +16,7 @@ public class Enemy extends Actor {
     private int targetY;
 
     /**
-     * Set distance for how far the enemy randomly moves towards.
+     * Set distance for how far away a random location is chosen.
      */
     private static final int LOCATION_DISTANCE = 5;
 
@@ -33,8 +35,12 @@ public class Enemy extends Actor {
      */
     Enemy(int x, int y, int hp) {
         super(x, y, hp);
+        // Initialize enemy in roam mode
         this.currentMode = EnemyMode.RoamMode;
-        newRandomLocation();
+        // Generate new random location for enemy to move
+        Point target_coordinate = getNewRandomLocation(LOCATION_DISTANCE);
+        this.targetX = target_coordinate.x;
+        this.targetY = target_coordinate.y;
     }
 
     /**
@@ -45,59 +51,65 @@ public class Enemy extends Actor {
      */
     void act() {
         // pick a direction and move
+
     }
 
     /**
-     * Called when the enemy is in RoamMode. Generates a new random location for the enemy to move.
-     *
      * @author Jake Tammaro
+     * Method to generate a random location for enemy to move to.
+     * @param initialDistance The initial distance to check for a valid location
+     * @return A random valid location for the enemy to move to.
      */
 
-    void newRandomLocation() {
-        Random rand = new Random();
+    public Point getNewRandomLocation(int initialDistance) {
+        List<Point> locations = getPossibleLocations(initialDistance);
+        while (locations.isEmpty() && initialDistance > 0) {
+            initialDistance--;
+            locations = getPossibleLocations(initialDistance);
+        }
+
+        if (!locations.isEmpty()) {
+            Random rand = new Random();
+            return locations.get(rand.nextInt(locations.size()));
+        }
+
+        return null;  // Return null if no valid location is found (very unlikely but just in case)
+    }
+
+    /**
+     * @author Jake Tammaro
+     * Method to generate all possible locations that the enemy can move to, given a distance.
+     * @param distance The Manhattan distance from the enemy to the possible locations
+     * @return A list of all possible locations
+     */
+    private List<Point> getPossibleLocations(int distance) {
+        List<Point> possibleLocations = new ArrayList<>();
         Board board = GameState.getInstance().board;
-        Tile[][] map = board.getTiles();
-        while (true) {
-            int direction = rand.nextInt(8);  // 0 to 7 representing 8 possible directions
-            switch (direction) {
-                case 0:  // North
-                    targetX = getX();
-                    targetY = getY() - LOCATION_DISTANCE;
-                    break;
-                case 1:  // South
-                    targetX = getX();
-                    targetY = getY() + LOCATION_DISTANCE;
-                    break;
-                case 2:  // East
-                    targetX = getX() + LOCATION_DISTANCE;
-                    targetY = getY();
-                    break;
-                case 3:  // West
-                    targetX = getX() - LOCATION_DISTANCE;
-                    targetY = getY();
-                    break;
-                case 4:  // North-East
-                    targetX = getX() + LOCATION_DISTANCE;
-                    targetY = getY() - LOCATION_DISTANCE;
-                    break;
-                case 5:  // North-West
-                    targetX = getX() - LOCATION_DISTANCE;
-                    targetY = getY() - LOCATION_DISTANCE;
-                    break;
-                case 6:  // South-East
-                    targetX = getX() + LOCATION_DISTANCE;
-                    targetY = getY() + LOCATION_DISTANCE;
-                    break;
-                case 7:  // South-West
-                    targetX = getX() - LOCATION_DISTANCE;
-                    targetY = getY() + LOCATION_DISTANCE;
-                    break;
-            }
-            // Check if the target location is out of bounds or not an empty tile
-            if (!board.isOutOfBounds(targetX, targetY) && board.isEmptyTile(map[targetX][targetY])) {
-                break;
+        Tile[][] tiles = board.getTiles();
+
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles[i].length; j++) {
+                if (manhattanDistance(getX(), getY(), i, j) == distance && board.isEmptyTile(tiles[i][j])) {
+                    possibleLocations.add(new Point(i, j));
+                }
             }
         }
+
+        return possibleLocations;
+    }
+
+    /**
+     * @author Jake Tammaro
+     * Calculates the Manhattan distance between two points.
+     * @param x1 The x coordinate of the first point
+     * @param y1 The y coordinate of the first point
+     * @param x2 The x coordinate of the second point
+     * @param y2 The y coordinate of the second point
+     * @return The Manhattan distance between the two points
+     */
+
+    private int manhattanDistance(int x1, int y1, int x2, int y2) {
+        return Math.abs(x1 - x2) + Math.abs(y1 - y2);
     }
 
 
