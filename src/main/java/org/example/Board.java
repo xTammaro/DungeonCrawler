@@ -10,6 +10,7 @@ public class Board {
         this.tiles = new Tile[x][y];
     }
 
+    // Returns a tile given the x and y coordinates.
     public Tile getTile(int x, int y) {
         if (x >= tiles.length || x < 0) {
             return null;

@@ -10,6 +10,7 @@ public class Player extends Actor {
      *
      * @author Alex Boxall
      *
+     * Initial gold value is set to zero.
      * @param x The initial X position.
      * @param y The initial Y position.
      * @param hp The initial health.
@@ -33,7 +34,9 @@ public class Player extends Actor {
     }
 
 
-
+    /** Functions to edit the player's gold.
+     * These functions should be called when the player buys or gains gold.
+     */
     public boolean canBuy(int x) {
         return this.gold >= x;
     }
