@@ -35,5 +35,10 @@ public class Enemy extends Actor {
     @Override
     void onZeroHealth() {
         GameState.getInstance().enemies.remove(this);
+
+        // This makes it so the last enemy will drop a key
+        if (GameState.getInstance().enemies.size() == 0) {
+            GameState.getInstance().board.tiles[x][y] = Tile.EmptyWithKey;
+        }
     }
 }
