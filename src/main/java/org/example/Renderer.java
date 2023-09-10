@@ -84,11 +84,11 @@ public class Renderer extends JFrame {
      */
     private Color getTileColour(Tile tile) {
         return switch (tile) {
-            case Empty -> Color.YELLOW;
+            case Empty -> Color.WHITE;
             case Wall -> Color.BLACK;
-            case EmptyWithKey -> Color.ORANGE;
-            case Staircase -> Color.GRAY;
-            case Shop -> Color.RED;
+            case EmptyWithKey -> Color.WHITE;
+            case Staircase -> Color.DARK_GRAY;
+            case Shop -> Color.GRAY;
         };
     }
 
@@ -144,6 +144,18 @@ public class Renderer extends JFrame {
         return y * tileSize + (WINDOW_HEIGHT - getBoardHeight() * tileSize) / 2;
     }
 
+    public void drawKey(Graphics g, int px, int py, int tileSize) {
+        /*
+         * Draw the key as an orange circle.
+         */
+        g.setColor(Color.ORANGE);
+        g.fillOval(
+                px + tileSize / 4,
+                py + tileSize / 4,
+                tileSize / 2,
+                tileSize / 2);
+    }
+
     /**
      * Draws a tile.
      *
@@ -157,8 +169,40 @@ public class Renderer extends JFrame {
         int px = getPixelXFromTile(x, tileSize);
         int py = getPixelYFromTile(y, tileSize);
 
+        /*
+         * Render the background colour of the tile.
+         */
         g.setColor(getTileColour(tile));
         g.fillRect(px, py, tileSize, tileSize);
+
+        /*
+         * Add some prettiness to some of the tiles so it doesn't just look like a
+         * bunch of strangely coloured squares.
+         */
+        if (tile == Tile.Shop) {
+            /*
+             * Put some pretty blunt 'SHOP' text on the tile.
+             */
+            g.setColor(Color.BLACK);
+            g.setFont(new Font("Arial", Font.BOLD, 20));
+            int textWidth = g.getFontMetrics().stringWidth("SHOP");
+            g.drawString("SHOP", px + (tileSize - textWidth) / 2, py + tileSize / 2);
+
+        } else if (tile == Tile.Staircase) {
+            /*
+             * The staircase will be shown as a grey block if you don't have the key,
+             * and will turn into a staircase.
+             */
+            if (GameState.getInstance().hasKey) {
+                g.setColor(Color.WHITE);
+                g.fillRect(px, py, tileSize / 4, 3 * tileSize / 4);
+                g.fillRect(px + tileSize / 4, py, tileSize / 4, 2 * tileSize / 4);
+                g.fillRect(px + tileSize / 2, py, tileSize / 4, tileSize / 4);
+            }
+
+        } else if (tile == Tile.EmptyWithKey) {
+            drawKey(g, px, py, tileSize);
+        }
     }
 
     /**
@@ -174,7 +218,11 @@ public class Renderer extends JFrame {
         int py = getPixelYFromTile(y, tileSize);
 
         g.setColor(Color.BLUE);
-        g.fillOval(px, py, tileSize, tileSize);
+        g.fillOval(
+                px + tileSize / 4,
+                py + tileSize / 4,
+                tileSize / 2,
+                tileSize / 2);
     }
 
     /**
@@ -190,7 +238,27 @@ public class Renderer extends JFrame {
         int py = getPixelYFromTile(y, tileSize);
 
         g.setColor(Color.RED);
-        g.fillOval(px, py, tileSize, tileSize);
+        g.fillOval(
+                px + tileSize / 4,
+                py + tileSize / 4,
+                tileSize / 2,
+                tileSize / 2);
+    }
+
+    /**
+     * Draws the heads-up display (HUD). Shows the level number, the player's health,
+     * and inventory.
+     */
+    public void renderHUD(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Arial", Font.BOLD, 20));
+
+        g.drawString("Level " + (GameState.getInstance().levelNumber + 1), 30, 60);
+        g.drawString("HP: " + GameState.getInstance().player.getHP(), 30, 80);
+
+        if (GameState.getInstance().hasKey) {
+            drawKey(g, 25, 80, 64);
+        }
     }
 
     /**
@@ -209,17 +277,25 @@ public class Renderer extends JFrame {
             return;
         }
 
+        /*
+         * Render all of the tiles in the game board. The key is also technically
+         * represented as a type of tile, so that is also handled here.
+         */
         for (int y = 0; y < state.board.tiles.length; ++y) {
             for (int x = 0; x < state.board.tiles[y].length; ++x) {
                 renderTile(g, x, y, state.board.tiles[y][x]);
             }
         }
 
+        /*
+         * Now show all of the actors.
+         */
         renderPlayer(g, state.player.x, state.player.y);
-
         for (Enemy e: state.enemies) {
             renderEnemy(g, e.x, e.y);
         }
+
+        renderHUD(g);
     }
 
     /**
@@ -244,7 +320,7 @@ public class Renderer extends JFrame {
                 new Tile[]{Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Empty, Tile.Empty, Tile.Wall },
                 new Tile[]{Tile.Wall , Tile.Empty, Tile.Empty, Tile.Staircase, Tile.Wall , Tile.Empty, Tile.Empty, Tile.Wall },
                 new Tile[]{Tile.Wall , Tile.Empty, Tile.Wall , Tile.Wall , Tile.Wall , Tile.Empty, Tile.Empty, Tile.Wall },
-                new Tile[]{Tile.Wall , Tile.Empty, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Wall },
+                new Tile[]{Tile.Wall , Tile.EmptyWithKey, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Wall },
                 new Tile[]{Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall },
         };
         GameState.getInstance().board = b;
