@@ -14,8 +14,12 @@ public class Player extends Actor {
      * @param y The initial Y position.
      * @param hp The initial health.
      */
+
+    private int gold;
+
     Player(int x, int y, int hp) {
         super(x, y, hp);
+        this.gold = 0;
     }
 
     /**
@@ -26,5 +30,20 @@ public class Player extends Actor {
     @Override
     void onZeroHealth() {
         System.out.printf("GAME OVER!\n");
+    }
+
+
+
+    public boolean canBuy(int x) {
+        return this.gold >= x;
+    }
+    public void buy(int x) {
+        this.gold -= x;
+    }
+    public void editGold(int x) {
+        this.gold += x;
+    }
+    public void setGold(int x) {
+        this.gold = x;
     }
 }
