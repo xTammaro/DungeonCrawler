@@ -9,4 +9,5 @@ public enum Tile {
     EmptyWithKey,
     Staircase,
     Shop,
+    chest
 }
