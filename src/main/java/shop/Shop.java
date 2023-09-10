@@ -1,6 +1,5 @@
 package shop;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Shop {
@@ -13,12 +12,13 @@ public class Shop {
         int i = 1;
         StringBuilder s = new StringBuilder();
         for (ShopItem shopItem : inventory) {
-            s.append(String.format("%d. %s", i, shopItem.toString())).append("\n");
+            s.append(String.format("%d. %s", i, shopItem.shopDescription())).append("\n");
             i++;
         }
         return s.toString();
     }
+    // maybe take number from printInventory instead of shopItem
     public void buy(ShopItem shopItem){
-        //TODO:
+        //TODO: add an item to the player's Inventory
     }
 }

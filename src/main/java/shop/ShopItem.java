@@ -9,11 +9,17 @@ public class ShopItem {
         this.quantity = quantity;
     }
 
-    @Override
-    public String toString() {
+    public String shopDescription() {
         if(quantity == 1){
             return String.format("1 %s for %d gold",item.getName(),item.getValue());
         }
         return String.format("%d %ss for %d gold each",quantity,item.getName(),item.getValue());
+    }
+
+    public String chestDescription() {
+        if(quantity == 1){
+            return String.format("1 %s worth %d gold",item.getName(),item.getValue());
+        }
+        return String.format("%d %ss worth %d gold each",quantity,item.getName(),item.getValue());
     }
 }

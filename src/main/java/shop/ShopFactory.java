@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class ShopFactory {
     private static ShopFactory instance;
-    private Map<String,Shop> shopMap;
+    final private Map<String,Shop> shopMap;
 
     private ShopFactory(){
         shopMap = new HashMap<>();
