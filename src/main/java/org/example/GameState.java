@@ -131,8 +131,8 @@ public class GameState {
      */
     void act(Action action) {
         if (action.isMove()) {
-            if (player.canMoveInDirection(Action.MoveDown.getDirection())) {
-                player.moveInDirection(Direction.LEFT);
+            if (player.canMoveInDirection(action.getDirection())) {
+                player.moveInDirection(action.getDirection());
             }
             endOfPlayerTurn();
         } else {
