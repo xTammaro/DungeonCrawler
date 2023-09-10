@@ -8,5 +8,9 @@ public enum Tile {
     Wall,
     EmptyWithKey,
     Staircase,
-    Shop,
+    Shop;
+
+    public boolean isMovable() {
+        return this == Empty || this == EmptyWithKey;
+    }
 }
