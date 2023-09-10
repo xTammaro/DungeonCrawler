@@ -1,5 +1,7 @@
 package org.example;
 
+import shop.Item;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +10,8 @@ public class GameState {
      * The player object.
      */
     Player player;
+
+
 
     /**
      * All of the enemies that are on the current board, and still alive.
@@ -30,7 +34,19 @@ public class GameState {
     boolean hasKey = false;
 
     // TODO: inventory
+    List<Item> inventory;
+    int gold;
 
+    public int getGold() {
+        return gold;
+    }
+
+    public void setGold(int gold) {
+        this.gold = gold;
+    }
+    public void addToInventory(Item item){
+        inventory.add(item);
+    }
     private static GameState instance;
 
     /**
