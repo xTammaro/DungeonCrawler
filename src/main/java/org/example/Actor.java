@@ -47,8 +47,26 @@ abstract public class Actor {
      * @return Whether the actor can move in this direction.
      */
     boolean canMoveInDirection(Direction direction) {
-        // TODO: collision detection
-        return false;
+        int x = this.x;
+        int y = this.y;
+        switch (direction) {
+            case UP  -> {
+                y++;
+            }
+            case RIGHT  -> {
+                x++;
+            }
+            case DOWN  -> {
+                y--;
+            }
+            case LEFT  -> {
+                x--;
+            }
+            default -> {
+                return false;
+            }
+        }
+        return (GameState.getInstance().board.getTile(x,y).isMovable());
     }
 
     /**
