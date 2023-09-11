@@ -288,12 +288,12 @@ public class Renderer extends JFrame {
         }
 
         /*
-         * Now show all of the actors.
+         * Now show all of the actors. Show the player on top of enemies.
          */
-        renderPlayer(g, state.player.x, state.player.y);
         for (Enemy e: state.enemies) {
             renderEnemy(g, e.x, e.y);
         }
+        renderPlayer(g, state.player.x, state.player.y);
 
         renderHUD(g);
     }
@@ -305,7 +305,7 @@ public class Renderer extends JFrame {
         /*
          * Tells the window manager that the entire window is dirty, and so it needs to be repainted.
          */
-        invalidate();
+        repaint();
     }
 
     /**
