@@ -316,8 +316,14 @@ public class Renderer extends JFrame {
 
         calculateChanges();
 
-        if (didHUDChange()) {
-            super.paintComponents(g);
+        if (didLevelChange()) {
+            g.setColor(Color.WHITE);
+            g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+            renderHUD(g);
+
+        } else if (didHUDChange()) {
+            g.setColor(Color.WHITE);
+            g.fillRect(0, 0, getPixelXFromTile(0, getTileSize()), 250);
             renderHUD(g);
         }
 
@@ -364,7 +370,7 @@ public class Renderer extends JFrame {
                 new Tile[]{Tile.Wall , Tile.Empty, Tile.Wall , Tile.Wall , Tile.Wall , Tile.Empty, Tile.Empty, Tile.Wall },
                 new Tile[]{Tile.Wall , Tile.EmptyWithKey, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Wall },
                 new Tile[]{Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall },
-        };
+        });
         GameState.getInstance().board = b;
         GameState.getInstance().player = new Player(1, 1, 10);
         GameState.getInstance().enemies = new ArrayList<>();
