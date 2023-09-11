@@ -8,7 +8,8 @@ public enum Tile {
     Wall,
     EmptyWithKey,
     Staircase,
-    Shop;
+    Shop,
+    Chest;
 
     // Player should only be able to move towards an Empty tile.
     // The Player should only not be able to move into a wall.
