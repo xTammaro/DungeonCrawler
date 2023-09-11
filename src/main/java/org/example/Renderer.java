@@ -76,6 +76,41 @@ public class Renderer extends JFrame {
         });
     }
 
+    private int prevLevelNumber = -1;
+    private int prevHP = -1;
+    private boolean prevHasKey = false;
+    private boolean levelChanged = false;
+    private boolean hudChanged = false;
+
+    private boolean didHUDChange() {
+        return hudChanged;
+    }
+
+    private boolean didLevelChange() {
+        return levelChanged;
+    }
+
+    private void calculateChanges() {
+        hudChanged = false;
+        levelChanged = false;
+
+        if (prevLevelNumber != GameState.getInstance().levelNumber) {
+            hudChanged = true;
+            levelChanged = true;
+            prevLevelNumber = GameState.getInstance().levelNumber;
+        }
+
+        if (prevHP != GameState.getInstance().player.getHP()) {
+            hudChanged = true;
+            prevHP = GameState.getInstance().player.getHP();
+        }
+
+        if (prevHasKey != GameState.getInstance().hasKey) {
+            hudChanged = true;
+            prevHasKey = GameState.getInstance().hasKey;
+        }
+    }
+
     /**
      * Given a Tile, it gives the colour that it should be rendered as.
      *
@@ -166,6 +201,10 @@ public class Renderer extends JFrame {
      * @param tile The tile type.
      */
     private void renderTile(Graphics g, int x, int y, Tile tile) {
+        if (tile == Tile.Wall && !didLevelChange() && !didHUDChange()) {
+            return;
+        }
+
         int tileSize = getTileSize();
         int px = getPixelXFromTile(x, tileSize);
         int py = getPixelYFromTile(y, tileSize);
@@ -250,7 +289,7 @@ public class Renderer extends JFrame {
      * Draws the heads-up display (HUD). Shows the level number, the player's health,
      * and inventory.
      */
-    public void renderHUD(Graphics g) {
+    private void renderHUD(Graphics g) {
         g.setColor(Color.BLACK);
         g.setFont(new Font("Arial", Font.BOLD, 20));
 
@@ -270,12 +309,23 @@ public class Renderer extends JFrame {
      */
     @Override
     public void paint(Graphics g) {
-        super.paintComponents(g);
-
         GameState state = GameState.getInstance();
 
         if (state.board == null) {
             return;
+        }
+
+        calculateChanges();
+
+        if (didLevelChange()) {
+            g.setColor(Color.WHITE);
+            g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+            renderHUD(g);
+
+        } else if (didHUDChange()) {
+            g.setColor(Color.WHITE);
+            g.fillRect(0, 0, getPixelXFromTile(0, getTileSize()), 250);
+            renderHUD(g);
         }
 
         /*
@@ -295,8 +345,6 @@ public class Renderer extends JFrame {
             renderEnemy(g, e.x, e.y);
         }
         renderPlayer(g, state.player.x, state.player.y);
-
-        renderHUD(g);
     }
 
     /**
