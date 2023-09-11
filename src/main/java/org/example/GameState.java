@@ -144,4 +144,8 @@ public class GameState {
                 System.out.printf("ACTION %s NOT IMPLEMENTED!\n", action);
         }
     }
+
+    public Player getPlayer() {
+        return player;
+    }
 }

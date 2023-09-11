@@ -27,4 +27,14 @@ public class Player extends Actor {
     void onZeroHealth() {
         System.out.printf("GAME OVER!\n");
     }
+
+
+    int getX() {
+    	return x;
+    }
+
+    int getY() {
+    	return y;
+    }
+
 }

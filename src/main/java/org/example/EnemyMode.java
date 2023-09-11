@@ -6,5 +6,5 @@ package org.example;
  */
 public enum EnemyMode {
     RoamMode,
-    TargetMode
+    AttackMode
 }

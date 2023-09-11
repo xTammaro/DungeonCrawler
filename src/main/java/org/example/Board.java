@@ -11,11 +11,11 @@ public class Board {
     /**
      * @author Jake Tammaro
      * Checks if a given tile is empty.
-     * @param tile
+     * @param tile The tile to check
      * @return true if the tile is empty, false otherwise
      */
 
-    boolean isEmptyTile(Tile tile) {
+    public boolean isEmptyTile(Tile tile) {
         return tile == Tile.Empty || tile == Tile.EmptyWithKey;
     }
 
