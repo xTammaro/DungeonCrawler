@@ -89,6 +89,7 @@ public class Renderer extends JFrame {
             case EmptyWithKey -> Color.WHITE;
             case Staircase -> Color.DARK_GRAY;
             case Shop -> Color.GRAY;
+            case Chest -> new Color(153, 102, 0);
         };
     }
 
