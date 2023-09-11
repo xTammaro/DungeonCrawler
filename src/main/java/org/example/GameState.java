@@ -33,17 +33,40 @@ public class GameState {
      */
     boolean hasKey = false;
 
-    // TODO: inventory
+
+    /**
+     * the players inventory as a list of Items
+     */
+
     List<Item> inventory;
+    /**
+     * The amount of gold the player has
+     */
     int gold;
+
+    /**
+     * @author Will Baird
+     * @return the players gold
+     */
 
     public int getGold() {
         return gold;
     }
 
+    /**
+     * @author Will Baird
+     * sets the players gold to new int
+     * @param gold the new amount of gold
+     */
     public void setGold(int gold) {
         this.gold = gold;
     }
+
+    /**
+     * @author Will Baird
+     * adds an item to the players inventory
+     * @param item the item to be added
+     */
     public void addToInventory(Item item){
         inventory.add(item);
     }

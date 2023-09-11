@@ -5,11 +5,24 @@ import org.example.GameState;
 import java.util.List;
 
 public class Shop {
+
     List<ShopItem> shopInventory;
 
+     /**
+     * @author Will Baird
+     * Constructor for Shop sets the inventory to a list of ShopItems
+     * @param inventory the list of ShopItems to be sold by this shop
+     */
     public Shop(List<ShopItem> inventory){
         this.shopInventory = inventory;
     }
+
+     /**
+     * @author Will Baird
+     * makes a String message to be displayed to the player listing
+     * all the Items this shop is selling
+     * @return String list of Items
+     */
     public String printInventory(){
         int i = 1;
         StringBuilder s = new StringBuilder();
@@ -19,7 +32,16 @@ public class Shop {
         }
         return s.toString();
     }
-    //adds an item to the player's Inventory if they have the required gold and if the shop has stock
+
+    /**
+     * @author Will Baird
+     * purchases and item based on the players input by checking if
+     * the item is available and if the player as the required gold
+     * the players input is an int from 1 - (length of shopInventory)
+     * the input number corresponds to the list of items made in printInventory.
+     * @param number the index of the item the player want to buy
+     * @return string message confirming the action chosen by player
+     */
     public String buy(int number){
         StringBuilder s = new StringBuilder();
         if(number <= 0 || number > shopInventory.size()){

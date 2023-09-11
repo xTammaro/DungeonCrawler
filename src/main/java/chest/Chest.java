@@ -9,11 +9,22 @@ public class Chest {
     int gold;
     List<ShopItem> loot;
 
+    /**
+     * @author Will Baird
+     * Constructor for Chest sets the gold and items in the chest
+     * @param gold the amount of gold in chest
+     * @param loot the list of ShopItems in chest
+     */
     public Chest(int gold ,List<ShopItem> loot){
         this.gold = gold;
         this.loot = loot;
     }
-    // String representation of all the items found in the chest
+     /**
+     * @author Will Baird
+     * makes a String message to be displayed to the player listing
+     * all the Items and gold this chest has in it
+     * @return String list of Items
+     */
     public String printLoot(){
         int i = 1;
         StringBuilder s = new StringBuilder();
@@ -28,8 +39,14 @@ public class Chest {
         return s.toString();
     }
 
-    //adds an item to the player's Inventory based on player input
-    // 0 is for take all
+    /**
+     * @author Will Baird
+     * takes items and/or gold based on the players input
+     * the players input is an int from 0 - (length of loot)
+     * the input number corresponds to the list of items made in printLoot.
+     * @param number the index of the item the player want to take
+     * @return string message confirming the action chosen by player
+     */
     //TODO: add a way to take just gold
     public String take(int number){
         StringBuilder s = new StringBuilder();
