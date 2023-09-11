@@ -35,4 +35,20 @@ public class Board {
         return tiles[y][x];
     }
 
+    /**
+     * @author Tal Shy-Tielen, Alex Boxall
+     * @param x x coordinate of tile.
+     * @param y y coordinate of tile.
+     * @param tile the tile to put at that position
+     * Note: function assumes the board is at least one tile tall.
+     */
+    public void setTile(int x, int y, Tile tile) {
+        if (x >= tiles[0].length || x < 0) {
+            return;
+        }
+        if (y >= tiles.length || y < 0) {
+            return;
+        }
+        tiles[y][x] = tile;
+    }
 }

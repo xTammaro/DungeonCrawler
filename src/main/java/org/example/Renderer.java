@@ -283,7 +283,7 @@ public class Renderer extends JFrame {
          */
         for (int y = 0; y < state.board.tiles.length; ++y) {
             for (int x = 0; x < state.board.tiles[y].length; ++x) {
-                renderTile(g, x, y, state.board.tiles[y][x]);
+                renderTile(g, x, y, state.board.getTile(x, y));
             }
         }
 
