@@ -4,7 +4,7 @@ package org.example;
  * The game board. Represented as an array of tiles.
  */
 public class Board {
-    Tile[][] tiles;
+    private Tile[][] tiles;
 
     public Board() {
         tiles = null;
@@ -18,6 +18,31 @@ public class Board {
     public Board(int x, int y) {
         this.tiles = new Tile[y][x];
     }
+
+    /**
+     * @author Alex Boxall
+     * @param tiles all of the tiles to load
+     */
+    public void setAllTiles(Tiles tiles) {
+        this.tiles = tiles;
+    }
+
+    /**
+     * @author Alex Boxall
+     * @return the width of the board, in tiles
+     */
+    public int getWidth() {
+        return tiles[0].length;
+    }
+
+    /**
+     * @author Alex Boxall
+     * @return the height of the board, in tiles
+     */
+    public int getHeight() {
+        return tiles.length;
+    }
+
     /**
      * @author Tal Shy-Tielen
      * @param x x coordinate of tile.
@@ -26,10 +51,10 @@ public class Board {
      * Note: function assumes the board is at least one tile tall.
      */
     public Tile getTile(int x, int y) {
-        if (x >= tiles[0].length || x < 0) {
+        if (x >= getWidth() || x < 0) {
             return null;
         }
-        if (y >= tiles.length || y < 0) {
+        if (y >= getHeight() || y < 0) {
             return null;
         }
         return tiles[y][x];
@@ -43,10 +68,10 @@ public class Board {
      * Note: function assumes the board is at least one tile tall.
      */
     public void setTile(int x, int y, Tile tile) {
-        if (x >= tiles[0].length || x < 0) {
+        if (x >= getWidth() || x < 0) {
             return;
         }
-        if (y >= tiles.length || y < 0) {
+        if (y >= getHeight() || y < 0) {
             return;
         }
         tiles[y][x] = tile;

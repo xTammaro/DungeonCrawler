@@ -98,7 +98,7 @@ public class Renderer extends JFrame {
      * @return The width, in tiles.
      */
     private int getBoardWidth() {
-        return GameState.getInstance().board.tiles[0].length;
+        return GameState.getInstance().board.getWidth();
     }
 
     /**
@@ -107,7 +107,7 @@ public class Renderer extends JFrame {
      * @return The height, in tiles.
      */
     private int getBoardHeight() {
-        return GameState.getInstance().board.tiles.length;
+        return GameState.getInstance().board.getHeight();
     }
 
     /**
@@ -281,8 +281,8 @@ public class Renderer extends JFrame {
          * Render all of the tiles in the game board. The key is also technically
          * represented as a type of tile, so that is also handled here.
          */
-        for (int y = 0; y < state.board.tiles.length; ++y) {
-            for (int x = 0; x < state.board.tiles[y].length; ++x) {
+        for (int y = 0; y < state.board.getHeight(); ++y) {
+            for (int x = 0; x < state.board.getWidth(); ++x) {
                 renderTile(g, x, y, state.board.getTile(x, y));
             }
         }
@@ -313,7 +313,7 @@ public class Renderer extends JFrame {
      */
     private void setDemoState() {
         Board b = new Board();
-        b.tiles = new Tile[][] {
+        b.setAllTiles(new Tile[][] {
                 new Tile[]{Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall },
                 new Tile[]{Tile.Wall , Tile.Empty, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Shop, Tile.Wall },
                 new Tile[]{Tile.Wall , Tile.Empty, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Wall },
@@ -322,7 +322,7 @@ public class Renderer extends JFrame {
                 new Tile[]{Tile.Wall , Tile.Empty, Tile.Wall , Tile.Wall , Tile.Wall , Tile.Empty, Tile.Empty, Tile.Wall },
                 new Tile[]{Tile.Wall , Tile.EmptyWithKey, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Wall },
                 new Tile[]{Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall },
-        };
+        });
         GameState.getInstance().board = b;
         GameState.getInstance().player = new Player(1, 1, 10);
         GameState.getInstance().enemies = new ArrayList<>();
