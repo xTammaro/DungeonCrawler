@@ -2,7 +2,6 @@ package shop;
 
 public class ShopItem {
     /**
-     * @author Will Baird
      * an Item pared with a quantity to be used is shops
      */
     Item item;
