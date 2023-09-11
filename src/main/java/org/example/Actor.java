@@ -120,4 +120,12 @@ abstract public class Actor {
      * @author Alex Boxall
      */
     abstract void onZeroHealth();
+
+    /**
+     * Returns the actor's current health.
+     * @return The current HP
+     */
+    public int getHP() {
+        return hp;
+    }
 }
