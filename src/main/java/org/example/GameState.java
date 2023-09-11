@@ -130,18 +130,13 @@ public class GameState {
      * @param action The action that the user should take.
      */
     void act(Action action) {
-        switch (action) {
-            case MoveLeft:
-                if (player.canMoveInDirection(Direction.LEFT)) {
-                    player.moveInDirection(Direction.LEFT);
-                }
-                endOfPlayerTurn();
-                break;
-
-            // TODO: other movement
-
-            default:
-                System.out.printf("ACTION %s NOT IMPLEMENTED!\n", action);
+        if (action.isMove()) {
+            if (player.canMoveInDirection(action.getDirection())) {
+                player.moveInDirection(action.getDirection());
+            }
+            endOfPlayerTurn();
+        } else {
+            System.out.printf("ACTION %s NOT IMPLEMENTED!\n", action);
         }
     }
 }

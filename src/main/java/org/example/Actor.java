@@ -40,15 +40,25 @@ abstract public class Actor {
     /**
      * Determines whether this actor can move in a certain direction. If there is a wall
      * blocking the way, it should return false.
-     *
-     * @author Alex Boxall
+     * There is also a check, if the player tries to move off the map it will return false.
+     * @author Alex Boxall, Tal Shy-Tielen
      *
      * @param direction The direction to move in.
      * @return Whether the actor can move in this direction.
      */
     boolean canMoveInDirection(Direction direction) {
-        // TODO: collision detection
-        return false;
+        int x = this.x;
+        int y = this.y;
+        switch (direction) {
+            case UP  -> y++;
+            case RIGHT  -> x++;
+            case DOWN  -> y--;
+            case LEFT  -> x--;
+            default -> {
+                return false;
+            }
+        }
+        return (GameState.getInstance().board.getTile(x,y).isMovable());
     }
 
     /**
