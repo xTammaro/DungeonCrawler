@@ -6,6 +6,10 @@ package org.example;
 public class Board {
     Tile[][] tiles;
 
+    public Board() {
+        tiles = null;
+    }
+
     /**
      * @author Tal Shy-Tielen
      * @param x width of the new board.
