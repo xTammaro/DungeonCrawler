@@ -16,15 +16,15 @@ public class Node {
     /*
     The cost to get to this node from the start.
      */
-    public int costFromStart;
+    public double costFromStart;
     /*
     The estimated cost to target node, calculated with Manhattan distance.
      */
-    public int costToGoal;
+    public double costToGoal;
     /*
     The total cost of the node, calculated by adding costFromStart and costToGoal.
      */
-    public int totalCost;
+    public double totalCost;
 
     /**
      * Node constructor.
