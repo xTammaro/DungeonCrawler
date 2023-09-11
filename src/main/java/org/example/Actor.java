@@ -51,9 +51,9 @@ abstract public class Actor {
         int x = this.x;
         int y = this.y;
         switch (direction) {
-            case UP  -> y++;
+            case UP  -> y--;
             case RIGHT  -> x++;
-            case DOWN  -> y--;
+            case DOWN  -> y++;
             case LEFT  -> x--;
             default -> {
                 return false;
