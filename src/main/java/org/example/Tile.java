@@ -9,5 +9,12 @@ public enum Tile {
     EmptyWithKey,
     Staircase,
     Shop,
-    Chest
+    Chest;
+
+    // Player should only be able to move towards an Empty tile.
+    // The Player should only not be able to move into a wall.
+    public boolean isMovable() {
+        return this != Wall;
+    }
+>>>>>>> src/main/java/org/example/Tile.java
 }

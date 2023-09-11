@@ -159,33 +159,25 @@ public class GameState {
      * @author Alex Boxall
      */
     void endOfPlayerTurn() {
-        if (board.tiles[player.y][player.x] == Tile.Staircase && hasKey) {
+        if (board.getTile(player.x, player.y) == Tile.Staircase && hasKey) {
             /*
              * Move onto the next floor. Return early as the rest of the code here will assume
              * we haven't moved floors. We must remember to update the screen due to this early
              * return.
              */
             levelNumber++;
+            hasKey = false;
             loadFloor(levelNumber);
             Renderer.getInstance().render();
             return;
         }
 
-        if (board.tiles[player.y][player.x] == Tile.EmptyWithKey && !hasKey) {
+        if (board.getTile(player.x, player.y) == Tile.EmptyWithKey && !hasKey) {
             /*
              * Make the player pick up the key.
              */
             hasKey = true;
-            board.tiles[player.y][player.x] = Tile.Empty;
-        }
-
-        if (enemies.size() == 0) {
-            /*
-             * Put the key on the map now that all the enemies are gone.
-             */
-
-            // TODO:
-            // currentMap.tiles[?][?] = Tile.EmptyWithKey;
+            board.setTile(player.x, player.y, Tile.Empty);
         }
 
         /*
@@ -203,22 +195,17 @@ public class GameState {
      * Depending on the action, time may progress (i.e. enemies will act afterwards).
      *
      * @author Alex Boxall
-     *
+     * @author Tal Shy-Tielen
      * @param action The action that the user should take.
      */
     void act(Action action) {
-        switch (action) {
-            case MoveLeft:
-                if (player.canMoveInDirection(Direction.LEFT)) {
-                    player.moveInDirection(Direction.LEFT);
-                }
-                endOfPlayerTurn();
-                break;
-
-            // TODO: other movement
-
-            default:
-                System.out.printf("ACTION %s NOT IMPLEMENTED!\n", action);
+        if (action.isMove()) {
+            if (player.canMoveInDirection(action.getDirection())) {
+                player.moveInDirection(action.getDirection());
+            }
+            endOfPlayerTurn();
+        } else {
+            System.out.printf("ACTION %s NOT IMPLEMENTED!\n", action);
         }
     }
 }
