@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Shop {
 
-    List<ShopItem> shopInventory;
+    private final List<ShopItem> shopInventory;
 
      /**
      * @author Will Baird
@@ -45,10 +45,10 @@ public class Shop {
     public String buy(int number){
         StringBuilder s = new StringBuilder();
         if(number <= 0 || number > shopInventory.size()){
-            return s.append("Invalid input").toString();
+            return s.append("Invalid Input").toString();
         }
 
-        ShopItem shopItem = shopInventory.get(number + 1);
+        ShopItem shopItem = shopInventory.get(number-1);
         int playerGold = GameState.getInstance().getGold();
         int itemPrice = shopItem.getItem().getValue();
         int quantity = shopItem.getQuantity();
@@ -59,7 +59,7 @@ public class Shop {
 
         if (playerGold >= itemPrice) {
             GameState.getInstance().setGold(playerGold - itemPrice);
-            GameState.getInstance().addToInventory(shopItem.getItem());
+            shopItem.addToPlayerInventory();
             shopItem.setQuantity(quantity-1);
             return s.append(String.format("%s successfully purchased",shopItem.getItem().getName())).toString();
         } else {

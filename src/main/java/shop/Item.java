@@ -1,8 +1,8 @@
 package shop;
 
 public abstract class Item {
-    private String name;
-    private int value;
+    private final String name;
+    private final int value;
 
     /**
      * @author Will Baird
@@ -30,4 +30,11 @@ public abstract class Item {
     public int getValue() {
          return value;
     }
+
+    /**
+     * @author Will Baird
+     * makes and returns a new Item with the same attributes
+     * @return the new Item
+     */
+    public abstract Item makeClone();
 }

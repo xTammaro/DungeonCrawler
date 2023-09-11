@@ -1,7 +1,6 @@
 package chest;
 
 import org.example.GameState;
-import shop.Item;
 import shop.ShopItem;
 import java.util.List;
 
@@ -47,27 +46,38 @@ public class Chest {
      * @param number the index of the item the player want to take
      * @return string message confirming the action chosen by player
      */
-    //TODO: add a way to take just gold
     public String take(int number){
         StringBuilder s = new StringBuilder();
-        if(number < 0 || number > loot.size()){
-            return s.append("Invalid input").toString();
+        if(number < 0 || number > loot.size()+1){
+            return s.append("Invalid Input").toString();
         }
 
         int playerGold = GameState.getInstance().getGold();
-        GameState.getInstance().setGold(playerGold + gold);
-        //s.append("Gold added to Inventory").toString();
-
         if(number == 0){
             GameState.getInstance().setGold(playerGold + gold);
-            for (ShopItem item: loot) {
-                GameState.getInstance().addToInventory(item.getItem());
+            for (ShopItem shopItem: loot) {
+                while (shopItem.getQuantity() > 0) {
+                    shopItem.addToPlayerInventory();
+                }
             }
             return s.append("Everything added to Inventory").toString();
         }
 
-        Item item = loot.get(number+1).getItem();
-        GameState.getInstance().addToInventory(item);
-        return s.append(String.format("%s added to Inventory",item.getName())).toString();
+        if(number == 1){
+            GameState.getInstance().setGold(playerGold + gold);
+            return s.append(String.format("%d Gold added to Inventory", gold)).toString();
+        }
+
+        ShopItem shopItem = loot.get(number-2);
+        int startQuantity = shopItem.getQuantity();
+
+        while (shopItem.getQuantity() > 0) {
+            shopItem.addToPlayerInventory();
+        }
+        if(startQuantity == 1){
+            return s.append(String.format("%d %s added to Inventory",startQuantity , shopItem.getItem().getName())).toString();
+        }
+
+        return s.append(String.format("%d %ss added to Inventory",startQuantity , shopItem.getItem().getName())).toString();
     }
 }

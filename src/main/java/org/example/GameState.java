@@ -1,6 +1,6 @@
 package org.example;
 
-import shop.Item;
+import shop.ShopItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,11 +38,49 @@ public class GameState {
      * the players inventory as a list of Items
      */
 
-    List<Item> inventory;
+    List<ShopItem> inventory;
+
+
+
     /**
      * The amount of gold the player has
      */
     int gold;
+
+    /**
+     * @author Will Baird
+     * empties the players  inventory
+     * used for testing
+     */
+    public void clearInventory(){
+        this.inventory = new ArrayList<>();
+    }
+
+    /**
+     * @author Will Baird
+     * makes a String message to be displayed to the player listing
+     * all the Items in the players inventory has in it
+     * @return String list of ShopItems
+     */
+    public String printInventory() {
+        StringBuilder s = new StringBuilder();
+        if (inventory.isEmpty()){
+            return s.append("Inventory Empty").toString();
+        }
+        int i = 1;
+        for (ShopItem shopItem: inventory) {
+            s.append(String.format("%d. %s", i, shopItem.chestDescription())).append("\n");
+            i++;
+        }
+        return s.toString();
+    }
+     /**
+     * @author Will Baird
+     * @return a list of the players Items
+     */
+    public List<ShopItem> getInventory() {
+        return inventory;
+    }
 
     /**
      * @author Will Baird
@@ -65,10 +103,10 @@ public class GameState {
     /**
      * @author Will Baird
      * adds an item to the players inventory
-     * @param item the item to be added
+     * @param shopItem the item to be added
      */
-    public void addToInventory(Item item){
-        inventory.add(item);
+    public void addToInventory(ShopItem shopItem){
+        inventory.add(shopItem);
     }
     private static GameState instance;
 
@@ -79,7 +117,7 @@ public class GameState {
      * @author Alex Boxall
      */
     private GameState() {
-
+        this.inventory = new ArrayList<>();
     }
 
     /**
