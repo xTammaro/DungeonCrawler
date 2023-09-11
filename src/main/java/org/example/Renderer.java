@@ -76,20 +76,43 @@ public class Renderer extends JFrame {
         });
     }
 
+    /**
+     * The values of the GameState the last time the board was redrawn.
+     */
     private int prevLevelNumber = -1;
     private int prevHP = -1;
     private boolean prevHasKey = false;
+
+    /**
+     * Whether or not either the level has changed since the last render, or whether
+     * the HUD has updated since the last render. Gets set by calculateChanges()
+     */
     private boolean levelChanged = false;
     private boolean hudChanged = false;
 
+    /**
+     * @author Alex Boxall
+     * @return whether the HUD has updated since the last render
+     */
     private boolean didHUDChange() {
         return hudChanged;
     }
 
+    /**
+     * @author Alex Boxall
+     * @return whether the level has changed since the last render
+     */
     private boolean didLevelChange() {
         return levelChanged;
     }
 
+    /**
+     * Determines whether the level or HUD has changed since the last time the screen
+     * was redrawn. Should be called at the start of the redraw routine, and then
+     * didHUDChange and didLevelChange will work correctly.
+     *
+     * @author Alex Boxall
+     */
     private void calculateChanges() {
         hudChanged = false;
         levelChanged = false;
@@ -318,11 +341,17 @@ public class Renderer extends JFrame {
         calculateChanges();
 
         if (didLevelChange()) {
+            /*
+             * Need to clear the entire screen as the game board may change in size/position.
+             */
             g.setColor(Color.WHITE);
             g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
             renderHUD(g);
 
         } else if (didHUDChange()) {
+            /*
+             * Need to clear the old HUD before drawing the new one.
+             */
             g.setColor(Color.WHITE);
             g.fillRect(0, 0, getPixelXFromTile(0, getTileSize()), 250);
             renderHUD(g);
