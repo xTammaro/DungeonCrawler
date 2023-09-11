@@ -6,16 +6,17 @@ package org.example;
 public class Board {
     Tile[][] tiles;
 
-    public Board(int x, int y) {
-        this.tiles = new Tile[x][y];
+    public Board(int y, int x) {
+        this.tiles = new Tile[y][x];
     }
 
     // Returns a tile given the x and y coordinates.
-    public Tile getTile(int x, int y) {
-        if (x >= tiles.length || x < 0) {
+    // Note: this function assumes that the map is at least 1 tile tall.
+    public Tile getTile(int y, int x) {
+        if (x >= tiles[0].length || x < 0) {
             return null;
         }
-        if (y >= tiles[0].length || y < 0) {
+        if (y >= tiles.length || y < 0) {
             return null;
         }
         return tiles[x][y];

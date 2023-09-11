@@ -50,23 +50,15 @@ abstract public class Actor {
         int x = this.x;
         int y = this.y;
         switch (direction) {
-            case UP  -> {
-                y++;
-            }
-            case RIGHT  -> {
-                x++;
-            }
-            case DOWN  -> {
-                y--;
-            }
-            case LEFT  -> {
-                x--;
-            }
+            case UP  -> y++;
+            case RIGHT  -> x++;
+            case DOWN  -> y--;
+            case LEFT  -> x--;
             default -> {
                 return false;
             }
         }
-        return (GameState.getInstance().board.getTile(x,y).isMovable());
+        return (GameState.getInstance().board.getTile(y,x).isMovable());
     }
 
     /**
