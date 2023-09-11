@@ -126,7 +126,7 @@ public class GameState {
      * Depending on the action, time may progress (i.e. enemies will act afterwards).
      *
      * @author Alex Boxall
-     *
+     * @author Tal Shy-Tielen
      * @param action The action that the user should take.
      */
     void act(Action action) {

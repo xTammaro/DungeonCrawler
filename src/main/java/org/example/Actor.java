@@ -41,7 +41,8 @@ abstract public class Actor {
      * Determines whether this actor can move in a certain direction. If there is a wall
      * blocking the way, it should return false.
      * There is also a check, if the player tries to move off the map it will return false.
-     * @author Alex Boxall, Tal Shy-Tielen
+     * @author Alex Boxall
+     * @author Tal Shy-Tielen
      *
      * @param direction The direction to move in.
      * @return Whether the actor can move in this direction.

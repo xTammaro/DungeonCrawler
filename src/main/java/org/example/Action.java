@@ -12,12 +12,18 @@ public enum Action {
     UseGun,
     UsePotion;
 
+    /**
+     * @author Tal Shy-Tielen
+     * @return true if action is a movement and false otherwise.
+     */
     public boolean isMove() {
         return this == MoveLeft || this == MoveRight || this == MoveDown || this == MoveUp;
     }
 
-    /** Returns the direction of the move in the Direction form.
-     *  If the action has no direction, it will return null.
+    /**
+     * @author Tal Shy-Tielen
+     * @return the direction of the move in the Direction form.
+     * If the action has no direction, it will return null.
      */
     public Direction getDirection() {
         switch (this) {
