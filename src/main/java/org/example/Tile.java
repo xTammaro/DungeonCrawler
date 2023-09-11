@@ -16,5 +16,4 @@ public enum Tile {
     public boolean isMovable() {
         return this != Wall;
     }
->>>>>>> src/main/java/org/example/Tile.java
 }
