@@ -273,7 +273,7 @@ public class Renderer extends JFrame {
 
         GameState state = GameState.getInstance();
 
-        if (state.board == null || state.board.tiles == null) {
+        if (state.board == null) {
             return;
         }
 
