@@ -31,6 +31,7 @@ public class Enemy extends Actor {
      * Called when the enemy dies. Should remove the enemy from the GameState.
      *
      * @author Alex Boxall
+     * @author Tal Shy-Tielen
      */
     @Override
     void onZeroHealth() {

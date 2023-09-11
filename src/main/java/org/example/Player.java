@@ -5,6 +5,9 @@ package org.example;
  * as part of the GameState.
  */
 public class Player extends Actor {
+
+    private int gold;
+
     /**
      * The player constructor.
      *
@@ -15,9 +18,6 @@ public class Player extends Actor {
      * @param y The initial Y position.
      * @param hp The initial health.
      */
-
-    private int gold;
-
     Player(int x, int y, int hp) {
         super(x, y, hp);
         this.gold = 0;
@@ -34,19 +34,31 @@ public class Player extends Actor {
     }
 
 
-    /** Functions to edit the player's gold.
-     * These functions should be called when the player buys or gains gold.
+    /**
+     * @author Tal Shy-Tielen
+     * Function should be called whenever the player receives gold.
+     * @param x the amount of gold recieved.
+     */
+    public void receiveGold(int x) {
+        this.gold += x;
+    }
+
+    /**
+     * @author Tal Shy-Tielen
+     * Checks whether the player can buy an item.
+     * @param x price of item.
+     * @return true if the player can afford it, false otherwise.
      */
     public boolean canBuy(int x) {
         return this.gold >= x;
     }
+
+    /**
+     * @author Tal Shy-Tielen
+     * Buys an item at a given price.
+     * @param x price of the item.
+     */
     public void buy(int x) {
         this.gold -= x;
-    }
-    public void editGold(int x) {
-        this.gold += x;
-    }
-    public void setGold(int x) {
-        this.gold = x;
     }
 }
