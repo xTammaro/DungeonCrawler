@@ -23,7 +23,7 @@ public class Board {
      * @author Alex Boxall
      * @param tiles all of the tiles to load
      */
-    public void setAllTiles(Tiles tiles) {
+    public void setAllTiles(Tile[][] tiles) {
         this.tiles = tiles;
     }
 
