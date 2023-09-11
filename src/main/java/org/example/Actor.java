@@ -58,7 +58,7 @@ abstract public class Actor {
                 return false;
             }
         }
-        return (GameState.getInstance().board.getTile(y,x).isMovable());
+        return (GameState.getInstance().board.getTile(x,y).isMovable());
     }
 
     /**

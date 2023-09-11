@@ -38,7 +38,7 @@ public class Enemy extends Actor {
 
         // This makes it so the last enemy will drop a key
         if (GameState.getInstance().enemies.size() == 0) {
-            GameState.getInstance().board.tiles[x][y] = Tile.EmptyWithKey;
+            GameState.getInstance().board.tiles[y][x] = Tile.EmptyWithKey;
         }
     }
 }
