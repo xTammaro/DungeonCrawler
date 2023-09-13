@@ -248,11 +248,11 @@ public class Enemy extends Actor {
     }
 
     /**
-     * Checks if the enemy is within the player's field of view.
+     * Checks if the player is within the enemy's field of view.
      * @param targetX The x coordinate of the player
      * @param targetY The y coordinate of the player
-     * @param distance The distance from the player that the enemy should be able to see
-     * @return True if the enemy is within the player's field of view, false otherwise
+     * @param distance The distance from the enemy that the enemy should be able to see
+     * @return True if the player is within the enemy's field of view, false otherwise
      * @author Jake Tammaro
      */
     boolean isWithinFieldOfView(int targetX, int targetY, int distance) {
