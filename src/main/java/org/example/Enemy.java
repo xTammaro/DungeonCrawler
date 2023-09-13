@@ -31,9 +31,15 @@ public class Enemy extends Actor {
      * Called when the enemy dies. Should remove the enemy from the GameState.
      *
      * @author Alex Boxall
+     * @author Tal Shy-Tielen
      */
     @Override
     void onZeroHealth() {
         GameState.getInstance().enemies.remove(this);
+
+        // This makes it so the last enemy will drop a key
+        if (GameState.getInstance().enemies.size() == 0) {
+            GameState.getInstance().board.setTile(x, y, Tile.EmptyWithKey);
+        }
     }
 }

@@ -1,5 +1,7 @@
 package org.example;
 
+import shop.ShopItem;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +10,8 @@ public class GameState {
      * The player object.
      */
     Player player;
+
+
 
     /**
      * All of the enemies that are on the current board, and still alive.
@@ -29,8 +33,81 @@ public class GameState {
      */
     boolean hasKey = false;
 
-    // TODO: inventory
 
+    /**
+     * the players inventory as a list of Items
+     */
+
+    List<ShopItem> inventory;
+
+
+
+    /**
+     * The amount of gold the player has
+     */
+    int gold;
+
+    /**
+     * @author Will Baird
+     * empties the players  inventory
+     * used for testing
+     */
+    public void clearInventory(){
+        this.inventory = new ArrayList<>();
+    }
+
+    /**
+     * @author Will Baird
+     * makes a String message to be displayed to the player listing
+     * all the Items in the players inventory has in it
+     * @return String list of ShopItems
+     */
+    public String printInventory() {
+        StringBuilder s = new StringBuilder();
+        if (inventory.isEmpty()){
+            return s.append("Inventory Empty").toString();
+        }
+        int i = 1;
+        for (ShopItem shopItem: inventory) {
+            s.append(String.format("%d. %s", i, shopItem.chestDescription())).append("\n");
+            i++;
+        }
+        return s.toString();
+    }
+     /**
+     * @author Will Baird
+     * @return a list of the players Items
+     */
+    public List<ShopItem> getInventory() {
+        return inventory;
+    }
+
+    /**
+     * @author Will Baird
+     * @return the players gold
+     */
+
+    public int getGold() {
+        return gold;
+    }
+
+    /**
+     * @author Will Baird
+     * sets the players gold to new int
+     * @param gold the new amount of gold
+     */
+    public void setGold(int gold) {
+        this.gold = gold;
+    }
+
+    /**
+     * @author Will Baird
+     * adds an item to the players inventory
+     * @param shopItem the item to be added
+     */
+    public void addToInventory(ShopItem shopItem){
+        inventory.add(shopItem);
+    }
     private static GameState instance;
 
     /**
@@ -40,7 +117,7 @@ public class GameState {
      * @author Alex Boxall
      */
     private GameState() {
-
+        this.inventory = new ArrayList<>();
     }
 
     /**
@@ -82,33 +159,25 @@ public class GameState {
      * @author Alex Boxall
      */
     void endOfPlayerTurn() {
-        if (board.tiles[player.y][player.x] == Tile.Staircase && hasKey) {
+        if (board.getTile(player.x, player.y) == Tile.Staircase && hasKey) {
             /*
              * Move onto the next floor. Return early as the rest of the code here will assume
              * we haven't moved floors. We must remember to update the screen due to this early
              * return.
              */
             levelNumber++;
+            hasKey = false;
             loadFloor(levelNumber);
             Renderer.getInstance().render();
             return;
         }
 
-        if (board.tiles[player.y][player.x] == Tile.EmptyWithKey && !hasKey) {
+        if (board.getTile(player.x, player.y) == Tile.EmptyWithKey && !hasKey) {
             /*
              * Make the player pick up the key.
              */
             hasKey = true;
-            board.tiles[player.y][player.x] = Tile.Empty;
-        }
-
-        if (enemies.size() == 0) {
-            /*
-             * Put the key on the map now that all the enemies are gone.
-             */
-
-            // TODO:
-            // currentMap.tiles[?][?] = Tile.EmptyWithKey;
+            board.setTile(player.x, player.y, Tile.Empty);
         }
 
         /*
@@ -126,22 +195,17 @@ public class GameState {
      * Depending on the action, time may progress (i.e. enemies will act afterwards).
      *
      * @author Alex Boxall
-     *
+     * @author Tal Shy-Tielen
      * @param action The action that the user should take.
      */
     void act(Action action) {
-        switch (action) {
-            case MoveLeft:
-                if (player.canMoveInDirection(Direction.LEFT)) {
-                    player.moveInDirection(Direction.LEFT);
-                }
-                endOfPlayerTurn();
-                break;
-
-            // TODO: other movement
-
-            default:
-                System.out.printf("ACTION %s NOT IMPLEMENTED!\n", action);
+        if (action.isMove()) {
+            if (player.canMoveInDirection(action.getDirection())) {
+                player.moveInDirection(action.getDirection());
+            }
+            endOfPlayerTurn();
+        } else {
+            System.out.printf("ACTION %s NOT IMPLEMENTED!\n", action);
         }
     }
 }

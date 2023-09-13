@@ -5,17 +5,22 @@ package org.example;
  * as part of the GameState.
  */
 public class Player extends Actor {
+
+    private int gold;
+
     /**
      * The player constructor.
      *
      * @author Alex Boxall
      *
+     * Initial gold value is set to zero.
      * @param x The initial X position.
      * @param y The initial Y position.
      * @param hp The initial health.
      */
     Player(int x, int y, int hp) {
         super(x, y, hp);
+        this.gold = 0;
     }
 
     /**
@@ -26,5 +31,34 @@ public class Player extends Actor {
     @Override
     void onZeroHealth() {
         System.out.printf("GAME OVER!\n");
+    }
+
+
+    /**
+     * @author Tal Shy-Tielen
+     * Function should be called whenever the player receives gold.
+     * @param x the amount of gold recieved.
+     */
+    public void receiveGold(int x) {
+        this.gold += x;
+    }
+
+    /**
+     * @author Tal Shy-Tielen
+     * Checks whether the player can buy an item.
+     * @param x price of item.
+     * @return true if the player can afford it, false otherwise.
+     */
+    public boolean canBuy(int x) {
+        return this.gold >= x;
+    }
+
+    /**
+     * @author Tal Shy-Tielen
+     * Buys an item at a given price.
+     * @param x price of the item.
+     */
+    public void buy(int x) {
+        this.gold -= x;
     }
 }
