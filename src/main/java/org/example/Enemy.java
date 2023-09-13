@@ -29,7 +29,7 @@ public class Enemy extends Actor {
     /**
      * The path that the enemy is following.
      */
-    private List<Node> path;
+    private List<AStarAlgorithm.Node> path;
     /**
      * The pathfinding algorithm used by the enemy.
      */
@@ -49,7 +49,7 @@ public class Enemy extends Actor {
         // Initialize enemy in roam mode
         this.currentMode = EnemyMode.RoamMode;
         // Initialize pathfinder
-        this.pathFinder = new AStarAlgorithm(GameState.getInstance().board.getTiles());
+        this.pathFinder = new AStarAlgorithm(GameState.getInstance().board);
         // Generate new random location for enemy to move
         Point target_coordinate = getNewRandomLocation(LOCATION_DISTANCE);
         setTargetLocation(target_coordinate);
@@ -120,11 +120,11 @@ public class Enemy extends Actor {
     private List<Point> getPossibleLocations(int distance) {
         List<Point> possibleLocations = new ArrayList<>();
         Board board = GameState.getInstance().board;
-        Tile[][] tiles = board.getTiles();
 
-        for (int i = 0; i < tiles.length; i++) {
-            for (int j = 0; j < tiles[i].length; j++) {
-                if (manhattanDistance(getX(), getY(), i, j) == distance && board.isEmptyTile(tiles[i][j])) {
+
+        for (int i = 0; i < board.getHeight(); i++) {
+            for (int j = 0; j < board.getWidth(); j++) {
+                if (manhattanDistance(getX(), getY(), i, j) == distance && board.getTile(i,j) == Tile.Empty) {
                     possibleLocations.add(new Point(i, j));
                 }
             }
@@ -163,7 +163,7 @@ public class Enemy extends Actor {
      */
     void moveToNextTileInPath() {
         if (path != null && !path.isEmpty()) {
-            Node nextTile = path.remove(0);
+            AStarAlgorithm.Node nextTile = path.remove(0);
             Direction dir = getDirectionToNextTile(nextTile);
             if (dir != null) {
                 moveInDirection(dir);
@@ -177,7 +177,7 @@ public class Enemy extends Actor {
      * @return The direction that the enemy should move in
      * @author Jake Tammaro
      */
-    Direction getDirectionToNextTile(Node nextTile) {
+    Direction getDirectionToNextTile(AStarAlgorithm.Node nextTile) {
         if (nextTile.x > x) return Direction.RIGHT;
         if (nextTile.x < x) return Direction.LEFT;
         if (nextTile.y > y) return Direction.DOWN;
@@ -234,12 +234,12 @@ public class Enemy extends Actor {
      * @author Jake Tammaro
      */
     private Boolean hasLineOfSight(Player player) {
-        Tile[][] map = GameState.getInstance().board.getTiles();
+        Board map = GameState.getInstance().board;
         // Create line from enemy to player
         List<Point> line = bresenhamLine(x, y, player.getX(), player.getY());
         // If any of the tiles in the line are not empty, the enemy cannot see the player.
         for (Point p : line) {
-            if (!GameState.getInstance().board.isEmptyTile(map[p.x][p.y])) {
+            if (map.getTile(p.x,p.y) != Tile.Empty) {
                 return false;
             }
         }

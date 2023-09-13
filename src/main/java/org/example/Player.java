@@ -61,4 +61,12 @@ public class Player extends Actor {
     public void buy(int x) {
         this.gold -= x;
     }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
 }

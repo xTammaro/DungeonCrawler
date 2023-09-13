@@ -9,13 +9,13 @@ import java.util.PriorityQueue;
  * Represents the A* Algorithm, used to generate enemy paths.
  */
 public class AStarAlgorithm {
-    private Tile[][] map;
+    private final Board map;
     private int width, height;
 
-    public AStarAlgorithm(Tile[][] map) {
+    public AStarAlgorithm(Board map) {
         this.map = map;
-        this.width = map.length;
-        this.height = map[0].length;
+        this.width = map.getWidth();
+        this.height = map.getHeight();
     }
 
     /**
@@ -100,7 +100,7 @@ public class AStarAlgorithm {
             int x = node.x + dir[0];
             int y = node.y + dir[1];
 
-            if (x >= 0 && x < width && y >= 0 && y < height && map[x][y] == Tile.Empty) {
+            if (map.getTile(x,y) == Tile.Empty) {
                 neighbors.add(new Node(x, y, node));
             }
         }
@@ -109,5 +109,43 @@ public class AStarAlgorithm {
     }
 
 
+    /**
+     * Represents a node in the A* Algorithm.
+     * @author Jake Tammaro
+     */
+    public static class Node {
+        /*
+        The node that was traversed to get to this node.
+         */
+        public Node parent;
+        /*
+        Coordinates of the node in the board.
+         */
+        public int x, y;
+        /*
+        The cost to get to this node from the start.
+         */
+        public double costFromStart;
+        /*
+        The estimated cost to target node, calculated with Manhattan distance.
+         */
+        public double costToGoal;
+        /*
+        The total cost of the node, calculated by adding costFromStart and costToGoal.
+         */
+        public double totalCost;
 
+        /**
+         * Node constructor.
+         * @author Jake Tammaro
+         * @param x The x coordinate of the node.
+         * @param y The y coordinate of the node.
+         * @param parent The node that was traversed to get to this node.
+         */
+        public Node(int x, int y, Node parent) {
+            this.x = x;
+            this.y = y;
+            this.parent = parent;
+        }
+    }
 }
