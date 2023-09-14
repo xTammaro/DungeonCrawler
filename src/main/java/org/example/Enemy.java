@@ -21,7 +21,7 @@ public class Enemy extends Actor {
     /**
      * Set field of view for the enemy.
      */
-    private static final int FIELD_OF_VIEW = 5;
+    private static final int FIELD_OF_VIEW = 3;
     /**
      * Current mode of the enemy.
      */
@@ -44,7 +44,7 @@ public class Enemy extends Actor {
      * @author Alex Boxall
      * @author Jake Tammaro
      */
-    Enemy(int x, int y, int hp) {
+    public Enemy(int x, int y, int hp) {
         super(x, y, hp);
         // Initialize enemy in roam mode
         this.currentMode = EnemyMode.RoamMode;
@@ -61,7 +61,7 @@ public class Enemy extends Actor {
      * @author Jake Tammaro
      * @author Alex Boxall
      */
-    void act() {
+    public void act() {
         Player player = GameState.getInstance().getPlayer();
         // Check if the player is within the enemy's field of view and has line of sight.
         if (isWithinFieldOfView(player.getX(), player.getY(), FIELD_OF_VIEW) && hasLineOfSight(player)) {
@@ -77,12 +77,23 @@ public class Enemy extends Actor {
                 setTargetLocation(target_coordinate);
                 // Generate path to target location
                 path = pathFinder.findPath(x, y, targetX, targetY);
+                path.remove(0); // Remove the first node in the path, as it is the current location of the enemy.
+                // In case the path is null, generate a new random location.
+                while (path == null) {
+                    target_coordinate = getNewRandomLocation(LOCATION_DISTANCE);
+                    setTargetLocation(target_coordinate);
+                    path = pathFinder.findPath(x, y, targetX, targetY);
+                    path.remove(0);
+                }
             }
+
             moveToNextTileInPath();
         }
         else {
             // If the enemy is in attack mode, move towards the player.
-            path = pathFinder.findPath(x, y, player.getX(), player.getY());
+            setTargetLocation(new Point(player.getX(), player.getY()));
+            path = pathFinder.findPath(x, y, targetX, targetY);
+            path.remove(0); // Remove the first node in the path, as it is the current location of the enemy.
             moveToNextTileInPath();
         }
 
@@ -108,7 +119,7 @@ public class Enemy extends Actor {
             return locations.get(rand.nextInt(locations.size()));
         }
 
-        return null;  // Return null if no valid location is found (very unlikely but just in case)
+        return null;  // Should never happen
     }
 
     /**
@@ -117,7 +128,7 @@ public class Enemy extends Actor {
      * @return A list of all possible locations
      * @author Jake Tammaro
      */
-    private List<Point> getPossibleLocations(int distance) {
+    public List<Point> getPossibleLocations(int distance) {
         List<Point> possibleLocations = new ArrayList<>();
         Board board = GameState.getInstance().board;
 
@@ -138,7 +149,7 @@ public class Enemy extends Actor {
      * @param target The target location
      * @author Jake Tammaro
      */
-    private void setTargetLocation(Point target) {
+    public void setTargetLocation(Point target) {
         this.targetX = target.x;
         this.targetY = target.y;
     }
@@ -161,7 +172,7 @@ public class Enemy extends Actor {
      * Moves the enemy to the next tile in their path.
      * @author Jake Tammaro
      */
-    void moveToNextTileInPath() {
+    public void moveToNextTileInPath() {
         if (path != null && !path.isEmpty()) {
             AStarAlgorithm.Node nextTile = path.remove(0);
             Direction dir = getDirectionToNextTile(nextTile);
@@ -177,12 +188,12 @@ public class Enemy extends Actor {
      * @return The direction that the enemy should move in
      * @author Jake Tammaro
      */
-    Direction getDirectionToNextTile(AStarAlgorithm.Node nextTile) {
+    public Direction getDirectionToNextTile(AStarAlgorithm.Node nextTile) {
         if (nextTile.x > x) return Direction.RIGHT;
         if (nextTile.x < x) return Direction.LEFT;
         if (nextTile.y > y) return Direction.DOWN;
         if (nextTile.y < y) return Direction.UP;
-        return null;  // This should never happen if the nodes are neighbors
+        return null; // Should never happen
     }
 
     /**
@@ -233,7 +244,7 @@ public class Enemy extends Actor {
      * @return True if the enemy can see the player, false otherwise
      * @author Jake Tammaro
      */
-    private Boolean hasLineOfSight(Player player) {
+    public Boolean hasLineOfSight(Player player) {
         Board map = GameState.getInstance().board;
         // Create line from enemy to player
         List<Point> line = bresenhamLine(x, y, player.getX(), player.getY());
@@ -255,7 +266,7 @@ public class Enemy extends Actor {
      * @return True if the player is within the enemy's field of view, false otherwise
      * @author Jake Tammaro
      */
-    boolean isWithinFieldOfView(int targetX, int targetY, int distance) {
+    public boolean isWithinFieldOfView(int targetX, int targetY, int distance) {
         int d = Math.abs(targetX - x) + Math.abs(targetY - y);
         return d <= distance;
     }
@@ -278,14 +289,24 @@ public class Enemy extends Actor {
         }
     }
 
-    private int getY() {
+    public int getY() {
         return y;
     }
 
-    private int getX() {
+    public int getX() {
         return x;
     }
 
 
+    public void setPath(ArrayList<AStarAlgorithm.Node> mockPath) {
+        this.path = mockPath;
+    }
 
+    public EnemyMode getCurrentMode() {
+        return currentMode;
+    }
+
+    public Point getTargetLocation() {
+        return new Point(targetX, targetY);
+    }
 }

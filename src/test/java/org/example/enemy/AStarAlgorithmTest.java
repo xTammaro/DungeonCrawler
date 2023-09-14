@@ -188,7 +188,7 @@ public class AStarAlgorithmTest {
     }
 
     @Test
-    public void testLargeMapDifficultPathfindingWithObstacles() {
+    public void testLargeDifficultMapPathfindingWithObstacles() {
         // Set up the board with obstacles
         Tile[][] map = {
                 {Tile.Empty, Tile.Empty, Tile.Empty,  Tile.Empty,  Tile.Empty,  Tile.Wall,  Tile.Wall,  Tile.Wall,  Tile.Wall,  Tile.Empty},

@@ -5,9 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5247d7a6-2f87-4959-a229-823f5d3a8a7b" name="Changes" comment="Integrated methods with merged changes, refactored Node class inside A star algorithm class.">
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/enemy/AStarAlgorithmTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apiguardian_apiguardian_api_1_1_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_jupiter_junit_jupiter_5_8_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_jupiter_junit_jupiter_api_5_8_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_jupiter_junit_jupiter_engine_5_8_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_jupiter_junit_jupiter_params_5_8_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_platform_junit_platform_commons_1_8_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_platform_junit_platform_engine_1_8_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_opentest4j_opentest4j_1_2_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/Game_main.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/Game_test.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/enemy/EnemyTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.0/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.0/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/checksums/md5-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.0/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/checksums/sha1-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/Game.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/Game.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/Game.main.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/Game.test.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/AStarAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/AStarAlgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/Enemy.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/Enemy.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/GameState.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/GameState.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/Player.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/org/example/enemy/AStarAlgorithmTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/test/org/example/enemy/AStarAlgorithmTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Enemy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/GameState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/enemy/AStarAlgorithmTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/enemy/AStarAlgorithmTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,36 +87,55 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pathVariables&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pathVariables"
   }
-}</component>
-  <component name="RunManager" selected="JUnit.AStarAlgorithmTest.testLargeMapPathfindingWithObstacles">
+}]]></component>
+  <component name="RunManager" selected="JUnit.EnemyTest">
     <configuration name="AStarAlgorithmTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Game.test" />
+      <module name="Game_test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.enemy.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.enemy" />
+      <option name="MAIN_CLASS_NAME" value="org.example.enemy.AStarAlgorithmTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EnemyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Game_test" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.example.enemy.*" />
           <option name="ENABLED" value="true" />
         </pattern>
         <pattern>
-          <option name="PATTERN" value="org.example.AStarAlgorithm" />
+          <option name="PATTERN" value="org.example.Enemy" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.example.enemy" />
-      <option name="MAIN_CLASS_NAME" value="org.example.enemy.AStarAlgorithmTest" />
+      <option name="MAIN_CLASS_NAME" value="org.example.enemy.EnemyTest" />
       <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AStarAlgorithmTest.testDifficultPathfindingWithObstacles" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Game.test" />
+    <configuration name="EnemyTest.testActWithEnemyAtTargetLocationInRoamMode" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Game_test" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.example.enemy.*" />
@@ -99,15 +143,15 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.example.enemy" />
-      <option name="MAIN_CLASS_NAME" value="org.example.enemy.AStarAlgorithmTest" />
-      <option name="METHOD_NAME" value="testDifficultPathfindingWithObstacles" />
+      <option name="MAIN_CLASS_NAME" value="org.example.enemy.EnemyTest" />
+      <option name="METHOD_NAME" value="testActWithEnemyAtTargetLocationInRoamMode" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AStarAlgorithmTest.testLargeMapPathfindingWithObstacles" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Game.test" />
+    <configuration name="EnemyTest.testActWithPlayerInViewAndLineOfSight" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Game_test" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.example.enemy.*" />
@@ -115,15 +159,15 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.example.enemy" />
-      <option name="MAIN_CLASS_NAME" value="org.example.enemy.AStarAlgorithmTest" />
-      <option name="METHOD_NAME" value="testLargeMapPathfindingWithObstacles" />
+      <option name="MAIN_CLASS_NAME" value="org.example.enemy.EnemyTest" />
+      <option name="METHOD_NAME" value="testActWithPlayerInViewAndLineOfSight" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AStarAlgorithmTest.testPathFindingImpossiblePath" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Game.test" />
+    <configuration name="EnemyTest.testActWithPlayerInViewAndOutOfLineOfSight" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Game_test" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.example.enemy.*" />
@@ -131,24 +175,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.example.enemy" />
-      <option name="MAIN_CLASS_NAME" value="org.example.enemy.AStarAlgorithmTest" />
-      <option name="METHOD_NAME" value="testPathFindingImpossiblePath" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AStarAlgorithmTest.testPathfindingWithObstacles" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Game.test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.enemy.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.example.enemy" />
-      <option name="MAIN_CLASS_NAME" value="org.example.enemy.AStarAlgorithmTest" />
-      <option name="METHOD_NAME" value="testPathfindingWithObstacles" />
+      <option name="MAIN_CLASS_NAME" value="org.example.enemy.EnemyTest" />
+      <option name="METHOD_NAME" value="testActWithPlayerInViewAndOutOfLineOfSight" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -156,11 +184,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.AStarAlgorithmTest.testLargeMapPathfindingWithObstacles" />
-        <item itemvalue="JUnit.AStarAlgorithmTest.testPathFindingImpossiblePath" />
-        <item itemvalue="JUnit.AStarAlgorithmTest.testDifficultPathfindingWithObstacles" />
+        <item itemvalue="JUnit.EnemyTest" />
+        <item itemvalue="JUnit.EnemyTest.testActWithEnemyAtTargetLocationInRoamMode" />
         <item itemvalue="JUnit.AStarAlgorithmTest" />
-        <item itemvalue="JUnit.AStarAlgorithmTest.testPathfindingWithObstacles" />
+        <item itemvalue="JUnit.EnemyTest.testActWithPlayerInViewAndLineOfSight" />
+        <item itemvalue="JUnit.EnemyTest.testActWithPlayerInViewAndOutOfLineOfSight" />
       </list>
     </recent_temporary>
   </component>
@@ -207,6 +235,10 @@
     <SUITE FILE_PATH="coverage/assignment3$AStarAlgorithmTest.ic" NAME="AStarAlgorithmTest Coverage Results" MODIFIED="1694679829580" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>org.example.enemy.*</FILTER>
       <FILTER>org.example.AStarAlgorithm</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Game$EnemyTest.ic" NAME="EnemyTest Coverage Results" MODIFIED="1694689163035" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>org.example.enemy.*</FILTER>
+      <FILTER>org.example.Enemy</FILTER>
     </SUITE>
   </component>
 </project>

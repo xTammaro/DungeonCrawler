@@ -212,4 +212,12 @@ public class GameState {
     public Player getPlayer() {
         return player;
     }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
 }
