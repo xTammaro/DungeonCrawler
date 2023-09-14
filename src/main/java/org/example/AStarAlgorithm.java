@@ -76,7 +76,7 @@ public class AStarAlgorithm {
      * @return A list of nodes representing the path to the goal.
      * @author Jake Tammaro
      */
-    private List<Node> buildPath(Node node) {
+    public List<Node> buildPath(Node node) {
         List<Node> path = new ArrayList<>();
         while (node != null) {
             path.add(0, node);
@@ -92,7 +92,7 @@ public class AStarAlgorithm {
      * @author Jake Tammaro
      */
 
-    private List<Node> getNeighbors(Node node) {
+    public List<Node> getNeighbors(Node node) {
         List<Node> neighbors = new ArrayList<>();
         // This checks the 4 neighboring tiles.
         int[][] dirs = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
@@ -107,6 +107,53 @@ public class AStarAlgorithm {
 
         return neighbors;
     }
+
+    /**
+     * Prints the path to the console.
+     * @param board The board to print the path on.
+     * @param path The path to print.
+     * @author Jake Tammaro
+     */
+    public void printPath(Board board, List<Node> path) {
+        if (path == null || path.isEmpty()) {
+            System.out.println("No path found.");
+            return;
+        }
+
+        int height = board.getHeight();
+        int width = board.getWidth();
+
+
+        // Create a visual representation of the board with the path
+        char[][] visualMap = new char[height][width];
+
+        // Fill the visualMap with empty tiles representation
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                visualMap[i][j] = (board.getTile(j,i) == Tile.Empty) ? '.' : '#';  // assuming # for non-empty tiles
+            }
+        }
+
+        // Mark the path on the visualMap
+        for (Node node : path) {
+            visualMap[node.y][node.x] = '*';
+        }
+
+        // Mark start and end points
+        visualMap[path.get(0).y][path.get(0).x] = 'S';
+        visualMap[path.get(path.size() - 1).y][path.get(path.size() - 1).x] = 'E';
+
+        // Print the visualMap
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                System.out.print(visualMap[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+
 
 
     /**
@@ -147,5 +194,15 @@ public class AStarAlgorithm {
             this.y = y;
             this.parent = parent;
         }
+
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Node node = (Node) o;
+            return x == node.x && y == node.y;
+        }
+
     }
 }

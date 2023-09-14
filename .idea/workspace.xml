@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5247d7a6-2f87-4959-a229-823f5d3a8a7b" name="Changes" comment="unversioned file">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="5247d7a6-2f87-4959-a229-823f5d3a8a7b" name="Changes" comment="Integrated methods with merged changes, refactored Node class inside A star algorithm class.">
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/enemy/AStarAlgorithmTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/AStarAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/AStarAlgorithm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Enemy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Node.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,6 +69,101 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pathVariables&quot;
   }
 }</component>
+  <component name="RunManager" selected="JUnit.AStarAlgorithmTest.testLargeMapPathfindingWithObstacles">
+    <configuration name="AStarAlgorithmTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Game.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.enemy.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+        <pattern>
+          <option name="PATTERN" value="org.example.AStarAlgorithm" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.enemy" />
+      <option name="MAIN_CLASS_NAME" value="org.example.enemy.AStarAlgorithmTest" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AStarAlgorithmTest.testDifficultPathfindingWithObstacles" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Game.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.enemy.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.enemy" />
+      <option name="MAIN_CLASS_NAME" value="org.example.enemy.AStarAlgorithmTest" />
+      <option name="METHOD_NAME" value="testDifficultPathfindingWithObstacles" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AStarAlgorithmTest.testLargeMapPathfindingWithObstacles" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Game.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.enemy.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.enemy" />
+      <option name="MAIN_CLASS_NAME" value="org.example.enemy.AStarAlgorithmTest" />
+      <option name="METHOD_NAME" value="testLargeMapPathfindingWithObstacles" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AStarAlgorithmTest.testPathFindingImpossiblePath" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Game.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.enemy.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.enemy" />
+      <option name="MAIN_CLASS_NAME" value="org.example.enemy.AStarAlgorithmTest" />
+      <option name="METHOD_NAME" value="testPathFindingImpossiblePath" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AStarAlgorithmTest.testPathfindingWithObstacles" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Game.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.enemy.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.enemy" />
+      <option name="MAIN_CLASS_NAME" value="org.example.enemy.AStarAlgorithmTest" />
+      <option name="METHOD_NAME" value="testPathfindingWithObstacles" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.AStarAlgorithmTest.testLargeMapPathfindingWithObstacles" />
+        <item itemvalue="JUnit.AStarAlgorithmTest.testPathFindingImpossiblePath" />
+        <item itemvalue="JUnit.AStarAlgorithmTest.testDifficultPathfindingWithObstacles" />
+        <item itemvalue="JUnit.AStarAlgorithmTest" />
+        <item itemvalue="JUnit.AStarAlgorithmTest.testPathfindingWithObstacles" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -81,6 +173,14 @@
       <option name="presentableId" value="Default" />
       <updated>1693969544887</updated>
     </task>
+    <task id="LOCAL-00001" summary="Integrated methods with merged changes, refactored Node class inside A star algorithm class.">
+      <created>1694614984468</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1694614984468</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -96,6 +196,17 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="unversioned file" />
-    <option name="LAST_COMMIT_MESSAGE" value="unversioned file" />
+    <MESSAGE value="Integrated methods with merged changes, refactored Node class inside A star algorithm class." />
+    <option name="LAST_COMMIT_MESSAGE" value="Integrated methods with merged changes, refactored Node class inside A star algorithm class." />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/assignment3$AStarAlgorithmTest_testBuildPath.ic" NAME="AStarAlgorithmTest.testBuildPath Coverage Results" MODIFIED="1694667478276" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>org.example.enemy.*</FILTER>
+      <FILTER>org.example.AStarAlgorithm</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/assignment3$AStarAlgorithmTest.ic" NAME="AStarAlgorithmTest Coverage Results" MODIFIED="1694679829580" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>org.example.enemy.*</FILTER>
+      <FILTER>org.example.AStarAlgorithm</FILTER>
+    </SUITE>
   </component>
 </project>
