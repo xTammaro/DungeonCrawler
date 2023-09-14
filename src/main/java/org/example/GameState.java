@@ -208,4 +208,16 @@ public class GameState {
             System.out.printf("ACTION %s NOT IMPLEMENTED!\n", action);
         }
     }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
 }

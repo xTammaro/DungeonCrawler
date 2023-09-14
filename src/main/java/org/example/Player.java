@@ -18,7 +18,7 @@ public class Player extends Actor {
      * @param y The initial Y position.
      * @param hp The initial health.
      */
-    Player(int x, int y, int hp) {
+    public Player(int x, int y, int hp) {
         super(x, y, hp);
         this.gold = 0;
     }
@@ -60,5 +60,13 @@ public class Player extends Actor {
      */
     public void buy(int x) {
         this.gold -= x;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }
