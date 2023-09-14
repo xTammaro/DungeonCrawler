@@ -4,9 +4,8 @@ By signing your name and UID each member of the group acknowledges that all the 
 
 ---
 
-- Group Member 1 Name:
-- Group Member 1 UID:
-
+- Group Member 1 Name: Jake Tammaro
+- Group Member 1 UID: u7074622
 ---
 
 - Group Member 2 Name:
@@ -31,5 +30,5 @@ By signing your name and UID each member of the group acknowledges that all the 
 
 # References (If any)
 
-- [1] [test.com](test.com) - Description/other info
-- [2] [test.com](test.com) - Description/other info
+- [1] Red Blob Games [https://www.redblobgames.com/pathfinding/a-star/introduction.html] - Insightful tutorial used to help build the A* Algorithm.
+- [2] SanFoundry [https://www.sanfoundry.com/java-program-bresenham-line-algorithm/] - Source code used for Bresnham line function in Enemy class.
