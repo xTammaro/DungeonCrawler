@@ -35,17 +35,48 @@ public class GameState {
 
 
     /**
-     * the players inventory as a list of Items
+     * The player's inventory as a list of Items
      */
 
     List<ShopItem> inventory;
-
-
 
     /**
      * The amount of gold the player has
      */
     int gold;
+
+    /**
+     * Determines whether we're in normal gameplay, or in the shop/inventory/title screen, etc.
+     */
+    enum GameMode {
+        Gameplay,
+        TitleScreen,
+        GameOverScreen,
+        Inventory,
+        Shop,
+        Ending
+    }
+    GameMode mode = GameMode.TitleScreen;
+
+    /**
+     * Changes what game mode that we're in. Used to, for example, determine if we are in the inventory/shop
+     * and to use the control scheme for that. The UI also uses this to determine what it should display.
+     * Should be called when switching from title screen to gameplay, when toggling the inventory or shop modes,
+     * and when the game is won or lost.
+     *
+     * @param mode The GameMode to switch into.
+     */
+    public void setGameMode(GameMode mode) {
+        this.mode = mode;
+        Renderer.getInstance().renderEverything();
+    }
+
+    /**
+     * @return Returns the current game mode. See comment for setGameMode()
+     */
+    public GameMode getGameMode() {
+        return mode;
+    }
 
     /**
      * @author Will Baird
@@ -199,11 +230,21 @@ public class GameState {
      * @param action The action that the user should take.
      */
     void act(Action action) {
-        if (action.isMove()) {
+        if (action.isMove() && mode == GameMode.Gameplay) {
             if (player.canMoveInDirection(action.getDirection())) {
                 player.moveInDirection(action.getDirection());
             }
             endOfPlayerTurn();
+
+        } else if (action == Action.OpenInventory) {
+            GameState.getInstance().setGameMode(mode == GameMode.Inventory ? GameMode.Gameplay : GameMode.Inventory);
+
+        } else if (action == Action.EnterShop && board.getTile(player.x, player.y) == Tile.Shop) {
+            GameState.getInstance().setGameMode(mode == GameMode.Shop ? GameMode.Gameplay : GameMode.Shop);
+
+        } else if (action == Action.StartGame && mode == GameMode.TitleScreen) {
+            GameState.getInstance().setGameMode(GameMode.Gameplay);
+
         } else {
             System.out.printf("ACTION %s NOT IMPLEMENTED!\n", action);
         }

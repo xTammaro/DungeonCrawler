@@ -30,7 +30,7 @@ public class Player extends Actor {
      */
     @Override
     void onZeroHealth() {
-        System.out.printf("GAME OVER!\n");
+        GameState.getInstance().setGameMode(GameState.GameMode.GameOverScreen);
     }
 
 

@@ -55,6 +55,9 @@ public class Renderer extends JFrame {
                     case KeyEvent.VK_Z      -> GameState.getInstance().act(Action.UseGun);
                     case KeyEvent.VK_X      -> GameState.getInstance().act(Action.UseSword);
                     case KeyEvent.VK_Q      -> GameState.getInstance().act(Action.UsePotion);
+                    case KeyEvent.VK_SPACE  -> GameState.getInstance().act(Action.EnterShop);
+                    case KeyEvent.VK_I      -> GameState.getInstance().act(Action.OpenInventory);
+                    case KeyEvent.VK_ENTER  -> GameState.getInstance().act(Action.StartGame);
                 }
             }
 
@@ -325,6 +328,90 @@ public class Renderer extends JFrame {
     }
 
     /**
+     * Draws the game, when we are in gameplay mode (as opposed to e.g., in the inventory
+     * or in a shop).
+     *
+     * @author Alex Boxall
+     *
+     * @param g The graphics object
+     */
+    private void renderGameplay(Graphics g) {
+        GameState state = GameState.getInstance();
+
+        /*
+         * Render all of the tiles in the game board. The key is also technically
+         * represented as a type of tile, so that is also handled here.
+         */
+        for (int y = 0; y < state.board.getHeight(); ++y) {
+            for (int x = 0; x < state.board.getWidth(); ++x) {
+                renderTile(g, x, y, state.board.getTile(x, y));
+            }
+        }
+
+        /*
+         * Now show all of the actors. Show the player on top of enemies.
+         */
+        for (Enemy e: state.enemies) {
+            renderEnemy(g, e.x, e.y);
+        }
+        renderPlayer(g, state.player.x, state.player.y);
+    }
+
+    /**
+     * A screen that should only appear while we're still working on stuff.
+     *
+     * @author Alex Boxall
+     *
+     * @param g The graphics object
+     */
+    private void renderNotImplementedFeatures(Graphics g) {
+        String errorMessage = String.format("The UI for %s isn't done yet!", GameState.getInstance().getGameMode());
+
+        g.setColor(Color.BLUE);
+        g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 24));
+        g.drawString(errorMessage, (WINDOW_WIDTH - g.getFontMetrics().stringWidth(errorMessage)) / 2, WINDOW_HEIGHT / 2);
+    }
+
+    /**
+     * Draws the game's title screen.
+     *
+     * @author Alex Boxall
+     *
+     * @param g The graphics object
+     */
+    private void renderTitleScreen(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 48));
+
+        String titleMsg = "REALLY AWESOME COMP2120 GAME";
+
+        /*
+         * Need to save this here, as changing the font to the small one will change the font metrics.
+         */
+        int titleMsgWidth = g.getFontMetrics().stringWidth(titleMsg);
+        g.drawString(titleMsg, (WINDOW_WIDTH - titleMsgWidth) / 2, WINDOW_HEIGHT / 3);
+
+        g.fillRect((WINDOW_WIDTH - titleMsgWidth) / 2, WINDOW_HEIGHT / 3 + 15, g.getFontMetrics().stringWidth("REALLY"), 5);
+
+        g.setFont(new Font("Arial", Font.BOLD, 12));
+        g.drawString("TM", (WINDOW_WIDTH + titleMsgWidth) / 2, WINDOW_HEIGHT / 3 - 32);
+
+        g.setColor(Color.LIGHT_GRAY);
+
+        g.setFont(new Font("Courier New", Font.BOLD, 30));
+        String instructionMsg  = "ENTER     Start new game";
+        String instructionMsg2 = "L         Load existing game";
+        int instructionMsgWidth = g.getFontMetrics().stringWidth(instructionMsg);
+        g.drawString(instructionMsg, (WINDOW_WIDTH - instructionMsgWidth) / 2, 2 * WINDOW_HEIGHT / 3);
+        g.drawString(instructionMsg2, (WINDOW_WIDTH - instructionMsgWidth) / 2, 2 * WINDOW_HEIGHT / 3 + 40);
+    }
+
+
+    /**
      * Redraws the window. Will be automatically called by the system/window manager when
      * required.
      *
@@ -357,23 +444,11 @@ public class Renderer extends JFrame {
             renderHUD(g);
         }
 
-        /*
-         * Render all of the tiles in the game board. The key is also technically
-         * represented as a type of tile, so that is also handled here.
-         */
-        for (int y = 0; y < state.board.getHeight(); ++y) {
-            for (int x = 0; x < state.board.getWidth(); ++x) {
-                renderTile(g, x, y, state.board.getTile(x, y));
-            }
+        switch (GameState.getInstance().getGameMode()) {
+            case Gameplay -> renderGameplay(g);
+            case TitleScreen -> renderTitleScreen(g);
+            default -> renderNotImplementedFeatures(g);
         }
-
-        /*
-         * Now show all of the actors. Show the player on top of enemies.
-         */
-        for (Enemy e: state.enemies) {
-            renderEnemy(g, e.x, e.y);
-        }
-        renderPlayer(g, state.player.x, state.player.y);
     }
 
     /**
@@ -383,6 +458,19 @@ public class Renderer extends JFrame {
         /*
          * Tells the window manager that the entire window is dirty, and so it needs to be repainted.
          */
+        repaint();
+    }
+
+    /**
+     * Forcefully redraws the entire screen.
+     */
+    public void renderEverything() {
+        /*
+         * This means everything will get redrawn, as it thinks we have moved to a different level.
+         */
+        prevHP = -2;
+        prevLevelNumber = -2;
+
         repaint();
     }
 
