@@ -17,7 +17,7 @@ public class Enemy extends Actor {
     /**
      * Set distance for how far away a random location is chosen.
      */
-    private static final int LOCATION_DISTANCE = 5;
+    private static final int LOCATION_DISTANCE = 2;
     /**
      * Set field of view for the enemy.
      */
@@ -50,9 +50,8 @@ public class Enemy extends Actor {
         this.currentMode = EnemyMode.RoamMode;
         // Initialize pathfinder
         this.pathFinder = new AStarAlgorithm(GameState.getInstance().board);
-        // Generate new random location for enemy to move
-        Point target_coordinate = getNewRandomLocation(LOCATION_DISTANCE);
-        setTargetLocation(target_coordinate);
+        // Initialize target location as the current location.
+        setTargetLocation(new Point(x,y));
     }
 
     /**
