@@ -35,6 +35,8 @@ public class Renderer extends JFrame {
     /**
      * The private constructor for the singleton Renderer object. Only gets called once.
      * Initialises the window and adds any required event listeners.
+     * 
+     * @author Alex Boxall
      */
     private Renderer() {
         setSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
@@ -137,6 +139,8 @@ public class Renderer extends JFrame {
     /**
      * Given a Tile, it gives the colour that it should be rendered as.
      *
+     * @author Alex Boxall
+     *
      * @param tile The tile type.
      * @return The Color that the tile should be rendered as.
      */
@@ -154,6 +158,8 @@ public class Renderer extends JFrame {
     /**
      * Returns how many tiles across the current board is.
      *
+     * @author Alex Boxall
+     *
      * @return The width, in tiles.
      */
     private int getBoardWidth() {
@@ -162,6 +168,8 @@ public class Renderer extends JFrame {
 
     /**
      * Returns how many tiles tall the current board is.
+     *
+     * @author Alex Boxall
      *
      * @return The height, in tiles.
      */
@@ -172,6 +180,8 @@ public class Renderer extends JFrame {
     /**
      * Returns the size of a tile, in pixels. A tile is square, and so this value
      * is both the width and height of a tile.
+     *
+     * @author Alex Boxall
      *
      * @return The width/height of a tile, in pixels.
      */
@@ -184,6 +194,8 @@ public class Renderer extends JFrame {
     /**
      * Given a tile's x location, returns its x coordinate it should be drawn in pixels.
      *
+     * @author Alex Boxall
+     *
      * @param x The x coordinate in tiles
      * @param tileSize The width/height of a tile, in pixels
      * @return The x coordinate in pixels of the tile
@@ -195,6 +207,8 @@ public class Renderer extends JFrame {
     /**
      * Given a tile's y location, returns its y coordinate it should be drawn in pixels.
      *
+     * @author Alex Boxall
+     *
      * @param y The x coordinate in tiles
      * @param tileSize The width/height of a tile, in pixels
      * @return The y coordinate in pixels of the tile
@@ -203,6 +217,16 @@ public class Renderer extends JFrame {
         return y * tileSize + (WINDOW_HEIGHT - getBoardHeight() * tileSize) / 2;
     }
 
+    /**
+     * Draws the graphic for the key on the screen at the given position
+     *
+     * @author Alex Boxall
+     *
+     * @param g The Graphics object we use to draw to the screen.
+     * @param px The x pixel to draw the key
+     * @param py The x pixel to draw the key
+     * @param tileSize The width/height of a tile, in pixels
+     */
     public void drawKey(Graphics g, int px, int py, int tileSize) {
         /*
          * Draw the key as an orange circle.
@@ -217,6 +241,8 @@ public class Renderer extends JFrame {
 
     /**
      * Draws a tile.
+     *
+     * @author Alex Boxall
      *
      * @param g The Graphics object we use to draw to the screen.
      * @param x The x position of tile, as a tile offset.
@@ -268,8 +294,11 @@ public class Renderer extends JFrame {
         }
     }
 
+
     /**
      * Draws the player.
+     *
+     * @author Alex Boxall
      *
      * @param g The Graphics object we use to draw to the screen.
      * @param x The x position of the player, as a tile offset.
@@ -291,6 +320,8 @@ public class Renderer extends JFrame {
     /**
      * Draws an enemy.
      *
+     * @author Alex Boxall
+     *
      * @param g The Graphics object we use to draw to the screen.
      * @param x The x position of the enemy, as a tile offset.
      * @param y The y position of the enemy, as a tile offset.
@@ -311,6 +342,8 @@ public class Renderer extends JFrame {
     /**
      * Draws the heads-up display (HUD). Shows the level number, the player's health,
      * and inventory.
+     *
+     * @author Alex Boxall
      */
     private void renderHUD(Graphics g) {
         g.setColor(Color.BLACK);
@@ -327,6 +360,8 @@ public class Renderer extends JFrame {
     /**
      * Redraws the window. Will be automatically called by the system/window manager when
      * required.
+     *
+     * @author Alex Boxall
      *
      * @param g the specified Graphics window
      */
@@ -378,6 +413,8 @@ public class Renderer extends JFrame {
 
     /**
      * Causes the game to be re-rendered.
+     *
+     * @author Alex Boxall
      */
     public void render() {
         /*
@@ -388,6 +425,8 @@ public class Renderer extends JFrame {
 
     /**
      * Sets the GameState for demonstrations. Should be removed once the rest of the game is written.
+     *
+     * @author Alex Boxall
      */
     private void setDemoState() {
         Board b = new Board();

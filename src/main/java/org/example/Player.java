@@ -8,6 +8,7 @@ public class Player extends Actor {
 
     private int gold;
 
+
     /**
      * The player constructor.
      *
