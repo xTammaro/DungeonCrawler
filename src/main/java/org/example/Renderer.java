@@ -313,22 +313,22 @@ public class Renderer extends JFrame {
 
         Polygon player = new Polygon();
         switch (direction) {
-        case Direction.UP:
+        case UP:
             player.addPoint(tileSize / 2, 0);
             player.addPoint(0, tileSize);
             player.addPoint(tileSize, tileSize);
             break;
-        case Direction.DOWN:
+        case DOWN:
             player.addPoint(tileSize / 2, tileSize);
             player.addPoint(0, 0);
             player.addPoint(tileSize, 0);
             break;
-        case Direction.LEFT:
+        case LEFT:
             player.addPoint(0, tileSize / 2);
             player.addPoint(tileSize, 0);
             player.addPoint(tileSize, tileSize);
             break;
-        case Direction.RIGHT:
+        case RIGHT:
             player.addPoint(tileSize, tileSize / 2);
             player.addPoint(0, 0);
             player.addPoint(0, tileSize);
