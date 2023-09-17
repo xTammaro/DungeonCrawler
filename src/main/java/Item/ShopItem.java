@@ -1,4 +1,4 @@
-package shop;
+package Item;
 
 import org.example.GameState;
 
@@ -8,8 +8,8 @@ public class ShopItem {
     /**
      * an Item pared with a quantity to be used is shops
      */
-    Item item;
-    int quantity;
+    private final Item item;
+    private int quantity;
 
     /**
      * Constructor for ShopItem

@@ -1,6 +1,9 @@
 package org.example;
 
-import shop.ShopItem;
+import Item.MeleeWeapon;
+import Item.RangedWeapon;
+import Item.Rarity;
+import Item.ShopItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +47,15 @@ public class GameState {
      * The amount of gold the player has
      */
     int gold;
+    /**
+     * the MeleeWeapon the player has equipped
+     */
+     MeleeWeapon currentMeleeWeapon;
+
+    /**
+     * the RangedWeapon the player has equipped
+     */
+     RangedWeapon currentRangedWeapon;
 
     /**
      * Determines whether we're in normal gameplay, or in the shop/inventory/title screen, etc.
@@ -149,6 +161,8 @@ public class GameState {
      */
     private GameState() {
         this.inventory = new ArrayList<>();
+        this.currentMeleeWeapon = new MeleeWeapon("basic sword",5, Rarity.COMMON,1);
+        this.currentRangedWeapon = new RangedWeapon("basic gun",5,Rarity.COMMON,1,2);
     }
 
     /**

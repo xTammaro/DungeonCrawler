@@ -1,7 +1,7 @@
 package chest;
 
 import org.example.GameState;
-import shop.ShopItem;
+import Item.ShopItem;
 import java.util.List;
 
 public class Chest {

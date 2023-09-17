@@ -1,9 +1,9 @@
 package Item;
 
-public enum ItemRarity {
+public enum Rarity {
     COMMON,
     UNCOMMON,
     RARE,
-    VERYRARE
+    VERY_RARE
 
 }

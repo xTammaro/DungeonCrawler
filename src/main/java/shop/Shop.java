@@ -1,5 +1,6 @@
 package shop;
 
+import Item.ShopItem;
 import org.example.GameState;
 
 import java.util.List;
