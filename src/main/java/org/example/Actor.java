@@ -25,7 +25,7 @@ abstract public class Actor {
      * The direction the actor is facing. Gets set to the most recent direction
      * the player moves in.
      */
-    private Direction direction = Directon.RIGHT;
+    private Direction direction = Direction.RIGHT;
 
     /**
      * Constructor for an Actor. As this is an abstract class, it cannot be
