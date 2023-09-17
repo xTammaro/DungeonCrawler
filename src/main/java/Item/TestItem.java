@@ -1,6 +1,6 @@
 package org.example.shop;
 
-import shop.Item;
+import Item.Item;
 
 public class TestItem extends Item {
     public TestItem(String name, int value){
