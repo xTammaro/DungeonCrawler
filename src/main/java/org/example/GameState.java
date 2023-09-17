@@ -1,10 +1,6 @@
 package org.example;
 
-import Item.MeleeWeapon;
-import Item.RangedWeapon;
-import Item.Rarity;
-import Item.ShopItem;
-
+import org.example.item.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +38,12 @@ public class GameState {
      */
 
     List<ShopItem> inventory;
+
+    /**
+     * A list of all Items that have a chance
+     * of spawning in game
+     */
+    private List<Item> gameItems;
 
     /**
      * The amount of gold the player has
@@ -157,12 +159,40 @@ public class GameState {
      * The private constructor for the GameState singleton.
      * Should initialise the game for the very first level.
      *
+     * gives the player starting weapons
+     * adds Items to gameItems
+     *
      * @author Alex Boxall
+     * @author Will Baird
      */
     private GameState() {
-        this.inventory = new ArrayList<>();
-        this.currentMeleeWeapon = new MeleeWeapon("basic sword",5, Rarity.COMMON,1);
-        this.currentRangedWeapon = new RangedWeapon("basic gun",5,Rarity.COMMON,1,2);
+        inventory = new ArrayList<>();
+        currentMeleeWeapon = new MeleeWeapon("Stick",5, Rarity.COMMON,1);
+        currentRangedWeapon = new RangedWeapon("Sling",5,Rarity.COMMON,1,2);
+        //TODO: Move adding Items to somewhere else
+        createGameItems();
+
+    }
+
+    private void createGameItems(){
+        gameItems = new ArrayList<>();
+        gameItems.add(new HealthPotion("Healing Potion",25,Rarity.COMMON,10));
+        gameItems.add(new HealthPotion("Healing Potion",40,Rarity.UNCOMMON,20));
+        gameItems.add(new HealthPotion("Greater Healing Potion",50,Rarity.RARE,30));
+        gameItems.add(new HealthPotion("Supreme Healing Potion",75,Rarity.VERY_RARE,5));
+        gameItems.add(new MeleeWeapon("Wooden Sword",20,Rarity.COMMON,2));
+        gameItems.add(new MeleeWeapon("Copper Sword",50,Rarity.UNCOMMON,4));
+        gameItems.add(new MeleeWeapon("Iron Sword",100,Rarity.RARE,8));
+        gameItems.add(new MeleeWeapon("Steel Sword",300,Rarity.VERY_RARE,1));
+        gameItems.add(new RangedWeapon("Slingshot",25,Rarity.COMMON,3,2));
+        gameItems.add(new RangedWeapon("Bow",60,Rarity.UNCOMMON,8,2));
+        gameItems.add(new RangedWeapon("Longbow",120,Rarity.RARE,25,4));
+        gameItems.add(new RangedWeapon("Crossbow",350,Rarity.VERY_RARE,30,2));
+        gameItems.add(new StatBoostItem("Health Ring",100,Rarity.COMMON,PlayerStatType.HEALTH,10));
+        gameItems.add(new StatBoostItem("Health Brooch",150,Rarity.UNCOMMON,PlayerStatType.HEALTH,15));
+        gameItems.add(new StatBoostItem("Health Amulet",200,Rarity.RARE,PlayerStatType.HEALTH,20));
+        gameItems.add(new StatBoostItem("Health Necklace",300,Rarity.VERY_RARE,PlayerStatType.HEALTH,30));
+
     }
 
     /**
@@ -275,4 +305,9 @@ public class GameState {
     public void setPlayer(Player player) {
         this.player = player;
     }
+
+    public List<Item> getGameItems() {
+        return gameItems;
+    }
+
 }

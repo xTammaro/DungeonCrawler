@@ -1,6 +1,6 @@
-package Item;
+package org.example.item;
 
-public class PotionItem extends Item{
+public class HealthPotion extends ConsumableItem{
 
     private final int health;
     /**
@@ -11,7 +11,7 @@ public class PotionItem extends Item{
      * @author Will Baird
      * Constructer for PotionItem
      */
-    public PotionItem(String name, int value, Rarity rarity, int health) {
+    public HealthPotion(String name, int value, Rarity rarity, int health) {
         super(name, value, rarity);
         this.health = health;
     }
@@ -23,7 +23,7 @@ public class PotionItem extends Item{
      */
     @Override
     public Item makeClone() {
-        return new PotionItem(this.getName(),this.getValue(),this.getRarity(),this.getHealth());
+        return new HealthPotion(this.getName(),this.getValue(),this.getRarity(),this.getHealth());
     }
     /**
      * @author Will Baird

@@ -1,4 +1,4 @@
-package Item;
+package org.example.item;
 
 public abstract class WeaponItem extends Item{
 

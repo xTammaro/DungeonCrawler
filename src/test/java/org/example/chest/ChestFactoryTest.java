@@ -1,6 +1,5 @@
 package org.example.chest;
 
-import chest.ChestFactory;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -16,15 +15,16 @@ public class ChestFactoryTest {
 
     @Test
     public void getChestTest1() {
-        var shop1 = ChestFactory.getInstance().getChest(1,1,1);
-        var shop2 = ChestFactory.getInstance().getChest(1,1,1);
-        assertEquals(shop1,shop2);
+        var chest1 = ChestFactory.getInstance().getChest(1,1,1);
+        var chest2 = ChestFactory.getInstance().getChest(1,1,1);
+        assertEquals(chest1,chest2);
     }
 
     @Test
     public void getChestTest2() {
-        var shop3 = ChestFactory.getInstance().getChest(2,2,2);
-        var shop4 = ChestFactory.getInstance().getChest(3,3,3);
-        assertNotEquals(shop3,shop4);
+        var chest1 = ChestFactory.getInstance().getChest(2,2,2);
+        var chest2 = ChestFactory.getInstance().getChest(3,3,3);
+        System.out.println(chest2.printLoot());
+        assertNotEquals(chest1,chest2);
     }
 }

@@ -1,11 +1,11 @@
-package shop;
+package org.example.shop;
 
-import Item.ShopItem;
+import org.example.item.ShopItem;
 import org.example.GameState;
 
 import java.util.List;
 
-public class Shop {
+public class    Shop {
 
     private final List<ShopItem> shopInventory;
 
