@@ -166,11 +166,14 @@ public class GameState {
             return true;
         }
 
-        for (Enemy e: enemies) {
-            if (e.x == x && e.y == y) {
-                return true;
+        if (enemies != null) {
+            for (Enemy e: enemies) {
+                if (e.x == x && e.y == y) {
+                    return true;
+                }
             }
         }
+
 
         return false;
     }
