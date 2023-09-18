@@ -62,7 +62,7 @@ public class ChestFactory {
 
             LevelLootRange range = LEVEL_LOOT_RANGES[LEVEL_LOOT_RANGES.length - 1];
             if (level >= 0 && level < LEVEL_LOOT_RANGES.length) {
-                range = LEVEL_LOOT_RANGES[level - 1]; // Assumes level is 1 based!
+                range = LEVEL_LOOT_RANGES[level]; // Assumes level is 0 based!
             }
 
             Item item;

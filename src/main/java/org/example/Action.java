@@ -13,6 +13,8 @@ public enum Action {
     UsePotion,
     OpenInventory,
     EnterShop,
+
+    EnterChest,
     StartGame;
 
     /**

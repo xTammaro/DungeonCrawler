@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.chest.Chest;
+import org.example.chest.ChestFactory;
 import org.example.item.*;
 import org.example.shop.*;
 import java.util.ArrayList;
@@ -69,6 +71,7 @@ public class GameState {
         GameOverScreen,
         Inventory,
         Shop,
+        Chest,
         Ending
     }
     GameMode mode = GameMode.TitleScreen;
@@ -281,6 +284,21 @@ public class GameState {
     }
 
     /**
+     * Returns the current chest that the player is in. If the player isn't in a chest, null is returned.
+     *
+     * @author Will Baird
+     * @author Alex Boxall
+     *
+     * @return The chest object, or null if the player isn't in a chest.
+     */
+    Chest getChest() {
+        if (mode != GameMode.Chest) {
+            return null;
+        }
+        return ChestFactory.getInstance().getChest(levelNumber, player.x, player.y);
+    }
+
+    /**
      * Action handler for when in regular gameplay. Used to allow the player to move,
      * open inventory/shops, etc.
      *
@@ -300,6 +318,9 @@ public class GameState {
 
         } else if (action == Action.EnterShop && board.getTile(player.x, player.y) == Tile.Shop) {
             GameState.getInstance().setGameMode(GameMode.Shop);
+
+        } else if (action == Action.EnterChest && board.getTile(player.x, player.y) == Tile.Chest) {
+            GameState.getInstance().setGameMode(GameMode.Chest);
         }
     }
 
@@ -326,6 +347,21 @@ public class GameState {
      */
     void actShop(Action action) {
         if (action == Action.EnterShop) {
+            GameState.getInstance().setGameMode(GameMode.Gameplay);
+        }
+    }
+
+    /**
+     * Action handler for the chest. Allows users to take Items, and/or exit
+     * the shop.
+     *
+     * @author Will Baird
+     * @author Alex Boxall
+     *
+     * @param action The action that the user should take.
+     */
+    void actChest(Action action) {
+        if (action == Action.EnterChest) {
             GameState.getInstance().setGameMode(GameMode.Gameplay);
         }
     }
@@ -360,6 +396,7 @@ public class GameState {
             case Gameplay       -> actGameplay(action);
             case Inventory      -> actInventory(action);
             case Shop           -> actShop(action);
+            case Chest          -> actChest(action);
             case TitleScreen    -> actTitleScreen(action);
             default             -> System.out.printf("Action cannot be used here.\n");
         }

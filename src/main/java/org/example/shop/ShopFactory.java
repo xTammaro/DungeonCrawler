@@ -70,7 +70,7 @@ public class ShopFactory {
         ArrayList<Item> itemList = new ArrayList<>();
         GameState gameState = GameState.getInstance();
 
-        switch(level) {
+        switch(level+1) { // level is 0 based
             case 1:
                 // One common consumable
                 itemList.add(ItemUtils.getRandomConsumable(gameState.getGameItems(), Rarity.COMMON, Rarity.COMMON));

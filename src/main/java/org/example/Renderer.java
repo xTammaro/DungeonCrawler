@@ -59,6 +59,7 @@ public class Renderer extends JFrame {
                     case KeyEvent.VK_SPACE  -> GameState.getInstance().act(Action.EnterShop);
                     case KeyEvent.VK_I      -> GameState.getInstance().act(Action.OpenInventory);
                     case KeyEvent.VK_ENTER  -> GameState.getInstance().act(Action.StartGame);
+                    case KeyEvent.VK_C  -> GameState.getInstance().act(Action.EnterChest);
                 }
             }
 
@@ -399,6 +400,30 @@ public class Renderer extends JFrame {
     }
 
     /**
+     * Draws the chest screen when the player is in a chest.
+     *
+     * @author Will Baird
+     * @author Alex Boxall
+     *
+     * @param g The graphics object
+     */
+    private void renderChest(Graphics g) {
+        var chest = GameState.getInstance().getChest();
+        String text = chest.printLoot();
+
+        g.setColor(Color.DARK_GRAY);
+        g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Arial", Font.BOLD, 24));
+
+        int ypos = WINDOW_HEIGHT / 3;
+        for (String line: text.split("\n")) {
+            g.drawString(line, WINDOW_WIDTH / 3, ypos);
+            ypos += 27;
+        }
+    }
+
+    /**
      * Draws the game's title screen.
      *
      * @author Alex Boxall
@@ -472,6 +497,7 @@ public class Renderer extends JFrame {
             case Gameplay -> renderGameplay(g);
             case TitleScreen -> renderTitleScreen(g);
             case Shop -> renderShop(g);
+            case Chest -> renderChest(g);
             default -> renderNotImplementedFeatures(g);
         }
     }
@@ -506,7 +532,7 @@ public class Renderer extends JFrame {
         Board b = new Board();
         b.setAllTiles(new Tile[][] {
                 new Tile[]{Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall },
-                new Tile[]{Tile.Wall , Tile.Empty, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Shop, Tile.Wall },
+                new Tile[]{Tile.Wall , Tile.Empty, Tile.Empty, Tile.Empty, Tile.Chest, Tile.Empty, Tile.Shop, Tile.Wall },
                 new Tile[]{Tile.Wall , Tile.Empty, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Wall },
                 new Tile[]{Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Empty, Tile.Empty, Tile.Wall },
                 new Tile[]{Tile.Wall , Tile.Empty, Tile.Empty, Tile.Staircase, Tile.Wall , Tile.Empty, Tile.Empty, Tile.Wall },
