@@ -375,6 +375,24 @@ public class Renderer extends JFrame {
     }
 
     /**
+     * Draws the shop screen when the player is in a shop.
+     *
+     * @author Alex Boxall
+     *
+     * @param g The graphics object
+     */
+    private void renderShop(Graphics g) {
+        Shop shop = GameState.getInstance().getShop();
+        String text = shop.getInventory();
+
+        g.setColor(Color.LIGHT_GRAY);
+        g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Arial", Font.BOLD, 24));
+        g.drawString(errorMessage, (WINDOW_WIDTH - g.getFontMetrics().stringWidth(text)) / 2, WINDOW_HEIGHT / 3);
+    }
+
+    /**
      * Draws the game's title screen.
      *
      * @author Alex Boxall
@@ -447,6 +465,7 @@ public class Renderer extends JFrame {
         switch (GameState.getInstance().getGameMode()) {
             case Gameplay -> renderGameplay(g);
             case TitleScreen -> renderTitleScreen(g);
+            case Shop -> renderShop(g);
             default -> renderNotImplementedFeatures(g);
         }
     }
