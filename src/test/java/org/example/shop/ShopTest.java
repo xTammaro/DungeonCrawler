@@ -1,9 +1,9 @@
 package org.example.shop;
 
+import org.example.item.TestItem;
 import org.example.GameState;
 import org.junit.Test;
-import shop.Shop;
-import shop.ShopItem;
+import org.example.item.ShopItem;
 
 import java.util.ArrayList;
 

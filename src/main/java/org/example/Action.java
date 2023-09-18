@@ -10,7 +10,12 @@ public enum Action {
     MoveDown,
     UseSword,
     UseGun,
-    UsePotion;
+    UsePotion,
+    OpenInventory,
+    EnterShop,
+
+    EnterChest,
+    StartGame;
 
     /**
      * @author Tal Shy-Tielen

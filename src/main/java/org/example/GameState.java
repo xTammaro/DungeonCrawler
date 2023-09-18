@@ -1,7 +1,9 @@
 package org.example;
 
-import shop.ShopItem;
-
+import org.example.chest.Chest;
+import org.example.chest.ChestFactory;
+import org.example.item.*;
+import org.example.shop.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,17 +37,64 @@ public class GameState {
 
 
     /**
-     * the players inventory as a list of Items
+     * The player's inventory as a list of Items
      */
 
     List<ShopItem> inventory;
 
-
+    /**
+     * A list of all Items that have a chance
+     * of spawning in game
+     */
+    private List<Item> gameItems;
 
     /**
      * The amount of gold the player has
      */
     int gold;
+    /**
+     * the MeleeWeapon the player has equipped
+     */
+     MeleeWeapon currentMeleeWeapon;
+
+    /**
+     * the RangedWeapon the player has equipped
+     */
+     RangedWeapon currentRangedWeapon;
+
+    /**
+     * Determines whether we're in normal gameplay, or in the shop/inventory/title screen, etc.
+     */
+    enum GameMode {
+        Gameplay,
+        TitleScreen,
+        GameOverScreen,
+        Inventory,
+        Shop,
+        Chest,
+        Ending
+    }
+    GameMode mode = GameMode.TitleScreen;
+
+    /**
+     * Changes what game mode that we're in. Used to, for example, determine if we are in the inventory/shop
+     * and to use the control scheme for that. The UI also uses this to determine what it should display.
+     * Should be called when switching from title screen to gameplay, when toggling the inventory or shop modes,
+     * and when the game is won or lost.
+     *
+     * @param mode The GameMode to switch into.
+     */
+    public void setGameMode(GameMode mode) {
+        this.mode = mode;
+        Renderer.getInstance().renderEverything();
+    }
+
+    /**
+     * @return Returns the current game mode. See comment for setGameMode()
+     */
+    public GameMode getGameMode() {
+        return mode;
+    }
 
     /**
      * @author Will Baird
@@ -114,10 +163,40 @@ public class GameState {
      * The private constructor for the GameState singleton.
      * Should initialise the game for the very first level.
      *
+     * gives the player starting weapons
+     * adds Items to gameItems
+     *
      * @author Alex Boxall
+     * @author Will Baird
      */
     private GameState() {
-        this.inventory = new ArrayList<>();
+        inventory = new ArrayList<>();
+        currentMeleeWeapon = new MeleeWeapon("Stick",5, Rarity.COMMON,1);
+        currentRangedWeapon = new RangedWeapon("Sling",5,Rarity.COMMON,1,2);
+        //TODO: Move adding Items to somewhere else
+        createGameItems();
+
+    }
+
+    private void createGameItems(){
+        gameItems = new ArrayList<>();
+        gameItems.add(new HealthPotion("Healing Potion",25,Rarity.COMMON,10));
+        gameItems.add(new HealthPotion("Healing Potion",40,Rarity.UNCOMMON,20));
+        gameItems.add(new HealthPotion("Greater Healing Potion",50,Rarity.RARE,30));
+        gameItems.add(new HealthPotion("Supreme Healing Potion",75,Rarity.VERY_RARE,5));
+        gameItems.add(new MeleeWeapon("Wooden Sword",20,Rarity.COMMON,2));
+        gameItems.add(new MeleeWeapon("Copper Sword",50,Rarity.UNCOMMON,4));
+        gameItems.add(new MeleeWeapon("Iron Sword",100,Rarity.RARE,8));
+        gameItems.add(new MeleeWeapon("Steel Sword",300,Rarity.VERY_RARE,1));
+        gameItems.add(new RangedWeapon("Slingshot",25,Rarity.COMMON,3,2));
+        gameItems.add(new RangedWeapon("Bow",60,Rarity.UNCOMMON,8,2));
+        gameItems.add(new RangedWeapon("Longbow",120,Rarity.RARE,25,4));
+        gameItems.add(new RangedWeapon("Crossbow",350,Rarity.VERY_RARE,30,2));
+        gameItems.add(new StatBoostItem("Health Ring",100,Rarity.COMMON,PlayerStatType.HEALTH,10));
+        gameItems.add(new StatBoostItem("Health Brooch",150,Rarity.UNCOMMON,PlayerStatType.HEALTH,15));
+        gameItems.add(new StatBoostItem("Health Amulet",200,Rarity.RARE,PlayerStatType.HEALTH,20));
+        gameItems.add(new StatBoostItem("Health Necklace",300,Rarity.VERY_RARE,PlayerStatType.HEALTH,30));
+
     }
 
     /**
@@ -217,14 +296,43 @@ public class GameState {
     }
 
     /**
-     * Makes the player take an action. This should be called by the keyboard handler.
-     * Depending on the action, time may progress (i.e. enemies will act afterwards).
+     * Returns the current shop that the player is in. If the player isn't in a shop, null is returned.
+     *
+     * @author Alex Boxall
+     *
+     * @return The Shop object, or null if the player isn't in a shop.
+     */
+    Shop getShop() {
+        if (mode != GameMode.Shop) {
+            return null;
+        }
+        return ShopFactory.getInstance().getShop(levelNumber, player.x, player.y);
+    }
+
+    /**
+     * Returns the current chest that the player is in. If the player isn't in a chest, null is returned.
+     *
+     * @author Will Baird
+     * @author Alex Boxall
+     *
+     * @return The chest object, or null if the player isn't in a chest.
+     */
+    Chest getChest() {
+        if (mode != GameMode.Chest) {
+            return null;
+        }
+        return ChestFactory.getInstance().getChest(levelNumber, player.x, player.y);
+    }
+
+    /**
+     * Action handler for when in regular gameplay. Used to allow the player to move,
+     * open inventory/shops, etc.
      *
      * @author Alex Boxall
      * @author Tal Shy-Tielen
      * @param action The action that the user should take.
      */
-    void act(Action action) {
+    void actGameplay(Action action) {
         if (action.isMove()) {
             /*
              * Allows direction to change even if the player cannot move in this direction.
@@ -235,8 +343,93 @@ public class GameState {
                 player.moveInDirection(action.getDirection());
             }
             endOfPlayerTurn();
-        } else {
-            System.out.printf("ACTION %s NOT IMPLEMENTED!\n", action);
+
+        } else if (action == Action.OpenInventory) {
+            GameState.getInstance().setGameMode(GameMode.Inventory);
+
+        } else if (action == Action.EnterShop && board.getTile(player.x, player.y) == Tile.Shop) {
+            GameState.getInstance().setGameMode(GameMode.Shop);
+
+        } else if (action == Action.EnterChest && board.getTile(player.x, player.y) == Tile.Chest) {
+            GameState.getInstance().setGameMode(GameMode.Chest);
+        }
+    }
+
+    /**
+     * Action handler for the title screen. Used to start and load games.
+     *
+     * @author Alex Boxall
+     *
+     * @param action The action that the user should take.
+     */
+    void actTitleScreen(Action action) {
+        if (action == Action.StartGame) {
+            GameState.getInstance().setGameMode(GameMode.Gameplay);
+        }
+    }
+
+    /**
+     * Action handler for the shop. Allows users to buy items, and/or exit
+     * the shop.
+     *
+     * @author Alex Boxall
+     *
+     * @param action The action that the user should take.
+     */
+    void actShop(Action action) {
+        if (action == Action.EnterShop) {
+            GameState.getInstance().setGameMode(GameMode.Gameplay);
+        }
+    }
+
+    /**
+     * Action handler for the chest. Allows users to take Items, and/or exit
+     * the shop.
+     *
+     * @author Will Baird
+     * @author Alex Boxall
+     *
+     * @param action The action that the user should take.
+     */
+    void actChest(Action action) {
+        if (action == Action.EnterChest) {
+            GameState.getInstance().setGameMode(GameMode.Gameplay);
+        }
+    }
+
+    /**
+     * Action handler for the inventory screen. Allows users to buy items, and/or exit
+     * the shop.
+     *
+     * @author Alex Boxall
+     *
+     * @param action The action that the user should take.
+     */
+    void actInventory(Action action) {
+        if (action == Action.OpenInventory) {
+            GameState.getInstance().setGameMode(GameMode.Gameplay);
+        }
+    }
+
+    /**
+     * Makes the player take an action. This should be called by the keyboard handler.
+     * Depending on the action, time may progress (i.e. enemies will act afterwards).
+     *
+     * @author Alex Boxall
+     * @author Tal Shy-Tielen
+     * @param action The action that the user should take.
+     */
+    void act(Action action) {
+        /*
+         * TODO: State design pattern?
+         */
+        switch (mode) {
+            case Gameplay       -> actGameplay(action);
+            case Inventory      -> actInventory(action);
+            case Shop           -> actShop(action);
+            case Chest          -> actChest(action);
+            case TitleScreen    -> actTitleScreen(action);
+            default             -> System.out.printf("Action cannot be used here.\n");
         }
     }
 
@@ -251,4 +444,9 @@ public class GameState {
     public void setPlayer(Player player) {
         this.player = player;
     }
+
+    public List<Item> getGameItems() {
+        return gameItems;
+    }
+
 }

@@ -1,7 +1,8 @@
 package org.example.shop;
 
+import org.example.item.TestItem;
 import org.junit.Test;
-import shop.ShopItem;
+import org.example.item.ShopItem;
 
 import static org.junit.Assert.assertEquals;
 
