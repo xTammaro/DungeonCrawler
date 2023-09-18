@@ -178,7 +178,7 @@ public class Enemy extends Actor {
             /*
              * Must also do a canMoveInDirection() to ensure you don't overlap with the player.
              */
-            if (dir != null && canMoveInDirection(dir)) {
+            if (dir != null) {
                 moveInDirection(dir);
             }
         }
