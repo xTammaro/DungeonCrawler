@@ -66,6 +66,13 @@ public class ShopFactory {
         return shopMap.get(key);
     }
 
+    /**
+     * makes a new shop based on the players level
+     * with shops with more and better Items
+     * on higher floors
+     * @param level the level the player is currently on
+     * @return a new shop
+     */
     private Shop createShopForLevel(int level) {
         ArrayList<Item> itemList = new ArrayList<>();
         GameState gameState = GameState.getInstance();

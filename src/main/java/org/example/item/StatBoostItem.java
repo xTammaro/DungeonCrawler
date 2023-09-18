@@ -23,11 +23,20 @@ public class StatBoostItem extends Item{
         this.statBoostAmount = statBoostAmount;
     }
 
+    /**
+     * @author Will Baird
+     * makes and returns a new StatBoostItem with the same attributes
+     * @return the new StatBoostItem
+     */
     @Override
     public Item makeClone() {
         return new StatBoostItem(getName(), getValue(), getRarity(), getPlayerStatType(), getStatBoostAmount());
     }
 
+    /**
+     * apples a permanent boost to the player stat
+     * based on playerStatType
+     */
     public void applyStat(){
         switch (playerStatType){
             case HEALTH -> {

@@ -19,6 +19,11 @@ public class ChestFactory {
      */
     final private Map<String,Chest> chestMap;
 
+    /**
+     * @author Will Baird
+     * an Array of LevelLootRange containing
+     * the Rarity and gold range for chests based on the level
+     */
     final private static LevelLootRange[] LEVEL_LOOT_RANGES = new LevelLootRange[] {
         new LevelLootRange(Rarity.COMMON, Rarity.COMMON, 10, 30),
         new LevelLootRange(Rarity.COMMON, Rarity.UNCOMMON, 15, 45),
@@ -57,7 +62,6 @@ public class ChestFactory {
     public Chest getChest(int level,int x,int y){
         String key = String.format("%d_%d_%d",level,x,y);
         if (!chestMap.containsKey(key)){
-            // TODO: make new chest based on level
             var gameState = GameState.getInstance();
 
             LevelLootRange range = LEVEL_LOOT_RANGES[LEVEL_LOOT_RANGES.length - 1];
@@ -93,6 +97,14 @@ public class ChestFactory {
         private int minGold;
         private int maxGold;
 
+        /**
+         * constructor for
+         * @author Will Baird
+         * @param minRarity the min rarity an Item can be
+         * @param maxRarity the max rarity an Item can be
+         * @param minGold   the min amount of gold
+         * @param maxGold   the max amount of gold
+         */
         public LevelLootRange(Rarity minRarity, Rarity maxRarity, int minGold, int maxGold) {
             this.minRarity = minRarity;
             this.maxRarity = maxRarity;
