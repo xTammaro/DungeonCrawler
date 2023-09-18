@@ -390,7 +390,12 @@ public class Renderer extends JFrame {
         g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         g.setColor(Color.BLACK);
         g.setFont(new Font("Arial", Font.BOLD, 24));
-        g.drawString(text, (WINDOW_WIDTH - g.getFontMetrics().stringWidth(text)) / 2, WINDOW_HEIGHT / 3);
+
+        int ypos = WINDOW_HEIGHT / 3;
+        for (String line: text.split("\n")) {
+            g.drawString(line, WINDOW_WIDTH / 3, ypos);
+            ypos += 27;
+        }
     }
 
     /**
