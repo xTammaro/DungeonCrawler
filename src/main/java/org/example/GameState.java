@@ -153,6 +153,29 @@ public class GameState {
     }
 
     /**
+     * Determines if an actor in on a given tile. Used in part of collision detection.
+     *
+     * @author Alex Boxall
+     *
+     * @param x The x coordinate, in tiles
+     * @param y The y coordinate, in tiles
+     * @return True if the square is occupied, or false if empty.
+     */
+    boolean isOccupied(int x, int y) {
+        if (player.x == x && player.y == y) {
+            return true;
+        }
+
+        for (Enemy e: enemies) {
+            if (e.x == x && e.y == y) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Called at the end of the player's turn. Handles logic such as finishing a level, or picking up a
      * key, and then makes all of the enemies move.
      *
@@ -200,6 +223,11 @@ public class GameState {
      */
     void act(Action action) {
         if (action.isMove()) {
+            /*
+             * Allows direction to change even if the player cannot move in this direction.
+             */
+            player.setDirection(action.getDirection());
+
             if (player.canMoveInDirection(action.getDirection())) {
                 player.moveInDirection(action.getDirection());
             }

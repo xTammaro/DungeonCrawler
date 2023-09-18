@@ -44,6 +44,13 @@ abstract public class Actor {
     }
 
     /**
+     * @param direction Sets the Actor's direction.
+     */
+    void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
+    /**
      * Determines whether this actor can move in a certain direction. If there is a wall
      * blocking the way, it should return false.
      * There is also a check, if the player tries to move off the map it will return false.
@@ -65,7 +72,7 @@ abstract public class Actor {
                 return false;
             }
         }
-        return (GameState.getInstance().board.getTile(x,y).isMovable());
+        return (GameState.getInstance().board.getTile(x,y).isMovable()) && !GameState.getInstance().isOccupied(x, y);
     }
 
     /**
@@ -77,8 +84,7 @@ abstract public class Actor {
      * @param direction The direction to move the player in.
      */
     void moveInDirection(Direction direction) {
-        this.direction = direction;
-
+        setDirection(direction);
         switch (direction) {
             case UP     -> y--;
             case DOWN   -> y++;
