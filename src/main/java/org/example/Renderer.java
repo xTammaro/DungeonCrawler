@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import org.example.shop.*;
 
 /**
  * Responsible for visually showing the game to the player. Also responsible for catching keyboard
