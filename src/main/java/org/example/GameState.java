@@ -266,6 +266,84 @@ public class GameState {
     }
 
     /**
+     * Returns the current shop that the player is in. If the player isn't in a shop, null is returned.
+     *
+     * @author Alex Boxall
+     *
+     * @return The Shop object, or null if the player isn't in a shop.
+     */
+    Shop getShop() {
+        if (mode != GameMode.Shop) {
+            return null;
+        }
+        return ShopFactory.getInstance().getShop(levelNumber, player.x, player.y);
+    }
+
+    /**
+     * Action handler for when in regular gameplay. Used to allow the player to move,
+     * open inventory/shops, etc.
+     *
+     * @author Alex Boxall
+     * @author Tal Shy-Tielen
+     * @param action The action that the user should take.
+     */
+    void actGameplay(Action action) {
+        if (action.isMove() && mode == GameMode.Gameplay) {
+            if (player.canMoveInDirection(action.getDirection())) {
+                player.moveInDirection(action.getDirection());
+            }
+            endOfPlayerTurn();
+
+        } else if (action == Action.OpenInventory) {
+            GameState.getInstance().setGameMode(GameMode.Inventory);
+
+        } else if (action == Action.EnterShop && board.getTile(player.x, player.y) == Tile.Shop) {
+            GameState.getInstance().setGameMode(GameMode.Shop);
+        }
+    }
+
+    /**
+     * Action handler for the title screen. Used to start and load games.
+     *
+     * @author Alex Boxall
+     *
+     * @param action The action that the user should take.
+     */
+    void actTitleScreen(Action action) {
+        if (action == Action.StartGame) {
+            GameState.getInstance().setGameMode(GameMode.Gameplay);
+        }
+    }
+
+    /**
+     * Action handler for the shop. Allows users to buy items, and/or exit
+     * the shop.
+     *
+     * @author Alex Boxall
+     *
+     * @param action The action that the user should take.
+     */
+    void actShop(Action action) {
+        if (action == Action.EnterShop) {
+            GameState.getInstance().setGameMode(GameMode.Gameplay);
+        }
+    }
+
+    /**
+     * Action handler for the inventory screen. Allows users to buy items, and/or exit
+     * the shop.
+     *
+     * @author Alex Boxall
+     *
+     * @param action The action that the user should take.
+     */
+    void actInventory(Action action) {
+        if (action == Action.OpenInventory) {
+            GameState.getInstance().setGameMode(GameMode.Gameplay);
+        }
+    }
+
+    /**
      * Makes the player take an action. This should be called by the keyboard handler.
      * Depending on the action, time may progress (i.e. enemies will act afterwards).
      *
@@ -274,23 +352,15 @@ public class GameState {
      * @param action The action that the user should take.
      */
     void act(Action action) {
-        if (action.isMove() && mode == GameMode.Gameplay) {
-            if (player.canMoveInDirection(action.getDirection())) {
-                player.moveInDirection(action.getDirection());
-            }
-            endOfPlayerTurn();
-
-        } else if (action == Action.OpenInventory) {
-            GameState.getInstance().setGameMode(mode == GameMode.Inventory ? GameMode.Gameplay : GameMode.Inventory);
-
-        } else if (action == Action.EnterShop && board.getTile(player.x, player.y) == Tile.Shop) {
-            GameState.getInstance().setGameMode(mode == GameMode.Shop ? GameMode.Gameplay : GameMode.Shop);
-
-        } else if (action == Action.StartGame && mode == GameMode.TitleScreen) {
-            GameState.getInstance().setGameMode(GameMode.Gameplay);
-
-        } else {
-            System.out.printf("ACTION %s NOT IMPLEMENTED!\n", action);
+        /*
+         * TODO: State design pattern?
+         */
+        switch (mode) {
+            case Gameplay       -> actGameplay(action);
+            case Inventory      -> actInventory(action);
+            case Shop           -> actShop(action);
+            case TitleScreen    -> actTitleScreen(action);
+            default             -> System.out.printf("Action cannot be used here.\n");
         }
     }
 
