@@ -22,6 +22,12 @@ abstract public class Actor {
     int hp;
 
     /**
+     * The direction the actor is facing. Gets set to the most recent direction
+     * the player moves in.
+     */
+    private Direction direction = Direction.RIGHT;
+
+    /**
      * Constructor for an Actor. As this is an abstract class, it cannot be
      * directly invoked.
      *
@@ -35,6 +41,13 @@ abstract public class Actor {
         this.x = x;
         this.y = y;
         this.hp = hp;
+    }
+
+    /**
+     * @param direction Sets the Actor's direction.
+     */
+    void setDirection(Direction direction) {
+        this.direction = direction;
     }
 
     /**
@@ -59,7 +72,7 @@ abstract public class Actor {
                 return false;
             }
         }
-        return (GameState.getInstance().board.getTile(x,y).isMovable());
+        return (GameState.getInstance().board.getTile(x,y).isMovable()) && !GameState.getInstance().isOccupied(x, y);
     }
 
     /**
@@ -71,12 +84,21 @@ abstract public class Actor {
      * @param direction The direction to move the player in.
      */
     void moveInDirection(Direction direction) {
+        setDirection(direction);
         switch (direction) {
             case UP     -> y--;
             case DOWN   -> y++;
             case LEFT   -> x--;
             case RIGHT  -> x++;
         }
+    }
+
+    /**
+     * @author Alex Boxall
+     * @return The player's current direction.
+     */
+    public Direction getDirection() {
+        return direction;
     }
 
     /**

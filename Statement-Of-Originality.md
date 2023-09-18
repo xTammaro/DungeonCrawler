@@ -8,8 +8,8 @@ By signing your name and UID each member of the group acknowledges that all the 
 - Group Member 1 UID: u7074622
 ---
 
-- Group Member 2 Name:
-- Group Member 2 UID:
+- Group Member 2 Name: Alex Boxall
+- Group Member 2 UID: u7468248
 
 ---
 
@@ -20,11 +20,6 @@ By signing your name and UID each member of the group acknowledges that all the 
 
 - Group Member 4 Name:
 - Group Member 4 UID:
-
----
-
-- Group Member 5 Name: (Remove if not applicable)
-- Group Member 5 UID: (Remove if not applicable)
 
 ---
 
