@@ -305,8 +305,10 @@ public class Renderer extends JFrame {
      */
     private void renderPlayer(Graphics g, int x, int y) {
         int tileSize = getTileSize();
-        int px = getPixelXFromTile(x, tileSize);
-        int py = getPixelYFromTile(y, tileSize);
+        int px = getPixelXFromTile(x, tileSize) + tileSize / 4;
+        int py = getPixelYFromTile(y, tileSize) + tileSize / 4;
+        tileSize /= 2;
+        
         Direction direction = GameState.getInstance().player.getDirection();
 
         g.setColor(Color.BLUE);
@@ -314,24 +316,24 @@ public class Renderer extends JFrame {
         Polygon player = new Polygon();
         switch (direction) {
         case UP:
-            player.addPoint(tileSize / 2, 0);
-            player.addPoint(0, tileSize);
-            player.addPoint(tileSize, tileSize);
+            player.addPoint(px + tileSize / 2, py);
+            player.addPoint(px, py + tileSize);
+            player.addPoint(px + tileSize, py + tileSize);
             break;
         case DOWN:
-            player.addPoint(tileSize / 2, tileSize);
-            player.addPoint(0, 0);
-            player.addPoint(tileSize, 0);
+            player.addPoint(px + tileSize / 2, py + tileSize);
+            player.addPoint(px, py);
+            player.addPoint(px + tileSize, py);
             break;
         case LEFT:
-            player.addPoint(0, tileSize / 2);
-            player.addPoint(tileSize, 0);
-            player.addPoint(tileSize, tileSize);
+            player.addPoint(px, py + tileSize / 2);
+            player.addPoint(px + tileSize, py);
+            player.addPoint(px + tileSize, py + tileSize);
             break;
         case RIGHT:
-            player.addPoint(tileSize, tileSize / 2);
-            player.addPoint(0, 0);
-            player.addPoint(0, tileSize);
+            player.addPoint(px + tileSize, py + tileSize / 2);
+            player.addPoint(px, py);
+            player.addPoint(px, py + tileSize);
             break;
         }
         g.fillPolygon(player);
