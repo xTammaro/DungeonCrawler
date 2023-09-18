@@ -95,7 +95,6 @@ public class Enemy extends Actor {
             path.remove(0); // Remove the first node in the path, as it is the current location of the enemy.
             moveToNextTileInPath();
         }
-
     }
 
     /**
@@ -175,7 +174,11 @@ public class Enemy extends Actor {
         if (path != null && !path.isEmpty()) {
             AStarAlgorithm.Node nextTile = path.remove(0);
             Direction dir = getDirectionToNextTile(nextTile);
-            if (dir != null) {
+
+            /*
+             * Must also do a canMoveInDirection() to ensure you don't overlap with the player.
+             */
+            if (dir != null && canMoveInDirection(dir)) {
                 moveInDirection(dir);
             }
         }
