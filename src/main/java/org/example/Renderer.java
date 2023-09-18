@@ -384,13 +384,13 @@ public class Renderer extends JFrame {
      */
     private void renderShop(Graphics g) {
         Shop shop = GameState.getInstance().getShop();
-        String text = shop.getInventory();
+        String text = shop.printInventory();
 
         g.setColor(Color.LIGHT_GRAY);
         g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         g.setColor(Color.BLACK);
         g.setFont(new Font("Arial", Font.BOLD, 24));
-        g.drawString(errorMessage, (WINDOW_WIDTH - g.getFontMetrics().stringWidth(text)) / 2, WINDOW_HEIGHT / 3);
+        g.drawString(text, (WINDOW_WIDTH - g.getFontMetrics().stringWidth(text)) / 2, WINDOW_HEIGHT / 3);
     }
 
     /**
