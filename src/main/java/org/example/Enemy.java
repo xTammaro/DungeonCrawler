@@ -152,6 +152,15 @@ public class Enemy extends Actor {
         this.targetY = target.y;
     }
 
+
+    /**
+     * Attacks the player, damage is calculated using the enemy's level.
+     * @author Tal Shy-Tielen
+     */
+    public void attackPlayer() {
+        GameState.getInstance().player.takeDamage(attackDamage());
+    }
+
     /**
      * Calculates the Manhattan distance between two points.
      * @author Jake Tammaro
@@ -169,8 +178,15 @@ public class Enemy extends Actor {
     /**
      * Moves the enemy to the next tile in their path.
      * @author Jake Tammaro
+     * @author Tal Shy-Tielen
      */
     public void moveToNextTileInPath() {
+        if (path != null && path.size() == 1) {
+            if (GameState.getInstance().getActorAt(path.get(0).x,path.get(0).y) == GameState.getInstance().player) {
+                attackPlayer();
+                return;
+            }
+        }
         if (path != null && !path.isEmpty()) {
             AStarAlgorithm.Node nextTile = path.remove(0);
             Direction dir = getDirectionToNextTile(nextTile);
