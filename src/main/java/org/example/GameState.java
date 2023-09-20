@@ -486,6 +486,11 @@ public class GameState {
     }
 
 
+    /**
+     * get the list of enemies
+     * @return Enemies
+     * @author Tal Shy-Tielen
+     */
     public List<Enemy> getEnemies() {
         return this.enemies;
     }
