@@ -449,4 +449,27 @@ public class GameState {
         return gameItems;
     }
 
+
+    /**
+     * Adds an enemy to the list. If list is null, initialises the list
+     * @param e the enemy to be added
+     */
+    public void addEnemy(Enemy e) {
+        if (this.enemies == null) {
+            this.enemies = new ArrayList<Enemy>();
+        }
+        this.enemies.add(e);
+        this.board.setTile(e.x,e.y, Tile.Empty);
+    }
+
+    /**
+     *
+     * @param x x coordinate
+     * @param y y coordinate
+     * @return the tile at that position
+     */
+    public Tile getTile(int x, int y) {
+        return this.board.getTile(x,y);
+    }
+
 }
