@@ -36,7 +36,7 @@ public class Renderer extends JFrame {
     /**
      * The private constructor for the singleton Renderer object. Only gets called once.
      * Initialises the window and adds any required event listeners.
-     * 
+     *
      * @author Alex Boxall
      */
     private Renderer() {
@@ -313,33 +313,33 @@ public class Renderer extends JFrame {
         int px = getPixelXFromTile(x, tileSize) + tileSize / 4;
         int py = getPixelYFromTile(y, tileSize) + tileSize / 4;
         tileSize /= 2;
-        
+
         Direction direction = GameState.getInstance().player.getDirection();
 
         g.setColor(Color.BLUE);
 
         Polygon player = new Polygon();
         switch (direction) {
-        case UP:
-            player.addPoint(px + tileSize / 2, py);
-            player.addPoint(px, py + tileSize);
-            player.addPoint(px + tileSize, py + tileSize);
-            break;
-        case DOWN:
-            player.addPoint(px + tileSize / 2, py + tileSize);
-            player.addPoint(px, py);
-            player.addPoint(px + tileSize, py);
-            break;
-        case LEFT:
-            player.addPoint(px, py + tileSize / 2);
-            player.addPoint(px + tileSize, py);
-            player.addPoint(px + tileSize, py + tileSize);
-            break;
-        case RIGHT:
-            player.addPoint(px + tileSize, py + tileSize / 2);
-            player.addPoint(px, py);
-            player.addPoint(px, py + tileSize);
-            break;
+            case UP:
+                player.addPoint(px + tileSize / 2, py);
+                player.addPoint(px, py + tileSize);
+                player.addPoint(px + tileSize, py + tileSize);
+                break;
+            case DOWN:
+                player.addPoint(px + tileSize / 2, py + tileSize);
+                player.addPoint(px, py);
+                player.addPoint(px + tileSize, py);
+                break;
+            case LEFT:
+                player.addPoint(px, py + tileSize / 2);
+                player.addPoint(px + tileSize, py);
+                player.addPoint(px + tileSize, py + tileSize);
+                break;
+            case RIGHT:
+                player.addPoint(px + tileSize, py + tileSize / 2);
+                player.addPoint(px, py);
+                player.addPoint(px, py + tileSize);
+                break;
         }
         g.fillPolygon(player);
     }
@@ -412,6 +412,27 @@ public class Renderer extends JFrame {
             renderEnemy(g, e.x, e.y);
         }
         renderPlayer(g, state.player.x, state.player.y);
+    }
+
+    /**
+     * The screen to be displayed when the player dies (i.e. loses all of their health).
+     *
+     * @author Alex Boxall
+     *
+     * @param g The graphics object
+     */
+    private void renderGameOver(Graphics g) {
+        String errorMessage = String.format("GAME OVER!");
+        String continueMessage = String.format("Press ENTER to return to the title screen.");
+
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 100));
+        g.drawString(errorMessage, (WINDOW_WIDTH - g.getFontMetrics().stringWidth(errorMessage)) / 2, WINDOW_HEIGHT / 3);
+
+        g.setFont(new Font("Arial", Font.BOLD, 24));
+        g.drawString(continueMessage, (WINDOW_WIDTH - g.getFontMetrics().stringWidth(continueMessage)) / 2, WINDOW_HEIGHT * 2 / 3);
     }
 
     /**
@@ -554,6 +575,7 @@ public class Renderer extends JFrame {
             case TitleScreen -> renderTitleScreen(g);
             case Shop -> renderShop(g);
             case Chest -> renderChest(g);
+            case GameOverScreen -> renderGameOver(g);
             default -> renderNotImplementedFeatures(g);
         }
     }
@@ -588,7 +610,7 @@ public class Renderer extends JFrame {
      *
      * @author Alex Boxall
      */
-    private void setDemoState() {
+    void setDemoState() {
         Board b = new Board();
         b.setAllTiles(new Tile[][] {
                 new Tile[]{Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall },
@@ -601,7 +623,7 @@ public class Renderer extends JFrame {
                 new Tile[]{Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall },
         });
         GameState.getInstance().board = b;
-        GameState.getInstance().player = new Player(1, 1, 30);
+        GameState.getInstance().player = new Player(1, 1, 10);
         GameState.getInstance().enemies = new ArrayList<>();
         GameState.getInstance().enemies.add(new Enemy(4, 1, 5));
         GameState.getInstance().enemies.add(new Enemy(5, 4, 5));

@@ -74,6 +74,7 @@ public class GameState {
         Chest,
         Ending
     }
+
     GameMode mode = GameMode.TitleScreen;
 
     /**
@@ -380,13 +381,13 @@ public class GameState {
             endOfPlayerTurn();
 
         } else if (action == Action.OpenInventory) {
-            GameState.getInstance().setGameMode(GameMode.Inventory);
+            setGameMode(GameMode.Inventory);
 
         } else if (action == Action.EnterShop && board.getTile(player.x, player.y) == Tile.Shop) {
-            GameState.getInstance().setGameMode(GameMode.Shop);
+            setGameMode(GameMode.Shop);
 
         } else if (action == Action.EnterChest && board.getTile(player.x, player.y) == Tile.Chest) {
-            GameState.getInstance().setGameMode(GameMode.Chest);
+            setGameMode(GameMode.Chest);
 
         } else if (action == Action.UseSword) {
             player.useSword();
@@ -403,7 +404,7 @@ public class GameState {
      */
     void actTitleScreen(Action action) {
         if (action == Action.StartGame) {
-            GameState.getInstance().setGameMode(GameMode.Gameplay);
+            setGameMode(GameMode.Gameplay);
         }
     }
 
@@ -417,7 +418,7 @@ public class GameState {
      */
     void actShop(Action action) {
         if (action == Action.EnterShop) {
-            GameState.getInstance().setGameMode(GameMode.Gameplay);
+            setGameMode(GameMode.Gameplay);
         }
     }
 
@@ -432,7 +433,7 @@ public class GameState {
      */
     void actChest(Action action) {
         if (action == Action.EnterChest) {
-            GameState.getInstance().setGameMode(GameMode.Gameplay);
+            setGameMode(GameMode.Gameplay);
         }
     }
 
@@ -446,7 +447,30 @@ public class GameState {
      */
     void actInventory(Action action) {
         if (action == Action.OpenInventory) {
-            GameState.getInstance().setGameMode(GameMode.Gameplay);
+            setGameMode(GameMode.Gameplay);
+        }
+    }
+
+    /**
+     * Action handler for the game over screen. Allows the player to move back to the title
+     * screen after they lose.
+     *
+     * @author Alex Boxall
+     *
+     * @param action The action that the user should take.
+     */
+    void actGameOver(Action action) {
+        if (action == Action.StartGame) {
+            /*
+             * Completely reset the game. This removes the old singleton and replaces it with a new one.
+             * This means none of the previous GameState carries over to the new game.
+             */
+            instance = new GameState();
+
+            // TODO: remove this after level loading is implemented
+            Renderer.getInstance().setDemoState();
+
+            Renderer.getInstance().renderEverything();
         }
     }
 
@@ -468,6 +492,7 @@ public class GameState {
             case Shop           -> actShop(action);
             case Chest          -> actChest(action);
             case TitleScreen    -> actTitleScreen(action);
+            case GameOverScreen -> actGameOver(action);
             default             -> System.out.printf("Action cannot be used here.\n");
         }
     }
