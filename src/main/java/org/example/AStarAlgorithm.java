@@ -14,8 +14,10 @@ public class AStarAlgorithm {
 
     public AStarAlgorithm(Board map) {
         this.map = map;
+        if (map == null) return;
         this.width = map.getWidth();
         this.height = map.getHeight();
+
     }
 
     /**
