@@ -257,6 +257,12 @@ public class GameState {
         return false;
     }
 
+    /**
+     * Get the actor at a certain position, returns null if there is no actor.
+     * @param x x coordinate of actor.
+     * @param y y coordinate of actor
+     * @return actor at that position.
+     */
     public Actor getActorAt(int x,int y) {
         if (player.x == x && player.y == y) {
             return player;
