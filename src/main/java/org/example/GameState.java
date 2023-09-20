@@ -376,6 +376,10 @@ public class GameState {
 
         } else if (action == Action.EnterChest && board.getTile(player.x, player.y) == Tile.Chest) {
             GameState.getInstance().setGameMode(GameMode.Chest);
+
+        } else if (action == Action.UseSword) {
+            player.useSword();
+            endOfPlayerTurn();
         }
     }
 
