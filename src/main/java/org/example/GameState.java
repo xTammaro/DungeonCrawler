@@ -262,6 +262,7 @@ public class GameState {
      * @param x x coordinate of actor.
      * @param y y coordinate of actor
      * @return actor at that position.
+     * @author Tal Shy-Tielen
      */
     public Actor getActorAt(int x,int y) {
         if (player.x == x && player.y == y) {
