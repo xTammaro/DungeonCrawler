@@ -36,6 +36,16 @@ public class Player extends Actor {
 
 
     /**
+     * Calculates the attack damage.
+     * This should use hte player's weapon
+     * @return Attack damage
+     * @author Tal Shy-Tielen
+     */
+    public int attackDamage() {
+        return 50;
+    }
+
+    /**
      * @author Tal Shy-Tielen
      * Function should be called whenever the player receives gold.
      * @param x the amount of gold recieved.

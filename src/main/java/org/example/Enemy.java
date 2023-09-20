@@ -273,7 +273,14 @@ public class Enemy extends Actor {
         return d <= distance;
     }
 
-
+    /**
+     * this function calculates the attack damage, it should use the zombie's level when completed.
+     * @return attack damage the zombie will inflict.
+     * @author Tal Shy-Tielen
+     */
+    public int attackDamage() {
+        return 10;
+    }
 
     /**
      * Called when the enemy dies. Should remove the enemy from the GameState.

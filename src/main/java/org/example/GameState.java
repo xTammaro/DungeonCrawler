@@ -258,6 +258,28 @@ public class GameState {
     }
 
     /**
+     * Get the actor at a certain position, returns null if there is no actor.
+     * @param x x coordinate of actor.
+     * @param y y coordinate of actor
+     * @return actor at that position.
+     * @author Tal Shy-Tielen
+     */
+    public Actor getActorAt(int x,int y) {
+        if (player.x == x && player.y == y) {
+            return player;
+        }
+
+        if (enemies != null) {
+            for (Enemy e: enemies) {
+                if (e.x == x && e.y == y) {
+                    return e;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
      * Called at the end of the player's turn. Handles logic such as finishing a level, or picking up a
      * key, and then makes all of the enemies move.
      *
@@ -294,6 +316,8 @@ public class GameState {
 
         Renderer.getInstance().render();
     }
+
+
 
     /**
      * Returns the current shop that the player is in. If the player isn't in a shop, null is returned.
@@ -352,6 +376,10 @@ public class GameState {
 
         } else if (action == Action.EnterChest && board.getTile(player.x, player.y) == Tile.Chest) {
             GameState.getInstance().setGameMode(GameMode.Chest);
+
+        } else if (action == Action.UseSword) {
+            player.useSword();
+            endOfPlayerTurn();
         }
     }
 

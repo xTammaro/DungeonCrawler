@@ -61,7 +61,7 @@ public class Renderer extends JFrame {
                     case KeyEvent.VK_SPACE  -> GameState.getInstance().act(Action.EnterShop);
                     case KeyEvent.VK_I      -> GameState.getInstance().act(Action.OpenInventory);
                     case KeyEvent.VK_ENTER  -> GameState.getInstance().act(Action.StartGame);
-                    case KeyEvent.VK_C  -> GameState.getInstance().act(Action.EnterChest);
+                    case KeyEvent.VK_C      -> GameState.getInstance().act(Action.EnterChest);
                 }
             }
 
@@ -514,7 +514,6 @@ public class Renderer extends JFrame {
         g.drawString(instructionMsg2, (WINDOW_WIDTH - instructionMsgWidth) / 2, 2 * WINDOW_HEIGHT / 3 + 40);
     }
 
-
     /**
      * Redraws the window. Will be automatically called by the system/window manager when
      * required.
@@ -598,7 +597,7 @@ public class Renderer extends JFrame {
                 new Tile[]{Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Empty, Tile.Empty, Tile.Wall },
                 new Tile[]{Tile.Wall , Tile.Empty, Tile.Empty, Tile.Staircase, Tile.Wall , Tile.Empty, Tile.Empty, Tile.Wall },
                 new Tile[]{Tile.Wall , Tile.Empty, Tile.Wall , Tile.Wall , Tile.Wall , Tile.Empty, Tile.Empty, Tile.Wall },
-                new Tile[]{Tile.Wall , Tile.EmptyWithKey, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Wall },
+                new Tile[]{Tile.Wall , Tile.Empty, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Empty, Tile.Wall },
                 new Tile[]{Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall },
         });
         GameState.getInstance().board = b;
