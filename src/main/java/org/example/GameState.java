@@ -214,6 +214,17 @@ public class GameState {
         return instance;
     }
 
+
+    /**
+     * This function should only be used for testing to reset the board.
+     * @return new gamestate reset.
+     * @author Tal Shy-Tielen
+     */
+    public GameState reset() {
+        instance = new GameState();
+        return instance;
+    }
+
     /**
      * Loads a given floor of the dungeon. It is located in this file so it can update all of the other
      * parts of the GameState, e.g. enemies, player, etc.
@@ -240,7 +251,7 @@ public class GameState {
      * @param y The y coordinate, in tiles
      * @return True if the square is occupied, or false if empty.
      */
-    boolean isOccupied(int x, int y) {
+    public boolean isOccupied(int x, int y) {
         if (player.x == x && player.y == y) {
             return true;
         }
@@ -475,6 +486,41 @@ public class GameState {
 
     public List<Item> getGameItems() {
         return gameItems;
+    }
+
+
+    /**
+     * Adds an enemy to the list. If list is null, initialises the list
+     * @param e the enemy to be added
+     * @author Tal Shy-Tielen
+     */
+    public void addEnemy(Enemy e) {
+        if (this.enemies == null) {
+            this.enemies = new ArrayList<Enemy>();
+        }
+        this.enemies.add(e);
+        this.board.setTile(e.x,e.y, Tile.Empty);
+    }
+
+    /**
+     *
+     * @param x x coordinate
+     * @param y y coordinate
+     * @return the tile at that position
+     * @author Tal Shy-Tielen
+     */
+    public Tile getTile(int x, int y) {
+        return this.board.getTile(x,y);
+    }
+
+
+    /**
+     * get the list of enemies
+     * @return Enemies
+     * @author Tal Shy-Tielen
+     */
+    public List<Enemy> getEnemies() {
+        return this.enemies;
     }
 
 }

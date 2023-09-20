@@ -139,7 +139,7 @@ abstract public class Actor {
      *
      * @param attack The health to subtract
      */
-    void takeDamage(int attack) {
+    public void takeDamage(int attack) {
         hp -= attack;
         if (hp <= 0) {
             onZeroHealth();
