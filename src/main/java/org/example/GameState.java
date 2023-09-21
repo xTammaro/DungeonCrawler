@@ -55,12 +55,12 @@ public class GameState {
     /**
      * the MeleeWeapon the player has equipped
      */
-     MeleeWeapon currentMeleeWeapon;
+     private MeleeWeapon currentMeleeWeapon;
 
     /**
      * the RangedWeapon the player has equipped
      */
-     RangedWeapon currentRangedWeapon;
+    private RangedWeapon currentRangedWeapon;
 
     /**
      * Determines whether we're in normal gameplay, or in the shop/inventory/title screen, etc.
@@ -88,6 +88,7 @@ public class GameState {
         this.mode = mode;
         Renderer.getInstance().renderEverything();
     }
+
 
     /**
      * @return Returns the current game mode. See comment for setGameMode()
@@ -521,6 +522,22 @@ public class GameState {
      */
     public List<Enemy> getEnemies() {
         return this.enemies;
+    }
+
+    public MeleeWeapon getCurrentMeleeWeapon() {
+        return currentMeleeWeapon;
+    }
+
+    public void setCurrentMeleeWeapon(MeleeWeapon currentMeleeWeapon) {
+        this.currentMeleeWeapon = currentMeleeWeapon;
+    }
+
+    public RangedWeapon getCurrentRangedWeapon() {
+        return currentRangedWeapon;
+    }
+
+    public void setCurrentRangedWeapon(RangedWeapon currentRangedWeapon) {
+        this.currentRangedWeapon = currentRangedWeapon;
     }
 
 }

@@ -118,18 +118,10 @@ abstract public class Actor {
         }
 
         if (GameState.getInstance().isOccupied(x,y)) {
-            GameState.getInstance().getActorAt(x,y).takeDamage(attackDamage());
+            GameState.getInstance().getActorAt(x,y).takeDamage(meleeAttackDamage());
         }
     }
 
-    /**
-     * Called when the actor uses a gun attack.
-     *
-     * @author Alex Boxall
-     */
-    void useGun() {
-
-    }
 
     /**
      * Causes this actor to take a certain amount of damage. If the health reaches zero,
@@ -157,10 +149,10 @@ abstract public class Actor {
 
     /**
      * Called when the actor attacks something
-     * @return The damage the actor does
+     * @return The melee damage the actor does
      * @author Tal Shy-Tielen
      */
-    abstract int attackDamage() ;
+    abstract int meleeAttackDamage() ;
     /**
      * Returns the actor's current health.
      * @return The current HP

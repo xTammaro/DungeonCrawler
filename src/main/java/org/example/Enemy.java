@@ -158,7 +158,7 @@ public class Enemy extends Actor {
      * @author Tal Shy-Tielen
      */
     public void attackPlayer() {
-        GameState.getInstance().player.takeDamage(attackDamage());
+        GameState.getInstance().player.takeDamage(meleeAttackDamage());
     }
 
     /**
@@ -294,7 +294,7 @@ public class Enemy extends Actor {
      * @return attack damage the zombie will inflict.
      * @author Tal Shy-Tielen
      */
-    public int attackDamage() {
+    public int meleeAttackDamage() {
         return 10;
     }
 
