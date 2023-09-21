@@ -118,7 +118,7 @@ public class Player extends Actor {
      * @return RangedWeapon Attack damage
      * @author Will Baird
      */
-    public  int rangeAttackDamage(){
+    public  int rangedAttackDamage(){
         return GameState.getInstance().getCurrentRangedWeapon().getDamage() + rangedBoost;
     }
 

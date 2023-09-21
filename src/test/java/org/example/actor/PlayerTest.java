@@ -26,19 +26,19 @@ public class PlayerTest {
     }
 
     @Test
-    public void rangeAttackDamageTest() {
+    public void rangedAttackDamageTest() {
         var gameState = GameState.getInstance();
         var player = new Player(1,1,30);
         gameState.setPlayer(player);
-        assertEquals(gameState.getPlayer().rangeAttackDamage(),1);
-        System.out.println(gameState.getPlayer().rangeAttackDamage());
+        assertEquals(gameState.getPlayer().rangedAttackDamage(),1);
+        System.out.println(gameState.getPlayer().rangedAttackDamage());
 
         gameState.setCurrentRangedWeapon(new RangedWeapon("gun",0, Rarity.COMMON,5,1));
-        assertEquals(gameState.getPlayer().rangeAttackDamage(),5);
-        System.out.println(gameState.getPlayer().rangeAttackDamage());
+        assertEquals(gameState.getPlayer().rangedAttackDamage(),5);
+        System.out.println(gameState.getPlayer().rangedAttackDamage());
 
         gameState.getPlayer().setRangedBoost(5);
-        assertEquals(gameState.getPlayer().rangeAttackDamage(),10);
-        System.out.println(gameState.getPlayer().rangeAttackDamage());
+        assertEquals(gameState.getPlayer().rangedAttackDamage(),10);
+        System.out.println(gameState.getPlayer().rangedAttackDamage());
     }
 }
