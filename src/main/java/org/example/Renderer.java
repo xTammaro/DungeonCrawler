@@ -415,6 +415,18 @@ public class Renderer extends JFrame {
     }
 
     /**
+     * Used to perform a fade-to-block in renderGameOver(). The higher this value, the darker the screen.
+     * Should range between 0 and 25. Gets reset to 0 on the title screen.
+     */
+    private int gameOverFadeoutCount = 0;
+
+    /**
+     * A Timer object used in renderGameOver() to perform the fade-to-black. Gets initialised on game
+     * over.
+     */
+    private Timer gameOverFadeoutTimer;
+
+    /**
      * The screen to be displayed when the player dies (i.e. loses all of their health).
      *
      * @author Alex Boxall
@@ -422,17 +434,49 @@ public class Renderer extends JFrame {
      * @param g The graphics object
      */
     private void renderGameOver(Graphics g) {
-        String errorMessage = String.format("GAME OVER!");
-        String continueMessage = String.format("Press ENTER to return to the title screen.");
+        if (gameOverFadeoutCount == 0) {
+            /*
+             * Start a timer for the fade to black that forces the game-over screen to be redrawn
+             * frequently. Each time, the counter is incremented, so the screen will get darker.
+             */
+            ++gameOverFadeoutCount;
+            renderGameplay(g);
+            gameOverFadeoutTimer = new Timer(50, (e) -> {
+                renderEverything();
+            });
+            gameOverFadeoutTimer.setRepeats(true);
+            gameOverFadeoutTimer.start();
 
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-        g.setColor(Color.WHITE);
-        g.setFont(new Font("Arial", Font.BOLD, 100));
-        g.drawString(errorMessage, (WINDOW_WIDTH - g.getFontMetrics().stringWidth(errorMessage)) / 2, WINDOW_HEIGHT / 3);
+        } else if (gameOverFadeoutCount < 25) {
+            /*
+             * Draw the fade-to-black, based on how far through the effect we are. Draws a transparent
+             * black rectangle over the top of the regular game screen.
+             */
+            ++gameOverFadeoutCount;
+            renderGameplay(g);
+            g.setColor(new Color(0, 0, 0, 16 + gameOverFadeoutCount * 8));
+            g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-        g.setFont(new Font("Arial", Font.BOLD, 24));
-        g.drawString(continueMessage, (WINDOW_WIDTH - g.getFontMetrics().stringWidth(continueMessage)) / 2, WINDOW_HEIGHT * 2 / 3);
+        } else if (gameOverFadeoutCount == 25) {
+            /*
+             * The fade-to-black is black enough that it's time to actually show the game over screen.
+             * Stop the timer to stop any additional updates.
+             */
+            gameOverFadeoutTimer.setRepeats(false);
+            gameOverFadeoutTimer.stop();
+
+            String errorMessage = String.format("GAME OVER!");
+            String continueMessage = String.format("Press ENTER to return to the title screen.");
+
+            g.setColor(Color.BLACK);
+            g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("Arial", Font.BOLD, 100));
+            g.drawString(errorMessage, (WINDOW_WIDTH - g.getFontMetrics().stringWidth(errorMessage)) / 2, WINDOW_HEIGHT / 3);
+
+            g.setFont(new Font("Arial", Font.BOLD, 24));
+            g.drawString(continueMessage, (WINDOW_WIDTH - g.getFontMetrics().stringWidth(continueMessage)) / 2, WINDOW_HEIGHT * 2 / 3);
+        }
     }
 
     /**
@@ -507,6 +551,11 @@ public class Renderer extends JFrame {
      * @param g The graphics object
      */
     private void renderTitleScreen(Graphics g) {
+        /*
+         * So the next game over will work.
+         */
+        gameOverFadeoutCount = 0;
+
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         g.setColor(Color.WHITE);
