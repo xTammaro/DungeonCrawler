@@ -603,9 +603,9 @@ public class Renderer extends JFrame {
         GameState.getInstance().board = b;
         GameState.getInstance().player = new Player(1, 1, 30);
         GameState.getInstance().enemies = new ArrayList<>();
-        GameState.getInstance().enemies.add(new Enemy(4, 1, 5));
-        GameState.getInstance().enemies.add(new Enemy(5, 4, 5));
-        GameState.getInstance().enemies.add(new Enemy(6, 6, 5));
+        GameState.getInstance().enemies.add(new Enemy(4, 1, 5, 10));
+        GameState.getInstance().enemies.add(new Enemy(5, 4, 5, 10));
+        GameState.getInstance().enemies.add(new Enemy(6, 6, 5, 10));
     }
 
     public static void main(String[] args) {
