@@ -29,10 +29,10 @@ public class testActors {
     }
 
     // Create some enemies and the player
-    Enemy enemy1 = new Enemy(4, 1, 5);
-    Enemy enemy2 = new Enemy(5, 4, 5);
-    Enemy enemy3 = new Enemy(6, 6, 5);
-    Enemy enemy4 = new Enemy(2, 3, 5);
+    Enemy enemy1 = new Enemy(4, 1, 5, 10);
+    Enemy enemy2 = new Enemy(5, 4, 5, 10);
+    Enemy enemy3 = new Enemy(6, 6, 5, 10);
+    Enemy enemy4 = new Enemy(2, 3, 5, 10);
     Player player = new Player(0,0, 100);
 
 
