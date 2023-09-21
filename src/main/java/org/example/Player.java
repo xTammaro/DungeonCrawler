@@ -30,6 +30,7 @@ public class Player extends Actor {
 
     /**
      * @param maxHealth the players new maxHealth
+     * @author Will Baird
      */
 
     public void setMaxHealth(int maxHealth) {
@@ -38,6 +39,7 @@ public class Player extends Actor {
 
     /**
      * @return extra melee damage the player does
+     * @author Will Baird
      */
     public int getMeleeBoost() {
         return meleeBoost;
@@ -45,12 +47,14 @@ public class Player extends Actor {
 
     /**
      * @param meleeBoost the new amount of extra melee damage
+     * @author Will Baird
      */
     public void setMeleeBoost(int meleeBoost) {
         this.meleeBoost = meleeBoost;
     }
     /**
      * @return extra ranged damage the player does
+     * @author Will Baird
      */
 
     public int getRangedBoost() {
@@ -59,6 +63,7 @@ public class Player extends Actor {
 
     /**
      * @param rangedBoost the new amount of extra ranged damage
+     * @author Will Baird
      */
     public void setRangedBoost(int rangedBoost) {
         this.rangedBoost = rangedBoost;

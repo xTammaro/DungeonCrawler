@@ -524,20 +524,36 @@ public class GameState {
         return this.enemies;
     }
 
+    /**
+     * @author Will Baird
+     * @return The player's current melee weapon.
+     */
     public MeleeWeapon getCurrentMeleeWeapon() {
         return currentMeleeWeapon;
     }
 
-    public void setCurrentMeleeWeapon(MeleeWeapon currentMeleeWeapon) {
-        this.currentMeleeWeapon = currentMeleeWeapon;
+    /**
+     * @author Will Baird
+     * @param newMeleeWeapon The melee weapon that the player will equip.
+     */
+    public void setCurrentMeleeWeapon(MeleeWeapon newMeleeWeapon) {
+        currentMeleeWeapon = newMeleeWeapon;
     }
 
+    /**
+     * @author Will Baird
+     * @return The player's current ranged weapon.
+     */
     public RangedWeapon getCurrentRangedWeapon() {
         return currentRangedWeapon;
     }
 
-    public void setCurrentRangedWeapon(RangedWeapon currentRangedWeapon) {
-        this.currentRangedWeapon = currentRangedWeapon;
+    /**
+     * @author Will Baird
+     * @param newRangedWeapon The ranged weapon that the player will equip.
+     */
+    public void setCurrentRangedWeapon(RangedWeapon newRangedWeapon) {
+        currentRangedWeapon = newRangedWeapon;
     }
 
 }
