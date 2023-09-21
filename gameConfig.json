@@ -4,6 +4,44 @@
     "health": 100,
     "weapons": ["sword", "bow"]
   },
+"enemies": {
+  "1": {
+    "health": 10,
+    "attack": 10
+  },
+  "2": {
+    "health": 100,
+    "attack": 20
+    },
+  "3": {
+    "health": 30,
+    "attack": 30
+    },
+  "4": {
+    "health": 40,
+    "attack": 40
+    },
+  "5": {
+    "health": 50,
+    "attack": 50
+    },
+  "6": {
+    "health": 60,
+    "attack": 60
+    },
+  "7": {
+    "health": 70,
+    "attack": 70
+    },
+  "8": {
+    "health": 80,
+    "attack": 80
+    },
+  "9": {
+    "health": 90,
+    "attack": 90
+    }
+  },
 "weapons": {
     "sword": {
       "damage": 10,
