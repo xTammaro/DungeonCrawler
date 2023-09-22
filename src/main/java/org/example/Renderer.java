@@ -255,10 +255,6 @@ public class Renderer extends JFrame {
      * @param tile The tile type.
      */
     private void renderTile(Graphics g, int x, int y, Tile tile) {
-        if (tile == Tile.Wall && !didLevelChange() && !didHUDChange()) {
-            return;
-        }
-
         int tileSize = getTileSize();
         int px = getPixelXFromTile(x, tileSize);
         int py = getPixelYFromTile(y, tileSize);
@@ -320,26 +316,26 @@ public class Renderer extends JFrame {
 
         Polygon player = new Polygon();
         switch (direction) {
-            case UP:
+            case UP -> {
                 player.addPoint(px + tileSize / 2, py);
                 player.addPoint(px, py + tileSize);
                 player.addPoint(px + tileSize, py + tileSize);
-                break;
-            case DOWN:
+            }
+            case DOWN -> {
                 player.addPoint(px + tileSize / 2, py + tileSize);
                 player.addPoint(px, py);
                 player.addPoint(px + tileSize, py);
-                break;
-            case LEFT:
+            }
+            case LEFT -> {
                 player.addPoint(px, py + tileSize / 2);
                 player.addPoint(px + tileSize, py);
                 player.addPoint(px + tileSize, py + tileSize);
-                break;
-            case RIGHT:
+            }
+            case RIGHT -> {
                 player.addPoint(px + tileSize, py + tileSize / 2);
                 player.addPoint(px, py);
                 player.addPoint(px, py + tileSize);
-                break;
+            }
         }
         g.fillPolygon(player);
     }
@@ -385,6 +381,48 @@ public class Renderer extends JFrame {
     }
 
     /**
+     * Draws a specified attack animation onscreen.
+     *
+     * @author Alex Boxall
+     * @param g The graphics object
+     * @param aa The attack animation to draw
+     */
+    private void renderAttackAnimation(Graphics g, AttackAnimation aa) {
+        g.setColor(aa.enemy ? Color.RED : Color.BLUE);
+        g.fillRect(aa.x, aa.y, aa.width, aa.height);
+    }
+
+    public void addMeleeAttackAnimation(Actor actor, Direction direction, boolean enemy) {
+        int tileSize = getTileSize();
+        int px = getPixelXFromTile(actor.getX(), tileSize);
+        int py = getPixelYFromTile(actor.getY(), tileSize);
+
+        attackAnimations.add(switch (direction) {
+            case UP     -> new AttackAnimation(px + tileSize / 2 - 2, py - tileSize / 2, 4, tileSize, enemy);
+            case DOWN   -> new AttackAnimation(px + tileSize / 2 - 2, py + tileSize / 2, 4, tileSize, enemy);
+            case LEFT   -> new AttackAnimation(px - tileSize / 2, py + tileSize / 2 - 2, tileSize, 4, enemy);
+            case RIGHT  -> new AttackAnimation(px + tileSize / 2, py + tileSize / 2 - 2, tileSize, 4, enemy);
+        });
+    }
+
+    public void addRangedAttackAnimation(Player player, int minX, int minY, int size) {
+        int tileSize = getTileSize();
+        boolean horizontal = player.getDirection() == Direction.LEFT || player.getDirection() == Direction.RIGHT;
+        int px = getPixelXFromTile(minX, tileSize) + tileSize / 2;
+        int py = getPixelYFromTile(minY, tileSize) + tileSize / 2;
+        int trueSize = size * getTileSize() - getTileSize() / 2;
+
+        if (player.getDirection() == Direction.LEFT) {
+            px += getTileSize() / 2;
+        }
+        if (player.getDirection() == Direction.UP) {
+            py += getTileSize() / 2;
+        }
+
+        attackAnimations.add(new AttackAnimation(px - (horizontal ? 0 : 2), py - (horizontal ? 2 : 0), horizontal ? trueSize : 4, horizontal ? 4 : trueSize, false));
+    }
+
+    /**
      * Draws the game, when we are in gameplay mode (as opposed to e.g., in the inventory
      * or in a shop).
      *
@@ -412,6 +450,61 @@ public class Renderer extends JFrame {
             renderEnemy(g, e.x, e.y);
         }
         renderPlayer(g, state.player.x, state.player.y);
+
+        /*
+         * Draw the attack animations over the top of everything else.
+         */
+        for (AttackAnimation aa: attackAnimations) {
+            renderAttackAnimation(g, aa);
+        }
+    }
+
+    /**
+     * Used to store the positions and sizes of attack animations to be drawn onscreen.
+     * An attack animation is simply at thin rectangle that looks like either a horizontal
+     * or vertical line.
+     *
+     * @author Alex Boxall
+     */
+    static class AttackAnimation {
+        /*
+         * Coordinates in pixels of the top left corner of the rectangle to draw.
+         */
+        int x;
+        int y;
+
+        /*
+         * The dimensions, in pixels.
+         */
+        int width;
+        int height;
+
+        /*
+         * Set to true if the enemy is making the attack, otherwise set to false for player-based
+         * attacks.
+         */
+        boolean enemy;
+
+        AttackAnimation(int x, int y, int width, int height, boolean enemy) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.enemy = enemy;
+        }
+    }
+
+    /**
+     * All of the active attack animations to be drawn when the screen gets repainted.
+     */
+    ArrayList<AttackAnimation> attackAnimations = new ArrayList<>();
+
+    /**
+     * Called at the start of a player's turn to remove any attack animations from the screen. This will
+     * not cause the screen to update - instead that will occur next time it is redrawn.
+     */
+    public void removeAttackAnimations() {
+        attackAnimations.clear();
     }
 
     /**
@@ -555,6 +648,8 @@ public class Renderer extends JFrame {
          * So the next game over will work.
          */
         gameOverFadeoutCount = 0;
+
+        removeAttackAnimations();
 
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);

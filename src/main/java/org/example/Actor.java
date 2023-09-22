@@ -102,36 +102,6 @@ abstract public class Actor {
     }
 
     /**
-     * Called when the actor uses a sword attack.
-     * This is also called when the enemies attack the player
-     * @author Alex Boxall
-     * @author Tal Shy-Tielen
-     */
-    void useSword() {
-        int x = this.x;
-        int y = this.y;
-        switch (direction) {
-            case UP     -> y--;
-            case DOWN   -> y++;
-            case LEFT   -> x--;
-            case RIGHT  -> x++;
-        }
-
-        if (GameState.getInstance().isOccupied(x,y)) {
-            GameState.getInstance().getActorAt(x,y).takeDamage(attackDamage());
-        }
-    }
-
-    /**
-     * Called when the actor uses a gun attack.
-     *
-     * @author Alex Boxall
-     */
-    void useGun() {
-
-    }
-
-    /**
      * Causes this actor to take a certain amount of damage. If the health reaches zero,
      * the Actor dies.
      *
@@ -167,5 +137,14 @@ abstract public class Actor {
      */
     public int getHP() {
         return hp;
+    }
+
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

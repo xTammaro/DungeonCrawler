@@ -369,6 +369,8 @@ public class GameState {
      * @param action The action that the user should take.
      */
     void actGameplay(Action action) {
+        Renderer.getInstance().removeAttackAnimations();
+
         if (action.isMove()) {
             /*
              * Allows direction to change even if the player cannot move in this direction.
@@ -391,6 +393,10 @@ public class GameState {
 
         } else if (action == Action.UseSword) {
             player.useSword();
+            endOfPlayerTurn();
+
+        } else if (action == Action.UseGun) {
+            player.useGun();
             endOfPlayerTurn();
         }
     }
