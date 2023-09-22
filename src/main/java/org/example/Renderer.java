@@ -47,6 +47,15 @@ public class Renderer extends JFrame {
             @Override
             public void keyPressed(KeyEvent e) {
                 /*
+                 * Dismiss the message screen if there is one.
+                 */
+                if (messageScreenText != null) {
+                    messageScreenText = null;
+                    renderEverything();
+                    return;
+                }
+
+                /*
                  * Gets called as soon as the user presses the key. Converts the keypress
                  * into an action which is then passed onto the GameState.
                  */
@@ -62,6 +71,11 @@ public class Renderer extends JFrame {
                     case KeyEvent.VK_I      -> GameState.getInstance().act(Action.OpenInventory);
                     case KeyEvent.VK_ENTER  -> GameState.getInstance().act(Action.StartGame);
                     case KeyEvent.VK_C      -> GameState.getInstance().act(Action.EnterChest);
+                    case KeyEvent.VK_1      -> GameState.getInstance().act(Action.KeyPress1);
+                    case KeyEvent.VK_2      -> GameState.getInstance().act(Action.KeyPress2);
+                    case KeyEvent.VK_3      -> GameState.getInstance().act(Action.KeyPress3);
+                    case KeyEvent.VK_4      -> GameState.getInstance().act(Action.KeyPress4);
+                    case KeyEvent.VK_5      -> GameState.getInstance().act(Action.KeyPress5);
                 }
             }
 
@@ -88,6 +102,7 @@ public class Renderer extends JFrame {
      */
     private int prevLevelNumber = -1;
     private int prevHP = -1;
+    private int prevGold = -1;
     private boolean prevHasKey = false;
 
     /**
@@ -133,6 +148,11 @@ public class Renderer extends JFrame {
         if (prevHP != GameState.getInstance().player.getHP()) {
             hudChanged = true;
             prevHP = GameState.getInstance().player.getHP();
+        }
+
+        if (prevGold != GameState.getInstance().getGold()) {
+            hudChanged = true;
+            prevGold = GameState.getInstance().getGold();
         }
 
         if (prevHasKey != GameState.getInstance().hasKey) {
@@ -378,9 +398,10 @@ public class Renderer extends JFrame {
 
         g.drawString("Level " + (GameState.getInstance().levelNumber + 1), 30, 60);
         g.drawString("HP: " + GameState.getInstance().player.getHP(), 30, 80);
+        g.drawString("Gold: " + GameState.getInstance().getGold(), 30, 100);
 
         if (GameState.getInstance().hasKey) {
-            drawKey(g, 25, 80, 64);
+            drawKey(g, 25, 100, 64);
         }
     }
 
@@ -497,19 +518,20 @@ public class Renderer extends JFrame {
     }
 
     /**
-     * Draws the shop screen when the player is in a shop.
+     * Draws a screen of text on a plain background. Useful for shops, chests, and messages.
+     * Handles newlines in the text correctly.
      *
      * @author Alex Boxall
      *
      * @param g The graphics object
+     * @param background The colour of the background
+     * @param foreground The colour of the text
+     * @param text The text to draw.
      */
-    private void renderShop(Graphics g) {
-        Shop shop = GameState.getInstance().getShop();
-        String text = shop.printInventory();
-
-        g.setColor(Color.LIGHT_GRAY);
+    private void renderTextScreen(Graphics g, Color background, Color foreground, String text) {
+        g.setColor(background);
         g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-        g.setColor(Color.BLACK);
+        g.setColor(foreground);
         g.setFont(new Font("Arial", Font.BOLD, 24));
 
         int ypos = WINDOW_HEIGHT / 3;
@@ -517,6 +539,59 @@ public class Renderer extends JFrame {
             g.drawString(line, WINDOW_WIDTH / 3, ypos);
             ypos += 27;
         }
+    }
+
+    /**
+     * Used to display full screen messages to the player that can be dismissed with any key.
+     * A message is displayed if the value of 'messageScreenText' is non-null.
+     */
+    Color messageScreenBg;
+    Color messageScreenFg;
+    String messageScreenText;
+
+    /**
+     * Causes the game to show a full-screen message on a plain-coloured background. The message will
+     * remain onscreen until the next key is pressed. The GameMode will be set to the specified value
+     * after the message is dismissed. No actions will be processed during the display of the message,
+     * as it bypasses sending normal actions.
+     *
+     * @param background The background colour of the screen when the message is active.
+     * @param foreground The colour of the message text.
+     * @param message The message to display.
+     * @param mode The GameMode to return to. If this is NULL, it will be the mode the game was in before
+     *             this call.
+     */
+    public void displayMessageScreen(Color background, Color foreground, String message, GameState.GameMode mode) {
+        /*
+         * We're fine to set GameMode early, as the game will not be playing while the message is active.
+         */
+        if (mode != null) {
+            GameState.getInstance().setGameMode(mode);
+        }
+
+        messageScreenText = message;
+        messageScreenBg = background;
+        messageScreenFg = foreground;
+
+        renderEverything();
+    }
+
+    /**
+     * Draws the shop screen when the player is in a shop.
+     * @author Alex Boxall
+     * @param g The graphics object
+     */
+    private void renderShop(Graphics g) {
+        renderTextScreen(g, Color.LIGHT_GRAY, Color.BLACK, GameState.getInstance().getShop().printInventory());
+    }
+
+    /**
+     * Draws the inventory screen when the player has their inventory open.
+     * @author Alex Boxall
+     * @param g The graphics object
+     */
+    private void renderInventory(Graphics g) {
+        renderTextScreen(g, Color.BLACK, Color.LIGHT_GRAY, GameState.getInstance().printInventory());
     }
 
     /**
@@ -528,19 +603,7 @@ public class Renderer extends JFrame {
      * @param g The graphics object
      */
     private void renderChest(Graphics g) {
-        var chest = GameState.getInstance().getChest();
-        String text = chest.printLoot();
-
-        g.setColor(Color.DARK_GRAY);
-        g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-        g.setColor(Color.BLACK);
-        g.setFont(new Font("Arial", Font.BOLD, 24));
-
-        int ypos = WINDOW_HEIGHT / 3;
-        for (String line: text.split("\n")) {
-            g.drawString(line, WINDOW_WIDTH / 3, ypos);
-            ypos += 27;
-        }
+        renderTextScreen(g, Color.DARK_GRAY, Color.BLACK, GameState.getInstance().getChest().printLoot());
     }
 
     /**
@@ -596,6 +659,11 @@ public class Renderer extends JFrame {
     public void paint(Graphics g) {
         GameState state = GameState.getInstance();
 
+        if (messageScreenText != null) {
+            renderTextScreen(g, messageScreenBg, messageScreenFg, messageScreenText);
+            return;
+        }
+
         if (state.board == null) {
             return;
         }
@@ -624,6 +692,7 @@ public class Renderer extends JFrame {
             case TitleScreen -> renderTitleScreen(g);
             case Shop -> renderShop(g);
             case Chest -> renderChest(g);
+            case Inventory -> renderInventory(g);
             case GameOverScreen -> renderGameOver(g);
             default -> renderNotImplementedFeatures(g);
         }

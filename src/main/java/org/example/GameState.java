@@ -4,6 +4,8 @@ import org.example.chest.Chest;
 import org.example.chest.ChestFactory;
 import org.example.item.*;
 import org.example.shop.*;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +54,7 @@ public class GameState {
      * The amount of gold the player has
      */
     int gold;
+
     /**
      * the MeleeWeapon the player has equipped
      */
@@ -265,7 +268,6 @@ public class GameState {
             }
         }
 
-
         return false;
     }
 
@@ -419,6 +421,11 @@ public class GameState {
     void actShop(Action action) {
         if (action == Action.EnterShop) {
             setGameMode(GameMode.Gameplay);
+        } else {
+            int index = action.translateToNumeric();
+            if (index != -1) {
+                Renderer.getInstance().displayMessageScreen(Color.LIGHT_GRAY, Color.BLACK, getShop().buy(index), null);
+            }
         }
     }
 
@@ -434,6 +441,11 @@ public class GameState {
     void actChest(Action action) {
         if (action == Action.EnterChest) {
             setGameMode(GameMode.Gameplay);
+        } else {
+            int index = action.translateToNumeric();
+            if (index != -1) {
+                Renderer.getInstance().displayMessageScreen(Color.DARK_GRAY, Color.BLACK, getChest().take(index), GameMode.Gameplay);
+            }
         }
     }
 
