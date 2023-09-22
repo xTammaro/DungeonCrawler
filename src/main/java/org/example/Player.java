@@ -86,8 +86,6 @@ public class Player extends Actor {
         int minX = getDirection() == Direction.LEFT ? x : this.x;
         int minY = getDirection() == Direction.UP ? y : this.y;
 
-        System.out.printf("%d, %d, %d\n", minX, minY, size);
-
         Renderer.getInstance().addRangedAttackAnimation(this, minX, minY, size);
     }
 

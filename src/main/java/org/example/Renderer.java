@@ -392,6 +392,14 @@ public class Renderer extends JFrame {
         g.fillRect(aa.x, aa.y, aa.width, aa.height);
     }
 
+    /**
+     * Adds a line to show that a melee attack has taken place. May be called by an enemy or a player.
+     *
+     * @param actor The actor that is making the attack
+     * @param direction The direction the actor is attacking (enemies attack toward the player even though
+     *                  they might not be facing that direction.
+     * @param enemy True if the enemy is making an attack, otherwise false for the player.
+     */
     public void addMeleeAttackAnimation(Actor actor, Direction direction, boolean enemy) {
         int tileSize = getTileSize();
         int px = getPixelXFromTile(actor.getX(), tileSize);
@@ -405,6 +413,16 @@ public class Renderer extends JFrame {
         });
     }
 
+    /**
+     * Adds a line to show that a ranged attack has taken place. Should be called when the attack is made.
+     *
+     * @author Alex Boxall
+     *
+     * @param player The player making the attack
+     * @param minX The leftmost tile that is being attacked
+     * @param minY The topmost tile that is being attacked
+     * @param size How long (either wide or high, depending on direction) the attack is.
+     */
     public void addRangedAttackAnimation(Player player, int minX, int minY, int size) {
         int tileSize = getTileSize();
         boolean horizontal = player.getDirection() == Direction.LEFT || player.getDirection() == Direction.RIGHT;
