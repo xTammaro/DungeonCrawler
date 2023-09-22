@@ -36,7 +36,7 @@ public class Renderer extends JFrame {
     /**
      * The private constructor for the singleton Renderer object. Only gets called once.
      * Initialises the window and adds any required event listeners.
-     * 
+     *
      * @author Alex Boxall
      */
     private Renderer() {
@@ -313,33 +313,33 @@ public class Renderer extends JFrame {
         int px = getPixelXFromTile(x, tileSize) + tileSize / 4;
         int py = getPixelYFromTile(y, tileSize) + tileSize / 4;
         tileSize /= 2;
-        
+
         Direction direction = GameState.getInstance().player.getDirection();
 
         g.setColor(Color.BLUE);
 
         Polygon player = new Polygon();
         switch (direction) {
-        case UP:
-            player.addPoint(px + tileSize / 2, py);
-            player.addPoint(px, py + tileSize);
-            player.addPoint(px + tileSize, py + tileSize);
-            break;
-        case DOWN:
-            player.addPoint(px + tileSize / 2, py + tileSize);
-            player.addPoint(px, py);
-            player.addPoint(px + tileSize, py);
-            break;
-        case LEFT:
-            player.addPoint(px, py + tileSize / 2);
-            player.addPoint(px + tileSize, py);
-            player.addPoint(px + tileSize, py + tileSize);
-            break;
-        case RIGHT:
-            player.addPoint(px + tileSize, py + tileSize / 2);
-            player.addPoint(px, py);
-            player.addPoint(px, py + tileSize);
-            break;
+            case UP:
+                player.addPoint(px + tileSize / 2, py);
+                player.addPoint(px, py + tileSize);
+                player.addPoint(px + tileSize, py + tileSize);
+                break;
+            case DOWN:
+                player.addPoint(px + tileSize / 2, py + tileSize);
+                player.addPoint(px, py);
+                player.addPoint(px + tileSize, py);
+                break;
+            case LEFT:
+                player.addPoint(px, py + tileSize / 2);
+                player.addPoint(px + tileSize, py);
+                player.addPoint(px + tileSize, py + tileSize);
+                break;
+            case RIGHT:
+                player.addPoint(px + tileSize, py + tileSize / 2);
+                player.addPoint(px, py);
+                player.addPoint(px, py + tileSize);
+                break;
         }
         g.fillPolygon(player);
     }
@@ -415,6 +415,71 @@ public class Renderer extends JFrame {
     }
 
     /**
+     * Used to perform a fade-to-block in renderGameOver(). The higher this value, the darker the screen.
+     * Should range between 0 and 25. Gets reset to 0 on the title screen.
+     */
+    private int gameOverFadeoutCount = 0;
+
+    /**
+     * A Timer object used in renderGameOver() to perform the fade-to-black. Gets initialised on game
+     * over.
+     */
+    private Timer gameOverFadeoutTimer;
+
+    /**
+     * The screen to be displayed when the player dies (i.e. loses all of their health).
+     *
+     * @author Alex Boxall
+     *
+     * @param g The graphics object
+     */
+    private void renderGameOver(Graphics g) {
+        if (gameOverFadeoutCount == 0) {
+            /*
+             * Start a timer for the fade to black that forces the game-over screen to be redrawn
+             * frequently. Each time, the counter is incremented, so the screen will get darker.
+             */
+            ++gameOverFadeoutCount;
+            renderGameplay(g);
+            gameOverFadeoutTimer = new Timer(50, (e) -> {
+                renderEverything();
+            });
+            gameOverFadeoutTimer.setRepeats(true);
+            gameOverFadeoutTimer.start();
+
+        } else if (gameOverFadeoutCount < 25) {
+            /*
+             * Draw the fade-to-black, based on how far through the effect we are. Draws a transparent
+             * black rectangle over the top of the regular game screen.
+             */
+            ++gameOverFadeoutCount;
+            renderGameplay(g);
+            g.setColor(new Color(0, 0, 0, 16 + gameOverFadeoutCount * 8));
+            g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+        } else if (gameOverFadeoutCount == 25) {
+            /*
+             * The fade-to-black is black enough that it's time to actually show the game over screen.
+             * Stop the timer to stop any additional updates.
+             */
+            gameOverFadeoutTimer.setRepeats(false);
+            gameOverFadeoutTimer.stop();
+
+            String errorMessage = String.format("GAME OVER!");
+            String continueMessage = String.format("Press ENTER to return to the title screen.");
+
+            g.setColor(Color.BLACK);
+            g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("Arial", Font.BOLD, 100));
+            g.drawString(errorMessage, (WINDOW_WIDTH - g.getFontMetrics().stringWidth(errorMessage)) / 2, WINDOW_HEIGHT / 3);
+
+            g.setFont(new Font("Arial", Font.BOLD, 24));
+            g.drawString(continueMessage, (WINDOW_WIDTH - g.getFontMetrics().stringWidth(continueMessage)) / 2, WINDOW_HEIGHT * 2 / 3);
+        }
+    }
+
+    /**
      * A screen that should only appear while we're still working on stuff.
      *
      * @author Alex Boxall
@@ -486,6 +551,11 @@ public class Renderer extends JFrame {
      * @param g The graphics object
      */
     private void renderTitleScreen(Graphics g) {
+        /*
+         * So the next game over will work.
+         */
+        gameOverFadeoutCount = 0;
+
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         g.setColor(Color.WHITE);
@@ -554,6 +624,7 @@ public class Renderer extends JFrame {
             case TitleScreen -> renderTitleScreen(g);
             case Shop -> renderShop(g);
             case Chest -> renderChest(g);
+            case GameOverScreen -> renderGameOver(g);
             default -> renderNotImplementedFeatures(g);
         }
     }
@@ -588,7 +659,7 @@ public class Renderer extends JFrame {
      *
      * @author Alex Boxall
      */
-    private void setDemoState() {
+    void setDemoState() {
         Board b = new Board();
         b.setAllTiles(new Tile[][] {
                 new Tile[]{Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall , Tile.Wall },
