@@ -505,7 +505,7 @@ public class GameState {
             instance = new GameState();
 
             // TODO: remove this after level loading is implemented
-            Renderer.getInstance().setDemoState();
+            Main.setDemoState();
 
             Renderer.getInstance().renderEverything();
         }
