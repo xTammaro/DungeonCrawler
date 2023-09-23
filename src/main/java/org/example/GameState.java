@@ -177,7 +177,7 @@ public class GameState {
     private GameState() {
         inventory = new ArrayList<>();
         currentMeleeWeapon = new MeleeWeapon("Stick",5, Rarity.COMMON,1);
-        currentRangedWeapon = new RangedWeapon("Sling",5,Rarity.COMMON,1,2);
+        currentRangedWeapon = new RangedWeapon("Sling",5,Rarity.COMMON,10,2);
         //TODO: Move adding Items to somewhere else
         createGameItems();
 
@@ -454,6 +454,7 @@ public class GameState {
         }
     }
 
+
     /**
      * Action handler for the chest. Allows users to take Items, and/or exit
      * the shop.
@@ -475,16 +476,49 @@ public class GameState {
     }
 
     /**
-     * Action handler for the inventory screen. Allows users to buy items, and/or exit
-     * the shop.
+     * Action handler for the inventory screen. Allows users to swap weapons, and/or use
+     * health potions.
      *
      * @author Alex Boxall
+     * @author Will Baird
      *
      * @param action The action that the user should take.
      */
     void actInventory(Action action) {
         if (action == Action.OpenInventory) {
             setGameMode(GameMode.Gameplay);
+        } else {
+
+            int index = action.translateToNumeric();
+
+            if(index!= -1){
+
+                var item = getInventory().get(index-1).getItem();
+                var shopItem = getInventory().get(index-1);
+
+                if(shopItem.getQuantity() > 0){
+
+                    if (item.getClass().equals(MeleeWeapon.class)) {
+                        new ShopItem(currentMeleeWeapon, 1).addToPlayerInventory();
+                        setCurrentMeleeWeapon((MeleeWeapon) item);
+                        shopItem.setQuantity(shopItem.getQuantity()-1);
+                        Renderer.getInstance().render();
+
+                    } else if (item.getClass().equals(RangedWeapon.class)) {
+                        new ShopItem(currentRangedWeapon, 1).addToPlayerInventory();
+                        setCurrentRangedWeapon((RangedWeapon) item);
+                        shopItem.setQuantity(shopItem.getQuantity()-1);
+                        Renderer.getInstance().render();
+
+                    } else if (item.getClass().equals(HealthPotion.class)) {
+                        ((HealthPotion) item).heal();
+                        shopItem.setQuantity(shopItem.getQuantity() - 1);
+                        Renderer.getInstance().render();
+                    }
+                } else {
+                    System.out.println("Quantity < 0");
+                }
+            }
         }
     }
 

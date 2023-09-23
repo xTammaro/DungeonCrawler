@@ -60,11 +60,13 @@ public class Chest {
                     shopItem.addToPlayerInventory();
                 }
             }
+            gold = 0;
             return s.append("Everything added to Inventory").toString();
         }
 
         if(number == 1){
             GameState.getInstance().setGold(playerGold + gold);
+            gold = 0;
             return s.append(String.format("%d Gold added to Inventory", gold)).toString();
         }
 
