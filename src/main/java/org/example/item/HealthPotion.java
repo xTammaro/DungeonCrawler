@@ -32,4 +32,13 @@ public class HealthPotion extends ConsumableItem{
     public int getHealth() {
         return health;
     }
+
+    /**
+     * heals the player health number of hp
+     * does not heal more than player max health
+     */
+    public void heal(){
+        //TODO
+    }
+
 }
