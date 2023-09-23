@@ -21,6 +21,9 @@ public class RendererConsole implements Renderer {
         return instance;
     }
 
+    /**
+     * The private constructor for the console singleton.
+     */
     private RendererConsole() {
 
     }
@@ -46,8 +49,19 @@ public class RendererConsole implements Renderer {
          */
     }
 
+    @Override
+    public void displayMessageScreen(Color background, Color foreground, String message, GameState.GameMode mode) {
+        drawMessage(message);
+        waitEnter();
+    }
+
     private Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Waits for the player to press a character and then ENTER.
+     * @author Alex Boxall
+     * @return The character that was entered
+     */
     private char getCharacter() {
         while (!scanner.hasNextLine()) {
             ;
@@ -55,6 +69,10 @@ public class RendererConsole implements Renderer {
         return (scanner.nextLine() + "\n").charAt(0);
     }
 
+    /**
+     * Waits for the player to press ENTER.
+     * @author Alex Boxall
+     */
     private void waitEnter() {
         while (!scanner.hasNextLine()) {
             ;
@@ -62,16 +80,21 @@ public class RendererConsole implements Renderer {
         scanner.nextLine();
     }
 
+    /**
+     * Draws a message on screen.
+     * @author Alex Boxall
+     * @param message The text to display.
+     */
     private void drawMessage(String message) {
         System.out.printf("------------------------------------------\n%s\n------------------------------------------\n", message);
     }
 
-    @Override
-    public void displayMessageScreen(Color background, Color foreground, String message, GameState.GameMode mode) {
-        drawMessage(message);
-        waitEnter();
-    }
-
+    /**
+     * Given a tile type, returns a character to represent that tile.
+     * @author Alex Boxall
+     * @param t The tile
+     * @return The character representing the tile
+     */
     private char getCharacterForTile(Tile t) {
         return switch (t) {
             case Wall -> '#';
@@ -83,6 +106,10 @@ public class RendererConsole implements Renderer {
         };
     }
 
+    /**
+     * Draws the gameplay screen onto the terminal.
+     * @author Alex Boxall
+     */
     private void drawGameplay() {
         GameState state = GameState.getInstance();
 
@@ -113,6 +140,10 @@ public class RendererConsole implements Renderer {
         System.out.printf("\tHP: %d\n\tGold: %d\n\tLevel: %d\n\t%s\n", state.player.getHP(), state.getGold(), state.levelNumber, state.hasKey ? "Got key" : "");
     }
 
+    /**
+     * Redraws the entire screen, depending on what the game mode currently is.
+     * @author Alex Boxall
+     */
     @Override
     public void renderEverything() {
         switch (GameState.getInstance().getGameMode()) {
@@ -125,11 +156,22 @@ public class RendererConsole implements Renderer {
         }
     }
 
+    /**
+     * Draws the parts of the screen that need updating. This is a console application, so the whole
+     * thing will be redrawn each time.
+     * @author Alex Boxall
+     */
     @Override
     public void render() {
         renderEverything();
     }
 
+    /**
+     * The main body of the game. Gets a character from the keyboard and acts upon it.
+     * To be called in a loop.
+     *
+     * @author Alex Boxall
+     */
     public void run() {
         switch (Character.toUpperCase(getCharacter())) {
             case 'A'  -> GameState.getInstance().act(Action.MoveLeft);
