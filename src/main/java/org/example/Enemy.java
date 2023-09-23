@@ -81,29 +81,42 @@ public class Enemy extends Actor {
         if (currentMode == EnemyMode.RoamMode) {
             // If the enemy is at the target location, generate a new random location.
             if (targetX == x && targetY == y) {
-                Point target_coordinate = getNewRandomLocation(LOCATION_DISTANCE);
-                setTargetLocation(target_coordinate);
-                // Generate path to target location
-                path = pathFinder.findPath(x, y, targetX, targetY);
-                path.remove(0); // Remove the first node in the path, as it is the current location of the enemy.
-                // In case the path is null, generate a new random location.
+                generatePath(true);
                 while (path == null) {
-                    target_coordinate = getNewRandomLocation(LOCATION_DISTANCE);
-                    setTargetLocation(target_coordinate);
-                    path = pathFinder.findPath(x, y, targetX, targetY);
-                    path.remove(0);
+                    generatePath(true);
                 }
             }
-
-            moveToNextTileInPath();
         }
         else {
             // If the enemy is in attack mode, move towards the player.
-            setTargetLocation(new Point(player.getX(), player.getY()));
-            path = pathFinder.findPath(x, y, targetX, targetY);
-            path.remove(0); // Remove the first node in the path, as it is the current location of the enemy.
-            moveToNextTileInPath();
+            generatePath(false);
         }
+        // Check if path is blocked by another enemy, if so, generate a new random path.
+        AStarAlgorithm.Node nextNode = path.get(0);
+        while (GameState.getInstance().isOccupiedbyEnemy(nextNode.x, nextNode.y)) {
+            generatePath(true);
+            nextNode = path.get(0);
+        }
+        // Move the enemy to the next tile in the path.
+        moveToNextTileInPath();
+    }
+
+    /**
+     * Generates a new path for the enemy to follow.
+     * @author Jake Tammaro
+     * @param random If the path should be random or not. 1 = random, 0 = towards player
+     */
+    public void generatePath(Boolean random) {
+        Player player = GameState.getInstance().getPlayer();
+        if (random) {
+            Point target_coordinate = getNewRandomLocation(LOCATION_DISTANCE);
+            setTargetLocation(target_coordinate);
+        }
+        else {
+            setTargetLocation(new Point(player.getX(), player.getY()));
+        }
+        path = pathFinder.findPath(x, y, targetX, targetY);
+        path.remove(0);
     }
 
     /**
