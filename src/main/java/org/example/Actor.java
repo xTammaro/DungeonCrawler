@@ -160,4 +160,13 @@ abstract public class Actor {
     public int getHP() {
         return hp;
     }
+
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
 }

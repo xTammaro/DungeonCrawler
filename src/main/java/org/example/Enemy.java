@@ -158,6 +158,14 @@ public class Enemy extends Actor {
      * @author Tal Shy-Tielen
      */
     public void attackPlayer() {
+        Direction relativeDirection;
+        Player player = GameState.getInstance().getPlayer();
+        if (player.x == this.x) {
+            relativeDirection = player.y > this.y ? Direction.DOWN : Direction.UP;
+        } else {
+            relativeDirection = player.x > this.x ? Direction.RIGHT : Direction.LEFT;
+        }
+        Renderer.getInstance().addMeleeAttackAnimation(this, relativeDirection, true);
         GameState.getInstance().player.takeDamage(meleeAttackDamage());
     }
 
