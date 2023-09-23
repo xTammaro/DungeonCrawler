@@ -7,7 +7,67 @@ package org.example;
 public class Player extends Actor {
 
     private int gold;
+    /**
+     * the Max amount of Health the player can have
+     */
+    private int maxHealth;
+    /**
+     * extra melee damage the player does
+     */
+    private int meleeBoost = 0;
 
+    /**
+     * extra ranged damage the player does
+     */
+    private int rangedBoost = 0;
+
+    /**
+     * @return the player maxHealth
+     */
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    /**
+     * @param maxHealth the players new maxHealth
+     * @author Will Baird
+     */
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+
+    /**
+     * @return extra melee damage the player does
+     * @author Will Baird
+     */
+    public int getMeleeBoost() {
+        return meleeBoost;
+    }
+
+    /**
+     * @param meleeBoost the new amount of extra melee damage
+     * @author Will Baird
+     */
+    public void setMeleeBoost(int meleeBoost) {
+        this.meleeBoost = meleeBoost;
+    }
+    /**
+     * @return extra ranged damage the player does
+     * @author Will Baird
+     */
+
+    public int getRangedBoost() {
+        return rangedBoost;
+    }
+
+    /**
+     * @param rangedBoost the new amount of extra ranged damage
+     * @author Will Baird
+     */
+    public void setRangedBoost(int rangedBoost) {
+        this.rangedBoost = rangedBoost;
+    }
 
     /**
      * The player constructor.
@@ -22,6 +82,7 @@ public class Player extends Actor {
     public Player(int x, int y, int hp) {
         super(x, y, hp);
         this.gold = 0;
+        this.maxHealth = hp;
     }
 
     /**
@@ -36,13 +97,34 @@ public class Player extends Actor {
 
 
     /**
-     * Calculates the attack damage.
-     * This should use hte player's weapon
-     * @return Attack damage
-     * @author Tal Shy-Tielen
+     * Called when the actor uses a gun attack.
+     *
+     * @author Alex Boxall
      */
-    public int attackDamage() {
-        return 50;
+    void useGun() {
+        // Moved to player because Enemy dont have range weapons
+        //TODO: get players range damage by calling rangeAttackDamage
+    }
+
+    /**
+     * Calculates the attack damage.
+     * This should use the player's melee weapon
+     * @return MeleeWeapon Attack damage
+     * @author Tal Shy-Tielen
+     * @author Will Baird
+     */
+    public int meleeAttackDamage() {
+        return GameState.getInstance().getCurrentMeleeWeapon().getDamage() + meleeBoost;
+    }
+
+    /**
+     * Calculates the attack damage.
+     * This should use the player's ranged weapon
+     * @return RangedWeapon Attack damage
+     * @author Will Baird
+     */
+    public  int rangedAttackDamage(){
+        return GameState.getInstance().getCurrentRangedWeapon().getDamage() + rangedBoost;
     }
 
     /**
