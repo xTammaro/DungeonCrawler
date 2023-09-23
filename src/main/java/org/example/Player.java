@@ -112,7 +112,7 @@ public class Player extends Actor {
         }
 
         if (GameState.getInstance().isOccupied(x,y)) {
-            GameState.getInstance().getActorAt(x,y).takeDamage(attackDamage());
+            GameState.getInstance().getActorAt(x,y).takeDamage(meleeAttackDamage());
         }
 
         Renderer.getInstance().addMeleeAttackAnimation(this, this.getDirection(), false);
@@ -140,7 +140,7 @@ public class Player extends Actor {
             ++size;
 
             if (GameState.getInstance().isOccupied(x,y)) {
-                GameState.getInstance().getActorAt(x,y).takeDamage(attackDamage());
+                GameState.getInstance().getActorAt(x,y).takeDamage(rangedAttackDamage());
             }
         }
 
@@ -148,16 +148,6 @@ public class Player extends Actor {
         int minY = getDirection() == Direction.UP ? y : this.y;
 
         Renderer.getInstance().addRangedAttackAnimation(this, minX, minY, size);
-    }
-
-    /**
-     * Called when the actor uses a gun attack.
-     *
-     * @author Alex Boxall
-     */
-    void useGun() {
-        // Moved to player because Enemy dont have range weapons
-        //TODO: get players range damage by calling rangeAttackDamage
     }
 
     /**
