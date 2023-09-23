@@ -270,6 +270,24 @@ public class GameState {
     }
 
     /**
+     * Determines if an enemy is on a given tile. Used in part of collision detection.
+     * @author Jake Tammaro
+     * @param x x coordinate of tile.
+     * @param y y coordinate of tile.
+     * @return true if an enemy is on tile, false if not. If there are no enemies, returns false.
+     */
+    public boolean isOccupiedbyEnemy(int x, int y) {
+        if (enemies != null) {
+            for (Enemy e : enemies) {
+                if (e.x == x && e.y == y) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * Get the actor at a certain position, returns null if there is no actor.
      * @param x x coordinate of actor.
      * @param y y coordinate of actor
