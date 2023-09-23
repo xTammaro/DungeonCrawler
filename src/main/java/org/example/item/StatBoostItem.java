@@ -1,5 +1,7 @@
 package org.example.item;
 
+import org.example.GameState;
+
 public class StatBoostItem extends Item{
 
 
@@ -38,15 +40,16 @@ public class StatBoostItem extends Item{
      * based on playerStatType
      */
     public void applyStat(){
+        var player = GameState.getInstance().getPlayer();
         switch (playerStatType){
             case HEALTH -> {
-                //TODO: set the player health to health + StatBoostAmount
+                player.setMaxHealth(player.getMaxHealth() + statBoostAmount);
             }
             case MELEE_DAMAGE -> {
-                //TODO: set the player melee_damage to health + StatBoostAmount
+                player.setMeleeBoost(player.getMeleeBoost() + statBoostAmount);
             }
             case RANGE_DAMAGE -> {
-                //TODO: set the player range_damage to health + StatBoostAmount
+                player.setRangedBoost(player.getRangedBoost() + statBoostAmount);
             }
         }
     }
