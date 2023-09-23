@@ -47,6 +47,15 @@ public class Renderer extends JFrame {
             @Override
             public void keyPressed(KeyEvent e) {
                 /*
+                 * Dismiss the message screen if there is one.
+                 */
+                if (messageScreenText != null) {
+                    messageScreenText = null;
+                    renderEverything();
+                    return;
+                }
+
+                /*
                  * Gets called as soon as the user presses the key. Converts the keypress
                  * into an action which is then passed onto the GameState.
                  */
@@ -62,6 +71,11 @@ public class Renderer extends JFrame {
                     case KeyEvent.VK_I      -> GameState.getInstance().act(Action.OpenInventory);
                     case KeyEvent.VK_ENTER  -> GameState.getInstance().act(Action.StartGame);
                     case KeyEvent.VK_C      -> GameState.getInstance().act(Action.EnterChest);
+                    case KeyEvent.VK_1      -> GameState.getInstance().act(Action.KeyPress1);
+                    case KeyEvent.VK_2      -> GameState.getInstance().act(Action.KeyPress2);
+                    case KeyEvent.VK_3      -> GameState.getInstance().act(Action.KeyPress3);
+                    case KeyEvent.VK_4      -> GameState.getInstance().act(Action.KeyPress4);
+                    case KeyEvent.VK_5      -> GameState.getInstance().act(Action.KeyPress5);
                 }
             }
 
@@ -88,6 +102,7 @@ public class Renderer extends JFrame {
      */
     private int prevLevelNumber = -1;
     private int prevHP = -1;
+    private int prevGold = -1;
     private boolean prevHasKey = false;
 
     /**
@@ -133,6 +148,11 @@ public class Renderer extends JFrame {
         if (prevHP != GameState.getInstance().player.getHP()) {
             hudChanged = true;
             prevHP = GameState.getInstance().player.getHP();
+        }
+
+        if (prevGold != GameState.getInstance().getGold()) {
+            hudChanged = true;
+            prevGold = GameState.getInstance().getGold();
         }
 
         if (prevHasKey != GameState.getInstance().hasKey) {
@@ -255,10 +275,6 @@ public class Renderer extends JFrame {
      * @param tile The tile type.
      */
     private void renderTile(Graphics g, int x, int y, Tile tile) {
-        if (tile == Tile.Wall && !didLevelChange() && !didHUDChange()) {
-            return;
-        }
-
         int tileSize = getTileSize();
         int px = getPixelXFromTile(x, tileSize);
         int py = getPixelYFromTile(y, tileSize);
@@ -320,26 +336,26 @@ public class Renderer extends JFrame {
 
         Polygon player = new Polygon();
         switch (direction) {
-            case UP:
+            case UP -> {
                 player.addPoint(px + tileSize / 2, py);
                 player.addPoint(px, py + tileSize);
                 player.addPoint(px + tileSize, py + tileSize);
-                break;
-            case DOWN:
+            }
+            case DOWN -> {
                 player.addPoint(px + tileSize / 2, py + tileSize);
                 player.addPoint(px, py);
                 player.addPoint(px + tileSize, py);
-                break;
-            case LEFT:
+            }
+            case LEFT -> {
                 player.addPoint(px, py + tileSize / 2);
                 player.addPoint(px + tileSize, py);
                 player.addPoint(px + tileSize, py + tileSize);
-                break;
-            case RIGHT:
+            }
+            case RIGHT -> {
                 player.addPoint(px + tileSize, py + tileSize / 2);
                 player.addPoint(px, py);
                 player.addPoint(px, py + tileSize);
-                break;
+            }
         }
         g.fillPolygon(player);
     }
@@ -378,10 +394,71 @@ public class Renderer extends JFrame {
 
         g.drawString("Level " + (GameState.getInstance().levelNumber + 1), 30, 60);
         g.drawString("HP: " + GameState.getInstance().player.getHP(), 30, 80);
+        g.drawString("Gold: " + GameState.getInstance().getGold(), 30, 100);
 
         if (GameState.getInstance().hasKey) {
-            drawKey(g, 25, 80, 64);
+            drawKey(g, 25, 100, 64);
         }
+    }
+
+    /**
+     * Draws a specified attack animation onscreen.
+     *
+     * @author Alex Boxall
+     * @param g The graphics object
+     * @param aa The attack animation to draw
+     */
+    private void renderAttackAnimation(Graphics g, AttackAnimation aa) {
+        g.setColor(aa.enemy ? Color.RED : Color.BLUE);
+        g.fillRect(aa.x, aa.y, aa.width, aa.height);
+    }
+
+    /**
+     * Adds a line to show that a melee attack has taken place. May be called by an enemy or a player.
+     *
+     * @param actor The actor that is making the attack
+     * @param direction The direction the actor is attacking (enemies attack toward the player even though
+     *                  they might not be facing that direction.
+     * @param enemy True if the enemy is making an attack, otherwise false for the player.
+     */
+    public void addMeleeAttackAnimation(Actor actor, Direction direction, boolean enemy) {
+        int tileSize = getTileSize();
+        int px = getPixelXFromTile(actor.getX(), tileSize);
+        int py = getPixelYFromTile(actor.getY(), tileSize);
+
+        attackAnimations.add(switch (direction) {
+            case UP     -> new AttackAnimation(px + tileSize / 2 - 2, py - tileSize / 2, 4, tileSize, enemy);
+            case DOWN   -> new AttackAnimation(px + tileSize / 2 - 2, py + tileSize / 2, 4, tileSize, enemy);
+            case LEFT   -> new AttackAnimation(px - tileSize / 2, py + tileSize / 2 - 2, tileSize, 4, enemy);
+            case RIGHT  -> new AttackAnimation(px + tileSize / 2, py + tileSize / 2 - 2, tileSize, 4, enemy);
+        });
+    }
+
+    /**
+     * Adds a line to show that a ranged attack has taken place. Should be called when the attack is made.
+     *
+     * @author Alex Boxall
+     *
+     * @param player The player making the attack
+     * @param minX The leftmost tile that is being attacked
+     * @param minY The topmost tile that is being attacked
+     * @param size How long (either wide or high, depending on direction) the attack is.
+     */
+    public void addRangedAttackAnimation(Player player, int minX, int minY, int size) {
+        int tileSize = getTileSize();
+        boolean horizontal = player.getDirection() == Direction.LEFT || player.getDirection() == Direction.RIGHT;
+        int px = getPixelXFromTile(minX, tileSize) + tileSize / 2;
+        int py = getPixelYFromTile(minY, tileSize) + tileSize / 2;
+        int trueSize = size * getTileSize() - getTileSize() / 2;
+
+        if (player.getDirection() == Direction.LEFT) {
+            px += getTileSize() / 2;
+        }
+        if (player.getDirection() == Direction.UP) {
+            py += getTileSize() / 2;
+        }
+
+        attackAnimations.add(new AttackAnimation(px - (horizontal ? 0 : 2), py - (horizontal ? 2 : 0), horizontal ? trueSize : 4, horizontal ? 4 : trueSize, false));
     }
 
     /**
@@ -412,6 +489,61 @@ public class Renderer extends JFrame {
             renderEnemy(g, e.x, e.y);
         }
         renderPlayer(g, state.player.x, state.player.y);
+
+        /*
+         * Draw the attack animations over the top of everything else.
+         */
+        for (AttackAnimation aa: attackAnimations) {
+            renderAttackAnimation(g, aa);
+        }
+    }
+
+    /**
+     * Used to store the positions and sizes of attack animations to be drawn onscreen.
+     * An attack animation is simply at thin rectangle that looks like either a horizontal
+     * or vertical line.
+     *
+     * @author Alex Boxall
+     */
+    static class AttackAnimation {
+        /*
+         * Coordinates in pixels of the top left corner of the rectangle to draw.
+         */
+        int x;
+        int y;
+
+        /*
+         * The dimensions, in pixels.
+         */
+        int width;
+        int height;
+
+        /*
+         * Set to true if the enemy is making the attack, otherwise set to false for player-based
+         * attacks.
+         */
+        boolean enemy;
+
+        AttackAnimation(int x, int y, int width, int height, boolean enemy) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.enemy = enemy;
+        }
+    }
+
+    /**
+     * All of the active attack animations to be drawn when the screen gets repainted.
+     */
+    ArrayList<AttackAnimation> attackAnimations = new ArrayList<>();
+
+    /**
+     * Called at the start of a player's turn to remove any attack animations from the screen. This will
+     * not cause the screen to update - instead that will occur next time it is redrawn.
+     */
+    public void removeAttackAnimations() {
+        attackAnimations.clear();
     }
 
     /**
@@ -497,19 +629,20 @@ public class Renderer extends JFrame {
     }
 
     /**
-     * Draws the shop screen when the player is in a shop.
+     * Draws a screen of text on a plain background. Useful for shops, chests, and messages.
+     * Handles newlines in the text correctly.
      *
      * @author Alex Boxall
      *
      * @param g The graphics object
+     * @param background The colour of the background
+     * @param foreground The colour of the text
+     * @param text The text to draw.
      */
-    private void renderShop(Graphics g) {
-        Shop shop = GameState.getInstance().getShop();
-        String text = shop.printInventory();
-
-        g.setColor(Color.LIGHT_GRAY);
+    private void renderTextScreen(Graphics g, Color background, Color foreground, String text) {
+        g.setColor(background);
         g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-        g.setColor(Color.BLACK);
+        g.setColor(foreground);
         g.setFont(new Font("Arial", Font.BOLD, 24));
 
         int ypos = WINDOW_HEIGHT / 3;
@@ -517,6 +650,59 @@ public class Renderer extends JFrame {
             g.drawString(line, WINDOW_WIDTH / 3, ypos);
             ypos += 27;
         }
+    }
+
+    /**
+     * Used to display full screen messages to the player that can be dismissed with any key.
+     * A message is displayed if the value of 'messageScreenText' is non-null.
+     */
+    Color messageScreenBg;
+    Color messageScreenFg;
+    String messageScreenText;
+
+    /**
+     * Causes the game to show a full-screen message on a plain-coloured background. The message will
+     * remain onscreen until the next key is pressed. The GameMode will be set to the specified value
+     * after the message is dismissed. No actions will be processed during the display of the message,
+     * as it bypasses sending normal actions.
+     *
+     * @param background The background colour of the screen when the message is active.
+     * @param foreground The colour of the message text.
+     * @param message The message to display.
+     * @param mode The GameMode to return to. If this is NULL, it will be the mode the game was in before
+     *             this call.
+     */
+    public void displayMessageScreen(Color background, Color foreground, String message, GameState.GameMode mode) {
+        /*
+         * We're fine to set GameMode early, as the game will not be playing while the message is active.
+         */
+        if (mode != null) {
+            GameState.getInstance().setGameMode(mode);
+        }
+
+        messageScreenText = message;
+        messageScreenBg = background;
+        messageScreenFg = foreground;
+
+        renderEverything();
+    }
+
+    /**
+     * Draws the shop screen when the player is in a shop.
+     * @author Alex Boxall
+     * @param g The graphics object
+     */
+    private void renderShop(Graphics g) {
+        renderTextScreen(g, Color.LIGHT_GRAY, Color.BLACK, GameState.getInstance().getShop().printInventory());
+    }
+
+    /**
+     * Draws the inventory screen when the player has their inventory open.
+     * @author Alex Boxall
+     * @param g The graphics object
+     */
+    private void renderInventory(Graphics g) {
+        renderTextScreen(g, Color.BLACK, Color.LIGHT_GRAY, GameState.getInstance().printInventory());
     }
 
     /**
@@ -528,19 +714,7 @@ public class Renderer extends JFrame {
      * @param g The graphics object
      */
     private void renderChest(Graphics g) {
-        var chest = GameState.getInstance().getChest();
-        String text = chest.printLoot();
-
-        g.setColor(Color.DARK_GRAY);
-        g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-        g.setColor(Color.BLACK);
-        g.setFont(new Font("Arial", Font.BOLD, 24));
-
-        int ypos = WINDOW_HEIGHT / 3;
-        for (String line: text.split("\n")) {
-            g.drawString(line, WINDOW_WIDTH / 3, ypos);
-            ypos += 27;
-        }
+        renderTextScreen(g, Color.DARK_GRAY, Color.BLACK, GameState.getInstance().getChest().printLoot());
     }
 
     /**
@@ -555,6 +729,8 @@ public class Renderer extends JFrame {
          * So the next game over will work.
          */
         gameOverFadeoutCount = 0;
+
+        removeAttackAnimations();
 
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -596,6 +772,11 @@ public class Renderer extends JFrame {
     public void paint(Graphics g) {
         GameState state = GameState.getInstance();
 
+        if (messageScreenText != null) {
+            renderTextScreen(g, messageScreenBg, messageScreenFg, messageScreenText);
+            return;
+        }
+
         if (state.board == null) {
             return;
         }
@@ -624,6 +805,7 @@ public class Renderer extends JFrame {
             case TitleScreen -> renderTitleScreen(g);
             case Shop -> renderShop(g);
             case Chest -> renderChest(g);
+            case Inventory -> renderInventory(g);
             case GameOverScreen -> renderGameOver(g);
             default -> renderNotImplementedFeatures(g);
         }
@@ -674,9 +856,9 @@ public class Renderer extends JFrame {
         GameState.getInstance().board = b;
         GameState.getInstance().player = new Player(1, 1, 30);
         GameState.getInstance().enemies = new ArrayList<>();
-        GameState.getInstance().enemies.add(new Enemy(4, 1, 5));
-        GameState.getInstance().enemies.add(new Enemy(5, 4, 5));
-        GameState.getInstance().enemies.add(new Enemy(6, 6, 5));
+        GameState.getInstance().enemies.add(new Enemy(4, 1, 5, 10));
+        GameState.getInstance().enemies.add(new Enemy(5, 4, 5, 10));
+        GameState.getInstance().enemies.add(new Enemy(6, 6, 5, 10));
     }
 
     public static void main(String[] args) {

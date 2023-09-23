@@ -4,6 +4,8 @@ import org.example.chest.Chest;
 import org.example.chest.ChestFactory;
 import org.example.item.*;
 import org.example.shop.*;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +54,7 @@ public class GameState {
      * The amount of gold the player has
      */
     int gold;
+
     /**
      * the MeleeWeapon the player has equipped
      */
@@ -266,7 +269,24 @@ public class GameState {
             }
         }
 
+        return false;
+    }
 
+    /**
+     * Determines if an enemy is on a given tile. Used in part of collision detection.
+     * @author Jake Tammaro
+     * @param x x coordinate of tile.
+     * @param y y coordinate of tile.
+     * @return true if an enemy is on tile, false if not. If there are no enemies, returns false.
+     */
+    public boolean isOccupiedbyEnemy(int x, int y) {
+        if (enemies != null) {
+            for (Enemy e : enemies) {
+                if (e.x == x && e.y == y) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -370,6 +390,8 @@ public class GameState {
      * @param action The action that the user should take.
      */
     void actGameplay(Action action) {
+        Renderer.getInstance().removeAttackAnimations();
+
         if (action.isMove()) {
             /*
              * Allows direction to change even if the player cannot move in this direction.
@@ -392,6 +414,10 @@ public class GameState {
 
         } else if (action == Action.UseSword) {
             player.useSword();
+            endOfPlayerTurn();
+
+        } else if (action == Action.UseGun) {
+            player.useGun();
             endOfPlayerTurn();
         }
     }
@@ -420,6 +446,11 @@ public class GameState {
     void actShop(Action action) {
         if (action == Action.EnterShop) {
             setGameMode(GameMode.Gameplay);
+        } else {
+            int index = action.translateToNumeric();
+            if (index != -1) {
+                Renderer.getInstance().displayMessageScreen(Color.LIGHT_GRAY, Color.BLACK, getShop().buy(index), null);
+            }
         }
     }
 
@@ -435,6 +466,11 @@ public class GameState {
     void actChest(Action action) {
         if (action == Action.EnterChest) {
             setGameMode(GameMode.Gameplay);
+        } else {
+            int index = action.translateToNumeric();
+            if (index != -1) {
+                Renderer.getInstance().displayMessageScreen(Color.DARK_GRAY, Color.BLACK, getChest().take(index), GameMode.Gameplay);
+            }
         }
     }
 

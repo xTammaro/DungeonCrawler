@@ -95,15 +95,59 @@ public class Player extends Actor {
         GameState.getInstance().setGameMode(GameState.GameMode.GameOverScreen);
     }
 
+    /**
+     * Called when the actor uses a sword attack.
+     * This is also called when the enemies attack the player
+     * @author Alex Boxall
+     * @author Tal Shy-Tielen
+     */
+    void useSword() {
+        int x = this.x;
+        int y = this.y;
+        switch (getDirection()) {
+            case UP     -> y--;
+            case DOWN   -> y++;
+            case LEFT   -> x--;
+            case RIGHT  -> x++;
+        }
+
+        if (GameState.getInstance().isOccupied(x,y)) {
+            GameState.getInstance().getActorAt(x,y).takeDamage(meleeAttackDamage());
+        }
+
+        Renderer.getInstance().addMeleeAttackAnimation(this, this.getDirection(), false);
+    }
 
     /**
-     * Called when the actor uses a gun attack.
+     * Called when the actor uses a gun attack. Attacks all enemies in its path until a wall is reached.
      *
      * @author Alex Boxall
      */
     void useGun() {
-        // Moved to player because Enemy dont have range weapons
-        //TODO: get players range damage by calling rangeAttackDamage
+        int x = this.x;
+        int y = this.y;
+
+        int size = 0;
+
+        while (GameState.getInstance().board.getTile(x, y) != Tile.Wall) {
+            switch (getDirection()) {
+                case UP     -> y--;
+                case DOWN   -> y++;
+                case LEFT   -> x--;
+                case RIGHT  -> x++;
+            }
+
+            ++size;
+
+            if (GameState.getInstance().isOccupied(x,y)) {
+                GameState.getInstance().getActorAt(x,y).takeDamage(rangedAttackDamage());
+            }
+        }
+
+        int minX = getDirection() == Direction.LEFT ? x : this.x;
+        int minY = getDirection() == Direction.UP ? y : this.y;
+
+        Renderer.getInstance().addRangedAttackAnimation(this, minX, minY, size);
     }
 
     /**
@@ -153,13 +197,5 @@ public class Player extends Actor {
      */
     public void buy(int x) {
         this.gold -= x;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
     }
 }

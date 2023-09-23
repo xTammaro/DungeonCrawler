@@ -170,4 +170,18 @@ abstract public class Actor {
     public void setHp(int hp) {
         this.hp = hp;
     }
+
+    /*
+     * @return The actor's x position
+     */
+    public int getX() {
+        return x;
+    }
+
+    /*
+     * @return The actor's y position
+     */
+    public int getY() {
+        return y;
+    }
 }
