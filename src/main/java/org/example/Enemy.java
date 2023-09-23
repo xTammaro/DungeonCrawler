@@ -158,7 +158,15 @@ public class Enemy extends Actor {
      * @author Tal Shy-Tielen
      */
     public void attackPlayer() {
-        GameState.getInstance().player.takeDamage(attackDamage());
+        Direction relativeDirection;
+        Player player = GameState.getInstance().getPlayer();
+        if (player.x == this.x) {
+            relativeDirection = player.y > this.y ? Direction.DOWN : Direction.UP;
+        } else {
+            relativeDirection = player.x > this.x ? Direction.RIGHT : Direction.LEFT;
+        }
+        Renderer.getInstance().addMeleeAttackAnimation(this, relativeDirection, true);
+        GameState.getInstance().player.takeDamage(meleeAttackDamage());
     }
 
     /**
@@ -294,7 +302,7 @@ public class Enemy extends Actor {
      * @return attack damage the zombie will inflict.
      * @author Tal Shy-Tielen
      */
-    public int attackDamage() {
+    public int meleeAttackDamage() {
         return 10;
     }
 
