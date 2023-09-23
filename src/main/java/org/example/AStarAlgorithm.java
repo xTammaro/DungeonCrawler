@@ -37,6 +37,8 @@ public class AStarAlgorithm {
         // Initialize open and closed lists
         // Open list is possible nodes to visit
         // Closed list is nodes that have already been visited
+
+        // Priority queue is a queue that sorts by a given comparator, in this case the total cost of the node
         PriorityQueue<Node> openList = new PriorityQueue<>(Comparator.comparingDouble(node -> node.totalCost));
         ArrayList<Node> closedList = new ArrayList<>();
 

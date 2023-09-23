@@ -23,6 +23,14 @@ public class Enemy extends Actor {
      */
     private static final int FIELD_OF_VIEW = 3;
     /**
+     * The level of the enemy.
+     */
+    private int level;
+    /**
+     * The attack damage of the enemy.
+     */
+    private int attackDamage;
+    /**
      * Current mode of the enemy.
      */
     private EnemyMode currentMode;
@@ -44,8 +52,9 @@ public class Enemy extends Actor {
      * @author Alex Boxall
      * @author Jake Tammaro
      */
-    public Enemy(int x, int y, int hp) {
+    public Enemy(int x, int y, int hp, int attackDamage) {
         super(x, y, hp);
+        this.attackDamage = attackDamage;
         // Initialize enemy in roam mode
         this.currentMode = EnemyMode.RoamMode;
         // Initialize pathfinder

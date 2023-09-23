@@ -31,7 +31,7 @@ public class EnemyTest {
         board = new Board(5,5);
         GameState.getInstance().setBoard(board);
         board.setAllTiles(testMap);
-        enemy = new Enemy(2, 2, 100);
+        enemy = new Enemy(2, 2, 100, 30);
     }
 
 
@@ -132,7 +132,7 @@ public class EnemyTest {
 
     @Test
     public void testIsWithinFieldOfView() {
-        Enemy enemy = new Enemy(4, 4, 100);
+        Enemy enemy = new Enemy(4, 4, 100, 30);
 
         // 1. Player is exactly at the enemy's position
         assertTrue(enemy.isWithinFieldOfView(4, 4, 3));
