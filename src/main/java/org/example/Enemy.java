@@ -72,20 +72,20 @@ public class Enemy extends Actor {
         if (currentMode == EnemyMode.RoamMode) {
             // If the enemy is at the target location, generate a new random location.
             if (targetX == x && targetY == y) {
-                generatePath(1);
+                generatePath(true);
                 while (path == null) {
-                    generatePath(1);
+                    generatePath(true);
                 }
             }
         }
         else {
             // If the enemy is in attack mode, move towards the player.
-            generatePath(0);
+            generatePath(false);
         }
         // Check if path is blocked by another enemy, if so, generate a new random path.
         AStarAlgorithm.Node nextNode = path.get(0);
         while (GameState.getInstance().isOccupiedbyEnemy(nextNode.x, nextNode.y)) {
-            generatePath(1);
+            generatePath(true);
             nextNode = path.get(0);
         }
         // Move the enemy to the next tile in the path.
@@ -97,9 +97,9 @@ public class Enemy extends Actor {
      * @author Jake Tammaro
      * @param random If the path should be random or not. 1 = random, 0 = towards player
      */
-    public void generatePath(int random) {
+    public void generatePath(Boolean random) {
         Player player = GameState.getInstance().getPlayer();
-        if (random == 1) {
+        if (random) {
             Point target_coordinate = getNewRandomLocation(LOCATION_DISTANCE);
             setTargetLocation(target_coordinate);
         }
