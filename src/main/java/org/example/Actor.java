@@ -10,6 +10,8 @@ package org.example;
  * TODO: many more things can be added, e.g. poison
  */
 abstract public class Actor {
+
+
     /**
      * The location of the actor from the top-left tile.
      */
@@ -159,5 +161,13 @@ abstract public class Actor {
      */
     public int getHP() {
         return hp;
+    }
+
+    /**
+     * @param hp sets the actor's hp
+     * to a new value
+     */
+    public void setHp(int hp) {
+        this.hp = hp;
     }
 }

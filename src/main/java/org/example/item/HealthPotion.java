@@ -1,5 +1,7 @@
 package org.example.item;
 
+import org.example.GameState;
+
 public class HealthPotion extends ConsumableItem{
 
     private final int health;
@@ -38,7 +40,14 @@ public class HealthPotion extends ConsumableItem{
      * does not heal more than player max health
      */
     public void heal(){
-        //TODO
+        var player = GameState.getInstance().getPlayer();
+        var hpToMax = player.getMaxHealth() - player.getHP();
+        if (hpToMax < health){
+            player.setHp(player.getMaxHealth());
+        } else {
+            player.setHp(player.getHP() + health);
+        }
+
     }
 
 }
