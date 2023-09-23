@@ -314,12 +314,18 @@ public class Enemy extends Actor {
      */
     @Override
     public void onZeroHealth() {
-        GameState.getInstance().enemies.remove(this);
+        GameState gs = GameState.getInstance();
+
+        gs.enemies.remove(this);
 
         // This makes it so the last enemy will drop a key
-        if (GameState.getInstance().enemies.size() == 0) {
-            GameState.getInstance().board.setTile(x, y, Tile.EmptyWithKey);
+        if (gs.enemies.size() == 0) {
+            gs.board.setTile(x, y, Tile.EmptyWithKey);
+
+            gs.setGold(gs.getGold() + gs.levelNumber * 5);
         }
+
+        gs.setGold(gs.getGold() + 3 + 2 * gs.levelNumber);
     }
 
     public int getY() {
