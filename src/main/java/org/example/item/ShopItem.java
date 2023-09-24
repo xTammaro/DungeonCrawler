@@ -48,18 +48,25 @@ public class ShopItem {
      */
     public void addToPlayerInventory(){
         var inventory = GameState.getInstance().getInventory();
-        boolean isInInventory = false;
-        for (ShopItem shopItem: inventory) {
-            if(Objects.equals(shopItem.getItem().getName(), item.getName())){
-                shopItem.setQuantity(shopItem.getQuantity()+1);
-                isInInventory = true;
+        if(quantity > 0) {
+            boolean isInInventory = false;
+            for (ShopItem shopItem: inventory) {
+                if(Objects.equals(shopItem.getItem().getName(), item.getName())){
+                    // Item is in Inventory
+                    shopItem.setQuantity(shopItem.getQuantity()+1);
+                    isInInventory = true;
+                }
+            }
+            if (!isInInventory){
+                var objectToAdd = new ShopItem(item.makeClone(),1);
+                GameState.getInstance().addToInventory(objectToAdd);
+            }
+            this.setQuantity(quantity-1);
+            //if the item is a statBoostItem applystat when added to inventory
+            if(item.getClass().equals(StatBoostItem.class)){
+                ((StatBoostItem) item).applyStat();
             }
         }
-        if (!isInInventory){
-            var objectToAdd = new ShopItem(item.makeClone(),1);
-            GameState.getInstance().addToInventory(objectToAdd);
-        }
-        this.setQuantity(quantity-1);
     }
 
     /**
