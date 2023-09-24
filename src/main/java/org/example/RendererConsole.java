@@ -137,7 +137,28 @@ public class RendererConsole implements Renderer {
             System.out.print('\n');
         }
 
-        System.out.printf("\tHP: %d\n\tGold: %d\n\tLevel: %d\n\t%s\n", state.player.getHP(), state.getGold(), state.levelNumber, state.hasKey ? "Got key" : "");
+        System.out.printf("\tHP: %d/%d\n\tGold: %d\n\tLevel: %d\n\t%s\n",
+                state.player.getHP(),
+                GameState.getInstance().getPlayer().getMaxHealth(),
+                state.getGold(),
+                state.levelNumber,
+                state.hasKey ? "Got key" : ""
+        );
+    }
+
+    /**
+     * Draws the console inventory.
+     * @author Alex Boxall
+     */
+    private void drawInventory() {
+        drawMessage(
+                "Current Melee Weapon = " + GameState.getInstance().getCurrentMeleeWeapon().getName()
+                        + " Damage = " + GameState.getInstance().getCurrentMeleeWeapon().getDamage()
+                        + "\n"
+                        + "Current Ranged Weapon = " + GameState.getInstance().getCurrentRangedWeapon().getName()
+                        + " Damage = " + GameState.getInstance().getCurrentRangedWeapon().getDamage()
+                        + "\n"
+                        + GameState.getInstance().printInventory());
     }
 
     /**
@@ -151,7 +172,7 @@ public class RendererConsole implements Renderer {
             case Shop -> drawMessage(GameState.getInstance().getShop().printInventory());
             case GameOverScreen -> drawMessage("GAME OVER!\n\nPress ENTER to restart.");
             case TitleScreen -> drawMessage("*REALLY* AWESOME COMP2120 GAME (TM)\n\nPress ENTER to start\n");
-            case Inventory -> drawMessage(GameState.getInstance().printInventory());
+            case Inventory -> drawInventory();
             case Gameplay -> drawGameplay();
         }
     }
