@@ -395,7 +395,7 @@ public class RendererGUI extends JFrame implements Renderer {
         g.setFont(new Font("Arial", Font.BOLD, 20));
 
         g.drawString("Level " + (GameState.getInstance().levelNumber + 1), 30, 60);
-        g.drawString("HP: " + GameState.getInstance().player.getHP(), 30, 80);
+        g.drawString("HP: " + GameState.getInstance().getPlayer().getHP() + "/" + GameState.getInstance().getPlayer().getMaxHealth(), 30, 80);
         g.drawString("Gold: " + GameState.getInstance().getGold(), 30, 100);
 
         if (GameState.getInstance().hasKey) {
@@ -704,7 +704,14 @@ public class RendererGUI extends JFrame implements Renderer {
      * @param g The graphics object
      */
     private void renderInventory(Graphics g) {
-        renderTextScreen(g, Color.BLACK, Color.LIGHT_GRAY, GameState.getInstance().printInventory());
+        renderTextScreen(g, Color.BLACK, Color.LIGHT_GRAY,
+                "Current Melee Weapon = " + GameState.getInstance().getCurrentMeleeWeapon().getName()
+                        + " Damage = " + GameState.getInstance().getCurrentMeleeWeapon().getDamage()
+                        + "\n"
+                        + "Current Ranged Weapon = " + GameState.getInstance().getCurrentRangedWeapon().getName()
+                        + " Damage = " + GameState.getInstance().getCurrentRangedWeapon().getDamage()
+                        + "\n"
+                        + GameState.getInstance().printInventory());
     }
 
     /**
