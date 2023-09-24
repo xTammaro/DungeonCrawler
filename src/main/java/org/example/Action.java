@@ -15,6 +15,7 @@ public enum Action {
     EnterShop,
     EnterChest,
     StartGame,
+    KeyPress0,
     KeyPress1,
     KeyPress2,
     KeyPress3,
@@ -38,6 +39,7 @@ public enum Action {
      */
     public int translateToNumeric() {
         return switch (this) {
+            case KeyPress0 -> 0;
             case KeyPress1 -> 1;
             case KeyPress2 -> 2;
             case KeyPress3 -> 3;

@@ -189,18 +189,31 @@ public class GameState {
         gameItems.add(new HealthPotion("Healing Potion",40,Rarity.UNCOMMON,20));
         gameItems.add(new HealthPotion("Greater Healing Potion",50,Rarity.RARE,30));
         gameItems.add(new HealthPotion("Supreme Healing Potion",75,Rarity.VERY_RARE,5));
+
         gameItems.add(new MeleeWeapon("Wooden Sword",20,Rarity.COMMON,2));
         gameItems.add(new MeleeWeapon("Copper Sword",50,Rarity.UNCOMMON,4));
         gameItems.add(new MeleeWeapon("Iron Sword",100,Rarity.RARE,8));
         gameItems.add(new MeleeWeapon("Steel Sword",300,Rarity.VERY_RARE,1));
+
         gameItems.add(new RangedWeapon("Slingshot",25,Rarity.COMMON,3,2));
         gameItems.add(new RangedWeapon("Bow",60,Rarity.UNCOMMON,8,2));
         gameItems.add(new RangedWeapon("Longbow",120,Rarity.RARE,25,4));
         gameItems.add(new RangedWeapon("Crossbow",350,Rarity.VERY_RARE,30,2));
+
         gameItems.add(new StatBoostItem("Health Ring",100,Rarity.COMMON,PlayerStatType.HEALTH,10));
         gameItems.add(new StatBoostItem("Health Brooch",150,Rarity.UNCOMMON,PlayerStatType.HEALTH,15));
         gameItems.add(new StatBoostItem("Health Amulet",200,Rarity.RARE,PlayerStatType.HEALTH,20));
         gameItems.add(new StatBoostItem("Health Necklace",300,Rarity.VERY_RARE,PlayerStatType.HEALTH,30));
+
+        gameItems.add(new StatBoostItem("Melee Damage Ring",100,Rarity.COMMON,PlayerStatType.MELEE_DAMAGE,2));
+        gameItems.add(new StatBoostItem("Melee Damage Brooch",150,Rarity.UNCOMMON,PlayerStatType.MELEE_DAMAGE,4));
+        gameItems.add(new StatBoostItem("Melee Damage Amulet",200,Rarity.RARE,PlayerStatType.MELEE_DAMAGE,6));
+        gameItems.add(new StatBoostItem("Melee Damage Necklace",300,Rarity.VERY_RARE,PlayerStatType.MELEE_DAMAGE,8));
+
+        gameItems.add(new StatBoostItem("Ranged Damage Ring",100,Rarity.COMMON,PlayerStatType.RANGE_DAMAGE,2));
+        gameItems.add(new StatBoostItem("Ranged Damage Brooch",150,Rarity.UNCOMMON,PlayerStatType.RANGE_DAMAGE,4));
+        gameItems.add(new StatBoostItem("Ranged Damage Amulet",200,Rarity.RARE,PlayerStatType.RANGE_DAMAGE,6));
+        gameItems.add(new StatBoostItem("Ranged Damage Necklace",300,Rarity.VERY_RARE,PlayerStatType.RANGE_DAMAGE,8));
 
     }
 
@@ -454,6 +467,7 @@ public class GameState {
         }
     }
 
+
     /**
      * Action handler for the chest. Allows users to take Items, and/or exit
      * the shop.
@@ -475,16 +489,49 @@ public class GameState {
     }
 
     /**
-     * Action handler for the inventory screen. Allows users to buy items, and/or exit
-     * the shop.
+     * Action handler for the inventory screen. Allows users to swap weapons, and/or use
+     * health potions.
      *
      * @author Alex Boxall
+     * @author Will Baird
      *
      * @param action The action that the user should take.
      */
     void actInventory(Action action) {
         if (action == Action.OpenInventory) {
             setGameMode(GameMode.Gameplay);
+        } else {
+
+            int index = action.translateToNumeric();
+
+            if(index!= -1){
+
+                var item = getInventory().get(index-1).getItem();
+                var shopItem = getInventory().get(index-1);
+
+                if(shopItem.getQuantity() > 0){
+
+                    if (item.getClass().equals(MeleeWeapon.class)) {
+                        new ShopItem(currentMeleeWeapon, 1).addToPlayerInventory();
+                        setCurrentMeleeWeapon((MeleeWeapon) item);
+                        shopItem.setQuantity(shopItem.getQuantity()-1);
+                        Renderer.getInstance().render();
+
+                    } else if (item.getClass().equals(RangedWeapon.class)) {
+                        new ShopItem(currentRangedWeapon, 1).addToPlayerInventory();
+                        setCurrentRangedWeapon((RangedWeapon) item);
+                        shopItem.setQuantity(shopItem.getQuantity()-1);
+                        Renderer.getInstance().render();
+
+                    } else if (item.getClass().equals(HealthPotion.class)) {
+                        ((HealthPotion) item).heal();
+                        shopItem.setQuantity(shopItem.getQuantity() - 1);
+                        Renderer.getInstance().render();
+                    }
+                } else {
+                    System.out.println("Quantity < 0");
+                }
+            }
         }
     }
 
