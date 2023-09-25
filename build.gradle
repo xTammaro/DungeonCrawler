@@ -11,5 +11,6 @@ repositories {
 
 dependencies {
     testImplementation 'junit:junit:4.13.1'
+    implementation 'org.json:json:20230227'
 
 }
