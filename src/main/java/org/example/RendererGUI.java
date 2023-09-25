@@ -67,7 +67,7 @@ public class RendererGUI extends JFrame implements Renderer {
                     case KeyEvent.VK_UP     -> GameState.getInstance().act(Action.MoveUp);
                     case KeyEvent.VK_DOWN   -> GameState.getInstance().act(Action.MoveDown);
                     case KeyEvent.VK_Z      -> GameState.getInstance().act(Action.UseGun);
-                    case KeyEvent.VK_X      -> GameState.getInstance().act(Action.UseSword);
+                    case KeyEvent.VK_X      -> {GameState.getInstance().act(Action.UseSword);}
                     case KeyEvent.VK_Q      -> GameState.getInstance().act(Action.UsePotion);
                     case KeyEvent.VK_SPACE  -> GameState.getInstance().act(Action.EnterShop);
                     case KeyEvent.VK_I      -> GameState.getInstance().act(Action.OpenInventory);

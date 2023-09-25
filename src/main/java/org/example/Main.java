@@ -49,7 +49,7 @@ public class Main {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         //setDemoState();
 
         try {
@@ -65,7 +65,7 @@ public class Main {
             cons.renderEverything();
 
             while (true) {
-                System.out.printf("> ");
+                System.out.print("> ");
                 cons.run();
             }
 

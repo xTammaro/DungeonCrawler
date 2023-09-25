@@ -193,7 +193,7 @@ public class RendererConsole implements Renderer {
      *
      * @author Alex Boxall
      */
-    public void run() {
+    public void run() throws Exception {
         switch (Character.toUpperCase(getCharacter())) {
             case 'A'  -> GameState.getInstance().act(Action.MoveLeft);
             case 'D'  -> GameState.getInstance().act(Action.MoveRight);
