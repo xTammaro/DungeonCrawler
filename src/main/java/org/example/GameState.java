@@ -181,8 +181,8 @@ public class GameState {
      */
     private GameState() {
         inventory = new ArrayList<>();
-        currentMeleeWeapon = new MeleeWeapon("Stick",5, Rarity.COMMON,1);
-        currentRangedWeapon = new RangedWeapon("Sling",5,Rarity.COMMON,1,2);
+        currentMeleeWeapon = new MeleeWeapon("Stick",5, Rarity.COMMON,10);
+        currentRangedWeapon = new RangedWeapon("Sling",5,Rarity.COMMON,10,2);
         //TODO: Move adding Items to somewhere else
         createGameItems();
 

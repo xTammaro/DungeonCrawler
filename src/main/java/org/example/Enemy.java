@@ -158,7 +158,7 @@ public class Enemy extends Actor {
         }
 
 
-        else {
+        if (!locations.isEmpty()) {
             Random rand = new Random();
             return locations.get(rand.nextInt(locations.size()));
         }
