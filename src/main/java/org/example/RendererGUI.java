@@ -383,6 +383,24 @@ public class RendererGUI extends JFrame implements Renderer {
                 py + tileSize / 4,
                 tileSize / 2,
                 tileSize / 2);
+
+        // Add text onto enemy to display health
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Arial", Font.BOLD, 15));
+        String health = String.valueOf(GameState.getInstance().getActorAt(x,y).hp);
+
+        // Display the health depending on how many characters there are
+        switch (health.length()) {
+            case 1:
+                g.drawString(health,px + tileSize/3 ,py + tileSize/2 + 6);
+                break;
+            case 2:
+                g.drawString(health,px + tileSize/3 + 3 ,py + tileSize/2 + 6);
+                break;
+            case 3:
+                g.drawString(health,px + tileSize/3 - 2,py + tileSize/2 + 6);
+                break;
+        }
     }
 
     /**
