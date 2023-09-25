@@ -182,7 +182,7 @@ public class GameState {
     private GameState() {
         inventory = new ArrayList<>();
         currentMeleeWeapon = new MeleeWeapon("Stick",5, Rarity.COMMON,1);
-        currentRangedWeapon = new RangedWeapon("Sling",5,Rarity.COMMON,1,2);
+        currentRangedWeapon = new RangedWeapon("Sling",5,Rarity.COMMON,10,2);
         //TODO: Move adding Items to somewhere else
         createGameItems();
 
@@ -558,6 +558,11 @@ public class GameState {
      * @param action The action that the user should take.
      */
     void actGameOver(Action action) {
+
+//        if (action == Action.StartGame) {
+//            setGameMode(GameMode.Gameplay);
+//        }
+
         if (action == Action.StartGame) {
             /*
              * Completely reset the game. This removes the old singleton and replaces it with a new one.
@@ -566,7 +571,12 @@ public class GameState {
             instance = new GameState();
 
             // TODO: remove this after level loading is implemented
-            Main.setDemoState();
+            try {
+                Main.initializeGameState();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
 
             Renderer.getInstance().renderEverything();
         }
