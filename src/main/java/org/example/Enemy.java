@@ -41,7 +41,7 @@ public class Enemy extends Actor {
     /**
      * The pathfinding algorithm used by the enemy.
      */
-    private final AStarAlgorithm pathFinder;
+    private AStarAlgorithm pathFinder;
 
     /**
      * Enemy constructor.
@@ -51,6 +51,7 @@ public class Enemy extends Actor {
      * @param hp The initial health
      * @author Alex Boxall
      * @author Jake Tammaro
+     * @author Tal Shy-Tielen
      */
     public Enemy(int x, int y, int hp, int attackDamage) {
         super(x, y, hp);
@@ -58,10 +59,22 @@ public class Enemy extends Actor {
         // Initialize enemy in roam mode
         this.currentMode = EnemyMode.RoamMode;
         // Initialize pathfinder
-        this.pathFinder = new AStarAlgorithm(GameState.getInstance().board);
+        if (GameState.getInstance().board != null) {
+            this.pathFinder = new AStarAlgorithm(GameState.getInstance().board);
+        }
         // Initialize target location as the current location.
         setTargetLocation(new Point(x,y));
     }
+
+    /**
+     * Set the enemy pathfinder.
+     * @author Tal Shy-Tielen
+     */
+    public void setPathFinder() {
+        if (GameState.getInstance().board != null)
+            this.pathFinder = new AStarAlgorithm(GameState.getInstance().board);
+    }
+
 
     /**
      * Called when it is this enemy's turn to move. It should run the pathfinding algorithm,
@@ -124,6 +137,7 @@ public class Enemy extends Actor {
      * @param initialDistance The initial distance to check for a valid location
      * @return A random valid location for the enemy to move to.
      * @author Jake Tammaro
+     * @author Tal Shy-Tielen
      */
 
     public Point getNewRandomLocation(int initialDistance) {
@@ -134,7 +148,17 @@ public class Enemy extends Actor {
             locations = getPossibleLocations(initialDistance);
         }
 
-        if (!locations.isEmpty()) {
+        // If the locations are empty for some reason then the distance will increase until the enemy finds something
+        // or the distance reaches 1000 (in which case it is unlikely it will ever find a new location.
+        if (locations.isEmpty()) {
+            while (locations.isEmpty() && initialDistance < 1000) {
+                initialDistance++;
+                locations = getPossibleLocations(initialDistance);
+            }
+        }
+
+
+        else {
             Random rand = new Random();
             return locations.get(rand.nextInt(locations.size()));
         }

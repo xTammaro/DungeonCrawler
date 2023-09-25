@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.configuration.GameConfiguration;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -34,8 +36,28 @@ public class Main {
         GameState.getInstance().enemies.add(new Enemy(6, 6, 5, 10));
     }
 
+    /**
+     * Sets the GameState for a new game.
+     * @author Jake Tammaro
+     * @throws Exception
+     */
+    static void initializeGameState() throws Exception {
+        GameConfiguration newConfig = new GameConfiguration("gameConfig.json");
+        GameState.getInstance().levelNumber = 0;
+        newConfig.initializeGame(newConfig.getBoardLayout(0));
+        GameState.getInstance().setGameConfiguration(newConfig);
+    }
+
+
     public static void main(String[] args) {
-        setDemoState();
+        //setDemoState();
+
+        try {
+            initializeGameState();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         if (GraphicsEnvironment.isHeadless()) {
             RendererConsole cons = (RendererConsole) Renderer.getInstance();
