@@ -129,7 +129,9 @@ public class Enemy extends Actor {
             setTargetLocation(new Point(player.getX(), player.getY()));
         }
         path = pathFinder.findPath(x, y, targetX, targetY);
-        path.remove(0);
+
+
+        if (path != null) path.remove(0);
     }
 
     /**
@@ -144,14 +146,14 @@ public class Enemy extends Actor {
         List<Point> locations = getPossibleLocations(initialDistance);
         // If no valid locations are found, decrease the distance and try again.
         while (locations.isEmpty() && initialDistance > 0) {
-            initialDistance--;
             locations = getPossibleLocations(initialDistance);
+            initialDistance--;
         }
 
         // If the locations are empty for some reason then the distance will increase until the enemy finds something
         // or the distance reaches 1000 (in which case it is unlikely it will ever find a new location.
         if (locations.isEmpty()) {
-            while (locations.isEmpty() && initialDistance < 1000) {
+            while (locations.isEmpty() && initialDistance < 100) {
                 initialDistance++;
                 locations = getPossibleLocations(initialDistance);
             }
@@ -179,8 +181,8 @@ public class Enemy extends Actor {
 
         for (int i = 0; i < board.getHeight(); i++) {
             for (int j = 0; j < board.getWidth(); j++) {
-                if (manhattanDistance(getX(), getY(), i, j) == distance && board.getTile(i,j) == Tile.Empty) {
-                    possibleLocations.add(new Point(i, j));
+                if (manhattanDistance(getX(), getY(), j, i) == distance && board.getTile(j,i) == Tile.Empty) {
+                    possibleLocations.add(new Point(j,i));
                 }
             }
         }
