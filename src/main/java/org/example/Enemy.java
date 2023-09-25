@@ -151,7 +151,7 @@ public class Enemy extends Actor {
         }
 
         // If the locations are empty for some reason then the distance will increase until the enemy finds something
-        // or the distance reaches 1000 (in which case it is unlikely it will ever find a new location.
+        // or the distance reaches 100 (in which case it is unlikely it will ever find a new location.
         if (locations.isEmpty()) {
             while (locations.isEmpty() && initialDistance < 100) {
                 initialDistance++;
