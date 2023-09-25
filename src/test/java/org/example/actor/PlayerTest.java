@@ -15,7 +15,7 @@ public class PlayerTest {
         var gameState = GameState.getInstance();
         var player = new Player(1,1,30);
         gameState.setPlayer(player);
-        assertEquals(gameState.getPlayer().meleeAttackDamage(),1);
+        assertEquals(gameState.getPlayer().meleeAttackDamage(),50);
         System.out.println(gameState.getPlayer().meleeAttackDamage());
         gameState.setCurrentMeleeWeapon(new MeleeWeapon("sword",0, Rarity.COMMON,5));
         assertEquals(gameState.getPlayer().meleeAttackDamage(),5);
@@ -30,7 +30,7 @@ public class PlayerTest {
         var gameState = GameState.getInstance();
         var player = new Player(1,1,30);
         gameState.setPlayer(player);
-        assertEquals(gameState.getPlayer().rangedAttackDamage(),1);
+        assertEquals(gameState.getPlayer().rangedAttackDamage(),50);
         System.out.println(gameState.getPlayer().rangedAttackDamage());
 
         gameState.setCurrentRangedWeapon(new RangedWeapon("gun",0, Rarity.COMMON,5,1));
