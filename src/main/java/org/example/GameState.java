@@ -2,8 +2,10 @@ package org.example;
 
 import org.example.chest.Chest;
 import org.example.chest.ChestFactory;
+import org.example.configuration.GameConfiguration;
 import org.example.item.*;
 import org.example.shop.*;
+import org.json.JSONException;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -68,6 +70,9 @@ public class GameState {
     /**
      * Determines whether we're in normal gameplay, or in the shop/inventory/title screen, etc.
      */
+
+    private GameConfiguration gameConfiguration;
+
     enum GameMode {
         Gameplay,
         TitleScreen,
@@ -176,8 +181,8 @@ public class GameState {
      */
     private GameState() {
         inventory = new ArrayList<>();
-        currentMeleeWeapon = new MeleeWeapon("Stick",5, Rarity.COMMON,1);
-        currentRangedWeapon = new RangedWeapon("Sling",5,Rarity.COMMON,1,2);
+        currentMeleeWeapon = new MeleeWeapon("Stick",5, Rarity.COMMON,50);
+        currentRangedWeapon = new RangedWeapon("Sling",5,Rarity.COMMON,50,2);
         //TODO: Move adding Items to somewhere else
         createGameItems();
 
@@ -330,6 +335,7 @@ public class GameState {
      * key, and then makes all of the enemies move.
      *
      * @author Alex Boxall
+     * @author Tal Shy-Tielen
      */
     void endOfPlayerTurn() {
         if (board.getTile(player.x, player.y) == Tile.Staircase && hasKey) {
@@ -338,9 +344,17 @@ public class GameState {
              * we haven't moved floors. We must remember to update the screen due to this early
              * return.
              */
+            this.board = null;
             levelNumber++;
             hasKey = false;
-            loadFloor(levelNumber);
+
+            // Tries to load the next level, if this is not possible, then the game must be over.
+            try {
+                this.gameConfiguration.initializeGame(this.gameConfiguration.getBoardLayout(levelNumber));
+            } catch (JSONException e) {
+                // End Game
+                System.out.println("end game");
+            }
             Renderer.getInstance().render();
             return;
         }
@@ -544,6 +558,11 @@ public class GameState {
      * @param action The action that the user should take.
      */
     void actGameOver(Action action) {
+
+//        if (action == Action.StartGame) {
+//            setGameMode(GameMode.Gameplay);
+//        }
+
         if (action == Action.StartGame) {
             /*
              * Completely reset the game. This removes the old singleton and replaces it with a new one.
@@ -552,7 +571,12 @@ public class GameState {
             instance = new GameState();
 
             // TODO: remove this after level loading is implemented
-            Main.setDemoState();
+            try {
+                Main.initializeGameState();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
 
             Renderer.getInstance().renderEverything();
         }
@@ -641,6 +665,17 @@ public class GameState {
     }
 
     /**
+     * Set all enemies to pathfind, this is done to allow us to make enemies without initialising their path.
+     * @author Tal Shy-Tielen
+     */
+    public void allEnemiesPathFind() {
+        for (Enemy e : this.enemies) {
+            e.setPathFinder();
+        }
+    }
+
+
+    /**
      * @author Will Baird
      * @param newMeleeWeapon The melee weapon that the player will equip.
      */
@@ -663,5 +698,24 @@ public class GameState {
     public void setCurrentRangedWeapon(RangedWeapon newRangedWeapon) {
         currentRangedWeapon = newRangedWeapon;
     }
+    /**
+     * set the list of enemies
+     * @author Jake Tammaro
+     * @param enemies the list of enemies to be set to the current list of enemies
+     */
+    public void setEnemies(ArrayList<Enemy> enemies) {
+        this.enemies = enemies;
+    }
+
+    /** set the game configuration
+     * @author Tal Shy-Tielen
+     * @param gameConfiguration the game configuration to be set to the current game configuration
+     */
+
+    public void setGameConfiguration(GameConfiguration gameConfiguration) {
+        this.gameConfiguration = gameConfiguration;
+    }
+
+
 
 }

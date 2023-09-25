@@ -67,12 +67,13 @@ public class RendererGUI extends JFrame implements Renderer {
                     case KeyEvent.VK_UP     -> GameState.getInstance().act(Action.MoveUp);
                     case KeyEvent.VK_DOWN   -> GameState.getInstance().act(Action.MoveDown);
                     case KeyEvent.VK_Z      -> GameState.getInstance().act(Action.UseGun);
-                    case KeyEvent.VK_X      -> GameState.getInstance().act(Action.UseSword);
+                    case KeyEvent.VK_X      -> {GameState.getInstance().act(Action.UseSword);}
                     case KeyEvent.VK_Q      -> GameState.getInstance().act(Action.UsePotion);
                     case KeyEvent.VK_SPACE  -> GameState.getInstance().act(Action.EnterShop);
                     case KeyEvent.VK_I      -> GameState.getInstance().act(Action.OpenInventory);
                     case KeyEvent.VK_ENTER  -> GameState.getInstance().act(Action.StartGame);
                     case KeyEvent.VK_C      -> GameState.getInstance().act(Action.EnterChest);
+                    case KeyEvent.VK_0      -> GameState.getInstance().act(Action.KeyPress0);
                     case KeyEvent.VK_1      -> GameState.getInstance().act(Action.KeyPress1);
                     case KeyEvent.VK_2      -> GameState.getInstance().act(Action.KeyPress2);
                     case KeyEvent.VK_3      -> GameState.getInstance().act(Action.KeyPress3);
@@ -382,6 +383,24 @@ public class RendererGUI extends JFrame implements Renderer {
                 py + tileSize / 4,
                 tileSize / 2,
                 tileSize / 2);
+
+        // Add text onto enemy to display health
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Arial", Font.BOLD, 15));
+        String health = String.valueOf(GameState.getInstance().getActorAt(x,y).hp);
+
+        // Display the health depending on how many characters there are
+        switch (health.length()) {
+            case 1:
+                g.drawString(health,px + tileSize/3 ,py + tileSize/2 + 6);
+                break;
+            case 2:
+                g.drawString(health,px + tileSize/3 + 3 ,py + tileSize/2 + 6);
+                break;
+            case 3:
+                g.drawString(health,px + tileSize/3 - 2,py + tileSize/2 + 6);
+                break;
+        }
     }
 
     /**

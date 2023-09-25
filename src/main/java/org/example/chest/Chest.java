@@ -66,8 +66,9 @@ public class Chest {
 
         if(number == 1){
             GameState.getInstance().setGold(playerGold + gold);
+            s.append(String.format("%d Gold added to Inventory", gold));
             gold = 0;
-            return s.append(String.format("%d Gold added to Inventory", gold)).toString();
+            return s.toString();
         }
 
         ShopItem shopItem = loot.get(number-2);

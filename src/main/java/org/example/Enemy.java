@@ -41,7 +41,7 @@ public class Enemy extends Actor {
     /**
      * The pathfinding algorithm used by the enemy.
      */
-    private final AStarAlgorithm pathFinder;
+    private AStarAlgorithm pathFinder;
 
     /**
      * Enemy constructor.
@@ -51,6 +51,7 @@ public class Enemy extends Actor {
      * @param hp The initial health
      * @author Alex Boxall
      * @author Jake Tammaro
+     * @author Tal Shy-Tielen
      */
     public Enemy(int x, int y, int hp, int attackDamage) {
         super(x, y, hp);
@@ -58,10 +59,22 @@ public class Enemy extends Actor {
         // Initialize enemy in roam mode
         this.currentMode = EnemyMode.RoamMode;
         // Initialize pathfinder
-        this.pathFinder = new AStarAlgorithm(GameState.getInstance().board);
+        if (GameState.getInstance().board != null) {
+            this.pathFinder = new AStarAlgorithm(GameState.getInstance().board);
+        }
         // Initialize target location as the current location.
         setTargetLocation(new Point(x,y));
     }
+
+    /**
+     * Set the enemy pathfinder.
+     * @author Tal Shy-Tielen
+     */
+    public void setPathFinder() {
+        if (GameState.getInstance().board != null)
+            this.pathFinder = new AStarAlgorithm(GameState.getInstance().board);
+    }
+
 
     /**
      * Called when it is this enemy's turn to move. It should run the pathfinding algorithm,
@@ -116,7 +129,9 @@ public class Enemy extends Actor {
             setTargetLocation(new Point(player.getX(), player.getY()));
         }
         path = pathFinder.findPath(x, y, targetX, targetY);
-        path.remove(0);
+
+
+        if (path != null) path.remove(0);
     }
 
     /**
@@ -124,15 +139,26 @@ public class Enemy extends Actor {
      * @param initialDistance The initial distance to check for a valid location
      * @return A random valid location for the enemy to move to.
      * @author Jake Tammaro
+     * @author Tal Shy-Tielen
      */
 
     public Point getNewRandomLocation(int initialDistance) {
         List<Point> locations = getPossibleLocations(initialDistance);
         // If no valid locations are found, decrease the distance and try again.
         while (locations.isEmpty() && initialDistance > 0) {
-            initialDistance--;
             locations = getPossibleLocations(initialDistance);
+            initialDistance--;
         }
+
+        // If the locations are empty for some reason then the distance will increase until the enemy finds something
+        // or the distance reaches 100 (in which case it is unlikely it will ever find a new location.
+        if (locations.isEmpty()) {
+            while (locations.isEmpty() && initialDistance < 100) {
+                initialDistance++;
+                locations = getPossibleLocations(initialDistance);
+            }
+        }
+
 
         if (!locations.isEmpty()) {
             Random rand = new Random();
@@ -155,8 +181,8 @@ public class Enemy extends Actor {
 
         for (int i = 0; i < board.getHeight(); i++) {
             for (int j = 0; j < board.getWidth(); j++) {
-                if (manhattanDistance(getX(), getY(), i, j) == distance && board.getTile(i,j) == Tile.Empty) {
-                    possibleLocations.add(new Point(i, j));
+                if (manhattanDistance(getX(), getY(), j, i) == distance && board.getTile(j,i) == Tile.Empty) {
+                    possibleLocations.add(new Point(j,i));
                 }
             }
         }
