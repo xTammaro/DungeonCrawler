@@ -214,7 +214,7 @@ public class RendererGUI extends JFrame implements Renderer {
      * @return The width/height of a tile, in pixels.
      */
     private int getTileSize() {
-        int maxTilesWide = WINDOW_WIDTH / (getBoardWidth() + 2);
+        int maxTilesWide = (WINDOW_WIDTH - 200) / getBoardWidth();
         int maxTilesHigh = WINDOW_HEIGHT / (getBoardHeight() + 2);
         return Math.max(4, Math.min(maxTilesHigh, maxTilesWide));
     }
@@ -493,6 +493,10 @@ public class RendererGUI extends JFrame implements Renderer {
     private void renderGameplay(Graphics g) {
         GameState state = GameState.getInstance();
 
+        if (state.board == null) {
+            return;
+        }
+
         /*
          * Render all of the tiles in the game board. The key is also technically
          * represented as a type of tile, so that is also handled here.
@@ -633,19 +637,19 @@ public class RendererGUI extends JFrame implements Renderer {
     }
 
     /**
-     * A screen that should only appear while we're still working on stuff.
+     * A screen that appears when the user beats the game.
      *
      * @author Alex Boxall
      *
      * @param g The graphics object
      */
-    private void renderNotImplementedFeatures(Graphics g) {
-        String errorMessage = String.format("The UI for %s isn't done yet!", GameState.getInstance().getGameMode());
+    private void renderEnding(Graphics g) {
+        String errorMessage = "YOU WIN!";
 
-        g.setColor(Color.BLUE);
+        g.setColor(Color.BLACK);
         g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         g.setColor(Color.WHITE);
-        g.setFont(new Font("Arial", Font.BOLD, 24));
+        g.setFont(new Font("Arial", Font.BOLD, 72));
         g.drawString(errorMessage, (WINDOW_WIDTH - g.getFontMetrics().stringWidth(errorMessage)) / 2, WINDOW_HEIGHT / 2);
     }
 
@@ -805,10 +809,6 @@ public class RendererGUI extends JFrame implements Renderer {
             return;
         }
 
-        if (state.board == null) {
-            return;
-        }
-
         calculateChanges();
 
         if (didLevelChange()) {
@@ -824,7 +824,7 @@ public class RendererGUI extends JFrame implements Renderer {
              * Need to clear the old HUD before drawing the new one.
              */
             g.setColor(Color.WHITE);
-            g.fillRect(0, 0, getPixelXFromTile(0, getTileSize()), 250);
+            g.fillRect(0, 0, getPixelXFromTile(0, getTileSize()) + 100, 250);
             renderHUD(g);
         }
 
@@ -835,7 +835,7 @@ public class RendererGUI extends JFrame implements Renderer {
             case Chest -> renderChest(g);
             case Inventory -> renderInventory(g);
             case GameOverScreen -> renderGameOver(g);
-            default -> renderNotImplementedFeatures(g);
+            case Ending -> renderEnding(g);
         }
     }
 

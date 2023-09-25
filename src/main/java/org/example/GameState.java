@@ -354,8 +354,9 @@ public class GameState {
             } catch (JSONException e) {
                 // End Game
                 System.out.println("end game");
+                setGameMode(GameMode.Ending);
             }
-            Renderer.getInstance().render();
+            Renderer.getInstance().renderEverything();
             return;
         }
 
