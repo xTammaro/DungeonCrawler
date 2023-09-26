@@ -10,8 +10,9 @@ public class HealthPotionTest {
     @Test
     public void healTest1() {
         var gameState = GameState.getInstance();
-        gameState.setPlayer(new Player(1,1,30));
-        var player = gameState.getPlayer();
+        Player player = new Player(1,1,30);
+        player.setMaxHealth(30);
+        gameState.setPlayer(player);
         var potion = new HealthPotion("test",1,Rarity.COMMON,15);
 
         potion.heal();
