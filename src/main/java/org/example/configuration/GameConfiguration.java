@@ -83,7 +83,6 @@ public class GameConfiguration {
         board.setAllTiles(tiles);
         GameState.getInstance().setBoard(board);
         GameState.getInstance().allEnemiesPathFind();
-        GameState.getInstance().setDifficulty("normal");
     }
 
     /**
@@ -105,7 +104,6 @@ public class GameConfiguration {
         Player player = new Player(x, y, health);
 
         GameState.getInstance().setPlayer(player);
-        GameState.getInstance().getPlayer().setMaxHealth(health);
     }
 
     /**
