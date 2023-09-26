@@ -63,15 +63,24 @@ public class GameState {
      private MeleeWeapon currentMeleeWeapon;
 
     /**
+     * The current difficulty of the game
+     */
+    String difficulty;
+    /**
      * the RangedWeapon the player has equipped
      */
     private RangedWeapon currentRangedWeapon;
+
+
+    /**
+     * Configuration data for the game. This is loaded from a JSON file.
+     */
+    private GameConfiguration gameConfiguration;
 
     /**
      * Determines whether we're in normal gameplay, or in the shop/inventory/title screen, etc.
      */
 
-    private GameConfiguration gameConfiguration;
 
     enum GameMode {
         Gameplay,
@@ -350,7 +359,7 @@ public class GameState {
 
             // Tries to load the next level, if this is not possible, then the game must be over.
             try {
-                this.gameConfiguration.initializeGame(this.gameConfiguration.getBoardLayout(levelNumber));
+                this.gameConfiguration.initializeGame(this.gameConfiguration.getBoardLayout(levelNumber), difficulty);
             } catch (JSONException e) {
                 // End Game
                 System.out.println("end game");
@@ -715,6 +724,10 @@ public class GameState {
 
     public void setGameConfiguration(GameConfiguration gameConfiguration) {
         this.gameConfiguration = gameConfiguration;
+    }
+
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
     }
 
 

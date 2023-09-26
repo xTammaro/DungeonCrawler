@@ -138,7 +138,7 @@ public class RendererConsole implements Renderer {
         }
 
         System.out.printf("\tHP: %d/%d\n\tGold: %d\n\tLevel: %d\n\t%s\n",
-                state.player.getHP(),
+                state.player.getHp(),
                 GameState.getInstance().getPlayer().getMaxHealth(),
                 state.getGold(),
                 state.levelNumber,

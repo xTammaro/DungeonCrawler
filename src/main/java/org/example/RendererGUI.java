@@ -148,9 +148,9 @@ public class RendererGUI extends JFrame implements Renderer {
             prevLevelNumber = GameState.getInstance().levelNumber;
         }
 
-        if (prevHP != GameState.getInstance().player.getHP()) {
+        if (prevHP != GameState.getInstance().player.getHp()) {
             hudChanged = true;
-            prevHP = GameState.getInstance().player.getHP();
+            prevHP = GameState.getInstance().player.getHp();
         }
 
         if (prevGold != GameState.getInstance().getGold()) {
@@ -414,7 +414,7 @@ public class RendererGUI extends JFrame implements Renderer {
         g.setFont(new Font("Arial", Font.BOLD, 20));
 
         g.drawString("Level " + (GameState.getInstance().levelNumber + 1), 30, 60);
-        g.drawString("HP: " + GameState.getInstance().getPlayer().getHP() + "/" + GameState.getInstance().getPlayer().getMaxHealth(), 30, 80);
+        g.drawString("HP: " + GameState.getInstance().getPlayer().getHp() + "/" + GameState.getInstance().getPlayer().getMaxHealth(), 30, 80);
         g.drawString("Gold: " + GameState.getInstance().getGold(), 30, 100);
 
         if (GameState.getInstance().hasKey) {
