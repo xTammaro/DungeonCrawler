@@ -493,6 +493,7 @@ public class GameState {
             default:
                 break;
         }
+        RendererGUI.getInstance().render();
     }
 
 

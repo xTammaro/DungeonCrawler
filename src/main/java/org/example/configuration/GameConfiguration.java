@@ -83,6 +83,7 @@ public class GameConfiguration {
         board.setAllTiles(tiles);
         GameState.getInstance().setBoard(board);
         GameState.getInstance().allEnemiesPathFind();
+        GameState.getInstance().setDifficulty("normal");
     }
 
     /**
