@@ -763,14 +763,14 @@ public class GameState {
         double eMultiplier = this.gameConfiguration.configData.getJSONObject("difficulty-multipliers").getJSONObject(difficulty).getDouble("enemy-health");
         double pMultiplier = this.gameConfiguration.configData.getJSONObject("difficulty-multipliers").getJSONObject(difficulty).getDouble("player-health");
 
-    if (getGameMode() == GameMode.TitleScreen) {
-        this.player.setHp((int) (this.player.getHp() * pMultiplier));
-    }
+        if (getGameMode() == GameMode.TitleScreen) {
+            this.player.setHp((int) (this.player.getHp() * pMultiplier));
+            this.player.setMaxHealth((int) (this.player.getMaxHealth() * pMultiplier));
+        }
 
-    this.player.setMaxHealth((int) (this.player.getMaxHealth() * pMultiplier));
-    for (Enemy e : this.enemies) {
-        e.setHp((int) (e.getHp() * eMultiplier));
-    }
+        for (Enemy e : this.enemies) {
+            e.setHp((int) (e.getHp() * eMultiplier));
+        }
 
     }
 
