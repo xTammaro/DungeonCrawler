@@ -759,6 +759,13 @@ public class GameState {
         return difficulty;
     }
 
+    /**
+     * Update the difficulty of the game based on the difficulty selected by the user.
+     * This is done by multiplying the health of the player and enemies by the difficulty multiplier.
+     * This needs to be called every floor change and when game is started.
+     * @author Jake Tammaro
+     */
+
     public void updateDifficulty() {
         double eMultiplier = this.gameConfiguration.configData.getJSONObject("difficulty-multipliers").getJSONObject(difficulty).getDouble("enemy-health");
         double pMultiplier = this.gameConfiguration.configData.getJSONObject("difficulty-multipliers").getJSONObject(difficulty).getDouble("player-health");
