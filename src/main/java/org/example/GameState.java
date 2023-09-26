@@ -762,11 +762,12 @@ public class GameState {
     public void updateDifficulty() {
         double eMultiplier = this.gameConfiguration.configData.getJSONObject("difficulty-multipliers").getJSONObject(difficulty).getDouble("enemy-health");
         double pMultiplier = this.gameConfiguration.configData.getJSONObject("difficulty-multipliers").getJSONObject(difficulty).getDouble("player-health");
+        int playerBaseHealth = this.gameConfiguration.configData.getJSONObject("player").getInt("health");
 
         if (getGameMode() == GameMode.TitleScreen) {
             this.player.setHp((int) (this.player.getHp() * pMultiplier));
-            this.player.setMaxHealth((int) (this.player.getMaxHealth() * pMultiplier));
         }
+        this.player.setMaxHealth((int) (playerBaseHealth * pMultiplier));
 
         for (Enemy e : this.enemies) {
             e.setHp((int) (e.getHp() * eMultiplier));
