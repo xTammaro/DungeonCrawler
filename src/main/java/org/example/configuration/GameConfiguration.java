@@ -144,23 +144,6 @@ public class GameConfiguration {
 
 
 
-    /**
-     * Sets the difficulty of the game.
-     * @author Jake Tammaro
-     * @param difficulty
-     *
-    private void setDifficulty(String difficulty) {
-        int pMultiplier = configData.getJSONObject("difficulty-multipliers").getJSONObject(difficulty).getInt("player-health");
-        int eMultiplier = configData.getJSONObject("difficulty-multipliers").getJSONObject(difficulty).getInt("enemy-health");
-
-        GameState.getInstance().getPlayer().setHp(GameState.getInstance().getPlayer().getHp() * pMultiplier);
-        GameState.getInstance().getPlayer().setMaxHealth(GameState.getInstance().getPlayer.getMaxp() * pMultiplier);
-        GameState.getInstance().getEnemies().forEach(enemy -> enemy.setHp(enemy.getHp() * eMultiplier));
-    }
-    */
-
-
-
     // Other methods to extract enemy configurations, board layouts, etc.
 }
 
