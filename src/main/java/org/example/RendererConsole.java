@@ -172,7 +172,7 @@ public class RendererConsole implements Renderer {
             case Shop -> drawMessage(GameState.getInstance().getShop().printInventory());
             case GameOverScreen -> drawMessage("GAME OVER!\n\nPress ENTER to restart.");
             case Ending -> drawMessage("YOU WIN!");
-            case TitleScreen -> drawMessage("*REALLY* AWESOME COMP2120 GAME (TM)\n\nPress ENTER to start\n");
+            case TitleScreen -> drawMessage("*REALLY* AWESOME COMP2120 GAME (TM)\n\nPress 1 for EASY\nPress 2 for NORMAL\nPress 3 for HARD\nPress 4 for INSANE\n\nThen, press ENTER to start.");
             case Inventory -> drawInventory();
             case Gameplay -> drawGameplay();
         }

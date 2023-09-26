@@ -77,6 +77,8 @@ public class GameState {
      */
     private GameConfiguration gameConfiguration;
 
+
+
     /**
      * Determines whether we're in normal gameplay, or in the shop/inventory/title screen, etc.
      */
@@ -359,7 +361,8 @@ public class GameState {
 
             // Tries to load the next level, if this is not possible, then the game must be over.
             try {
-                this.gameConfiguration.initializeGame(this.gameConfiguration.getBoardLayout(levelNumber), difficulty);
+                this.gameConfiguration.initializeGame(this.gameConfiguration.getBoardLayout(levelNumber));
+                updateDifficulty();
             } catch (JSONException e) {
                 // End Game
                 System.out.println("end game");
@@ -467,10 +470,31 @@ public class GameState {
      * @param action The action that the user should take.
      */
     void actTitleScreen(Action action) {
-        if (action == Action.StartGame) {
-            setGameMode(GameMode.Gameplay);
+        switch(action) {
+            case StartGame:
+                if (difficulty == null) {
+                    setDifficulty("normal");
+                }
+                updateDifficulty();
+                setGameMode(GameMode.Gameplay);
+                break;
+            case KeyPress1:
+                setDifficulty("easy");
+                break;
+            case KeyPress2:
+                setDifficulty("normal");
+                break;
+            case KeyPress3:
+                setDifficulty("hard");
+                break;
+            case KeyPress4:
+                setDifficulty("insane");
+                break;
+            default:
+                break;
         }
     }
+
 
     /**
      * Action handler for the shop. Allows users to buy items, and/or exit
@@ -728,6 +752,25 @@ public class GameState {
 
     public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    public void updateDifficulty() {
+        double eMultiplier = this.gameConfiguration.configData.getJSONObject("difficulty-multipliers").getJSONObject(difficulty).getDouble("enemy-health");
+        double pMultiplier = this.gameConfiguration.configData.getJSONObject("difficulty-multipliers").getJSONObject(difficulty).getDouble("player-health");
+
+    if (getGameMode() == GameMode.TitleScreen) {
+        this.player.setHp((int) (this.player.getHp() * pMultiplier));
+    }
+
+    this.player.setMaxHealth((int) (this.player.getMaxHealth() * pMultiplier));
+    for (Enemy e : this.enemies) {
+        e.setHp((int) (e.getHp() * eMultiplier));
+    }
+
     }
 
 

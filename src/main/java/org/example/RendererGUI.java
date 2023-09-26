@@ -787,9 +787,17 @@ public class RendererGUI extends JFrame implements Renderer {
         g.setFont(new Font("Courier New", Font.BOLD, 30));
         String instructionMsg  = "ENTER     Start new game";
         String instructionMsg2 = "L         Load existing game";
+        String instructionMsg3 = "1         Easy Difficulty";
+        String instructionMsg4 = "2         Medium Difficulty";
+        String instructionMsg5 = "3         Hard Difficulty";
+        String instructionMsg6 = "4         Insane Difficulty";
         int instructionMsgWidth = g.getFontMetrics().stringWidth(instructionMsg);
         g.drawString(instructionMsg, (WINDOW_WIDTH - instructionMsgWidth) / 2, 2 * WINDOW_HEIGHT / 3);
         g.drawString(instructionMsg2, (WINDOW_WIDTH - instructionMsgWidth) / 2, 2 * WINDOW_HEIGHT / 3 + 40);
+        g.drawString(instructionMsg3, (WINDOW_WIDTH - instructionMsgWidth) / 2, 2 * WINDOW_HEIGHT / 3 + 80);
+        g.drawString(instructionMsg4, (WINDOW_WIDTH - instructionMsgWidth) / 2, 2 * WINDOW_HEIGHT / 3 + 120);
+        g.drawString(instructionMsg5, (WINDOW_WIDTH - instructionMsgWidth) / 2, 2 * WINDOW_HEIGHT / 3 + 160);
+        g.drawString(instructionMsg6, (WINDOW_WIDTH - instructionMsgWidth) / 2, 2 * WINDOW_HEIGHT / 3 + 200);
     }
 
     /**

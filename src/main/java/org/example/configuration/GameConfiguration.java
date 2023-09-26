@@ -10,7 +10,7 @@ import java.nio.file.Paths;
  * This class is responsible for configuring the game based on a JSON file.
  */
 public class GameConfiguration {
-    private JSONObject configData;
+    public JSONObject configData;
 
 
     public GameConfiguration(String path) throws Exception {
@@ -54,10 +54,9 @@ public class GameConfiguration {
     /**
      * Uses the string array board layout to initialize the game.
      * @param boardLayout The string array board layout.
-     * @param difficulty The difficulty of the game.
      * @author Jake Tammaro
      */
-    public void initializeGame(String[] boardLayout, String difficulty) {
+    public void initializeGame(String[] boardLayout) {
         int height = boardLayout.length;
         int width = boardLayout[0].length(); // assuming all strings in the boardLayout have the same length
 
@@ -68,11 +67,11 @@ public class GameConfiguration {
                 char currentChar = boardLayout[y].charAt(x);
                 if (Character.isDigit(currentChar)) {
                     // Create an enemy at this position of this level
-                    initializeEnemy(x, y, Character.toString(currentChar), difficulty);
+                    initializeEnemy(x, y, Character.toString(currentChar));
                     tiles[y][x] = Tile.Empty;
                 } else if (currentChar == '@') {
                     // Initialize the player's here
-                    initializePlayer(x,y, difficulty);
+                    initializePlayer(x,y);
                     tiles[y][x] = Tile.Empty;
                 } else {
                     tiles[y][x] = charToTile(currentChar);
@@ -91,22 +90,21 @@ public class GameConfiguration {
      * @author Jake Tammaro
      * @param x The x position of the player.
      * @param y The y position of the player.
-     * @param difficulty The difficulty of the game.
      */
-    private void initializePlayer(int x, int y, String difficulty) {
+    private void initializePlayer(int x, int y) {
         int health;
-        int pMultiplier = configData.getJSONObject("difficulty-multipliers").getJSONObject(difficulty).getInt("player-health");
         // If first level, use the config data, otherwise use the player's current health
         if (GameState.getInstance().getPlayer() == null) {
-            health = configData.getJSONObject("player").getInt("health") * pMultiplier;
-            GameState.getInstance().getPlayer().setMaxHealth(health);
+            health = configData.getJSONObject("player").getInt("health");
         }
         else {
             health = GameState.getInstance().getPlayer().getHp();
         }
 
         Player player = new Player(x, y, health);
+
         GameState.getInstance().setPlayer(player);
+        GameState.getInstance().getPlayer().setMaxHealth(health);
     }
 
     /**
@@ -115,11 +113,9 @@ public class GameConfiguration {
      * @param level The level of the enemy.
      * @param x The x position of the enemy.
      * @param y The y position of the enemy.
-     * @param difficulty The difficulty of the game.
      */
-    private void initializeEnemy(int x, int y, String level, String difficulty) {
-        int eMultiplier = configData.getJSONObject("difficulty-multipliers").getJSONObject(difficulty).getInt("enemy-health");
-        int health = configData.getJSONObject("enemies").getJSONObject(level).getInt("health") * eMultiplier;
+    private void initializeEnemy(int x, int y, String level) {
+        int health = configData.getJSONObject("enemies").getJSONObject(level).getInt("health");
         int damage = configData.getJSONObject("enemies").getJSONObject(level).getInt("attack");
 
         Enemy enemy = new Enemy(x, y, health, damage);
