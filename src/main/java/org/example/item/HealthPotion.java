@@ -41,11 +41,11 @@ public class HealthPotion extends ConsumableItem{
      */
     public void heal(){
         var player = GameState.getInstance().getPlayer();
-        var hpToMax = player.getMaxHealth() - player.getHP();
+        var hpToMax = player.getMaxHealth() - player.getHp();
         if (hpToMax < health){
             player.setHp(player.getMaxHealth());
         } else {
-            player.setHp(player.getHP() + health);
+            player.setHp(player.getHp() + health);
         }
 
     }

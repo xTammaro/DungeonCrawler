@@ -10,7 +10,7 @@
     "attack": 10
   },
   "2": {
-    "health": 100,
+    "health": 20,
     "attack": 20
     },
   "3": {
@@ -146,6 +146,24 @@
       "#############"
     ]
   }
-  ]
+  ],
+  "difficulty-multipliers": {
+    "easy": {
+      "player-health": 1.5,
+      "enemy-health": 0.5
+    },
+    "normal": {
+      "player-health": 1,
+      "enemy-health": 1
+    },
+    "hard": {
+      "player-health": 0.5,
+      "enemy-health": 1.5
+    },
+    "insane": {
+      "player-health": 0.25,
+      "enemy-health": 2
+    }
+  }
 }
 

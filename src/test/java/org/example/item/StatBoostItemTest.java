@@ -11,6 +11,7 @@ public class StatBoostItemTest {
     public void getRandomConsumableTest1() {
         var gameState = GameState.getInstance();
         gameState.setPlayer(new Player(1,1,30));
+        gameState.getPlayer().setMaxHealth(30);
         var statItem1 = new StatBoostItem("testItem",1,Rarity.COMMON,PlayerStatType.HEALTH,5);
         var statItem2 = new StatBoostItem("testItem2",1,Rarity.COMMON,PlayerStatType.HEALTH,10);
 

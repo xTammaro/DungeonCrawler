@@ -159,7 +159,7 @@ abstract public class Actor {
      * Returns the actor's current health.
      * @return The current HP
      */
-    public int getHP() {
+    public int getHp() {
         return hp;
     }
 

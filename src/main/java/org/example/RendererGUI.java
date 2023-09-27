@@ -148,9 +148,9 @@ public class RendererGUI extends JFrame implements Renderer {
             prevLevelNumber = GameState.getInstance().levelNumber;
         }
 
-        if (prevHP != GameState.getInstance().player.getHP()) {
+        if (prevHP != GameState.getInstance().player.getHp()) {
             hudChanged = true;
-            prevHP = GameState.getInstance().player.getHP();
+            prevHP = GameState.getInstance().player.getHp();
         }
 
         if (prevGold != GameState.getInstance().getGold()) {
@@ -414,7 +414,7 @@ public class RendererGUI extends JFrame implements Renderer {
         g.setFont(new Font("Arial", Font.BOLD, 20));
 
         g.drawString("Level " + (GameState.getInstance().levelNumber + 1), 30, 60);
-        g.drawString("HP: " + GameState.getInstance().getPlayer().getHP() + "/" + GameState.getInstance().getPlayer().getMaxHealth(), 30, 80);
+        g.drawString("HP: " + GameState.getInstance().getPlayer().getHp() + "/" + GameState.getInstance().getPlayer().getMaxHealth(), 30, 80);
         g.drawString("Gold: " + GameState.getInstance().getGold(), 30, 100);
 
         if (GameState.getInstance().hasKey) {
@@ -784,12 +784,31 @@ public class RendererGUI extends JFrame implements Renderer {
 
         g.setColor(Color.LIGHT_GRAY);
 
+
         g.setFont(new Font("Courier New", Font.BOLD, 30));
         String instructionMsg  = "ENTER     Start new game";
         String instructionMsg2 = "L         Load existing game";
+        String instructionMsg3 = withArrow("1         Easy Difficulty", "easy");
+        String instructionMsg4 = withArrow("2         Normal Difficulty", "normal");
+        String instructionMsg5 = withArrow("3         Hard Difficulty", "hard");
+        String instructionMsg6 = withArrow("4         Insane Difficulty", "insane");
         int instructionMsgWidth = g.getFontMetrics().stringWidth(instructionMsg);
+        String arrow = "->  ";
+        int arrowWidth = g.getFontMetrics().stringWidth(arrow);
         g.drawString(instructionMsg, (WINDOW_WIDTH - instructionMsgWidth) / 2, 2 * WINDOW_HEIGHT / 3);
         g.drawString(instructionMsg2, (WINDOW_WIDTH - instructionMsgWidth) / 2, 2 * WINDOW_HEIGHT / 3 + 40);
+        g.drawString(instructionMsg3, (WINDOW_WIDTH - instructionMsgWidth - arrowWidth) / 2, 2 * WINDOW_HEIGHT / 3 + 80);
+        g.drawString(instructionMsg4, (WINDOW_WIDTH - instructionMsgWidth - arrowWidth) / 2, 2 * WINDOW_HEIGHT / 3 + 120);
+        g.drawString(instructionMsg5, (WINDOW_WIDTH - instructionMsgWidth - arrowWidth) / 2, 2 * WINDOW_HEIGHT / 3 + 160);
+        g.drawString(instructionMsg6, (WINDOW_WIDTH - instructionMsgWidth - arrowWidth) / 2, 2 * WINDOW_HEIGHT / 3 + 200);
+    }
+
+    // Helper function to add the arrow based on selected difficulty
+    String withArrow(String label, String difficulty) {
+        if (difficulty.equals(GameState.getInstance().difficulty)) {
+            return "->" + label;
+        }
+       return "  " + label;
     }
 
     /**

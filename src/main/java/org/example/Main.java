@@ -54,6 +54,7 @@ public class Main {
 
         try {
             initializeGameState();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

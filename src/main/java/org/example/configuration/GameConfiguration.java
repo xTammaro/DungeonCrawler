@@ -10,8 +10,7 @@ import java.nio.file.Paths;
  * This class is responsible for configuring the game based on a JSON file.
  */
 public class GameConfiguration {
-    private JSONObject configData;
-
+    public JSONObject configData;
 
 
     public GameConfiguration(String path) throws Exception {
@@ -93,8 +92,17 @@ public class GameConfiguration {
      * @param y The y position of the player.
      */
     private void initializePlayer(int x, int y) {
-        int health = configData.getJSONObject("player").getInt("health");
+        int health;
+        // If first level, use the config data, otherwise use the player's current health
+        if (GameState.getInstance().getPlayer() == null) {
+            health = configData.getJSONObject("player").getInt("health");
+        }
+        else {
+            health = GameState.getInstance().getPlayer().getHp();
+        }
+
         Player player = new Player(x, y, health);
+
         GameState.getInstance().setPlayer(player);
     }
 
@@ -108,6 +116,7 @@ public class GameConfiguration {
     private void initializeEnemy(int x, int y, String level) {
         int health = configData.getJSONObject("enemies").getJSONObject(level).getInt("health");
         int damage = configData.getJSONObject("enemies").getJSONObject(level).getInt("attack");
+
         Enemy enemy = new Enemy(x, y, health, damage);
         if (GameState.getInstance().getEnemies() == null) {
             GameState.getInstance().setEnemies(new java.util.ArrayList<>());
@@ -130,7 +139,6 @@ public class GameConfiguration {
                 return Tile.Empty;
         }
     }
-
 
 
 
