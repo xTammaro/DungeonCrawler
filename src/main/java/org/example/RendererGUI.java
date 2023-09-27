@@ -789,7 +789,7 @@ public class RendererGUI extends JFrame implements Renderer {
         String instructionMsg  = "ENTER     Start new game";
         String instructionMsg2 = "L         Load existing game";
         String instructionMsg3 = withArrow("1         Easy Difficulty", "easy");
-        String instructionMsg4 = withArrow("2         Medium Difficulty", "normal");
+        String instructionMsg4 = withArrow("2         Normal Difficulty", "normal");
         String instructionMsg5 = withArrow("3         Hard Difficulty", "hard");
         String instructionMsg6 = withArrow("4         Insane Difficulty", "insane");
         int instructionMsgWidth = g.getFontMetrics().stringWidth(instructionMsg);
