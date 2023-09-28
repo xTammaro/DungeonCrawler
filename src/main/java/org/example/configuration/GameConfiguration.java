@@ -141,6 +141,11 @@ public class GameConfiguration {
     }
 
 
+    public String getTitle() {
+        return configData.getString("gameTitle");
+    }
+
+
 
     // Other methods to extract enemy configurations, board layouts, etc.
 }
