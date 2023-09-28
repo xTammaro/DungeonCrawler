@@ -192,8 +192,8 @@ public class GameState {
      */
     private GameState() {
         inventory = new ArrayList<>();
-        currentMeleeWeapon = new MeleeWeapon("Stick",5, Rarity.COMMON,50);
-        currentRangedWeapon = new RangedWeapon("Sling",5,Rarity.COMMON,50,2);
+        currentMeleeWeapon = new MeleeWeapon("Stick",5, Rarity.COMMON,10);
+        currentRangedWeapon = new RangedWeapon("Sling",5,Rarity.COMMON,5,2);
         //TODO: Move adding Items to somewhere else
         createGameItems();
 
@@ -206,15 +206,15 @@ public class GameState {
         gameItems.add(new HealthPotion("Greater Healing Potion",50,Rarity.RARE,30));
         gameItems.add(new HealthPotion("Supreme Healing Potion",75,Rarity.VERY_RARE,5));
 
-        gameItems.add(new MeleeWeapon("Wooden Sword",20,Rarity.COMMON,2));
-        gameItems.add(new MeleeWeapon("Copper Sword",50,Rarity.UNCOMMON,4));
-        gameItems.add(new MeleeWeapon("Iron Sword",100,Rarity.RARE,8));
-        gameItems.add(new MeleeWeapon("Steel Sword",300,Rarity.VERY_RARE,1));
+        gameItems.add(new MeleeWeapon("Wooden Sword",20,Rarity.COMMON,15));
+        gameItems.add(new MeleeWeapon("Copper Sword",50,Rarity.UNCOMMON,20));
+        gameItems.add(new MeleeWeapon("Iron Sword",100,Rarity.RARE,30));
+        gameItems.add(new MeleeWeapon("Steel Sword",300,Rarity.VERY_RARE,50));
 
-        gameItems.add(new RangedWeapon("Slingshot",25,Rarity.COMMON,3,2));
-        gameItems.add(new RangedWeapon("Bow",60,Rarity.UNCOMMON,8,2));
-        gameItems.add(new RangedWeapon("Longbow",120,Rarity.RARE,25,4));
-        gameItems.add(new RangedWeapon("Crossbow",350,Rarity.VERY_RARE,30,2));
+        gameItems.add(new RangedWeapon("Slingshot",25,Rarity.COMMON,3,10));
+        gameItems.add(new RangedWeapon("Bow",60,Rarity.UNCOMMON,8,15));
+        gameItems.add(new RangedWeapon("Longbow",120,Rarity.RARE,25,20));
+        gameItems.add(new RangedWeapon("Crossbow",350,Rarity.VERY_RARE,30,30));
 
         gameItems.add(new StatBoostItem("Health Ring",100,Rarity.COMMON,PlayerStatType.HEALTH,10));
         gameItems.add(new StatBoostItem("Health Brooch",150,Rarity.UNCOMMON,PlayerStatType.HEALTH,15));
