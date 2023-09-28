@@ -214,7 +214,7 @@ public class Enemy extends Actor {
             relativeDirection = player.x > this.x ? Direction.RIGHT : Direction.LEFT;
         }
         Renderer.getInstance().addMeleeAttackAnimation(this, relativeDirection, true);
-        GameState.getInstance().player.takeDamage(meleeAttackDamage());
+        GameState.getInstance().player.takeDamage(this.attackDamage);
     }
 
     /**
