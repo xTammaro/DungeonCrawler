@@ -1,8 +1,7 @@
 {
-"gameTitle": "Rogue Adventure",
+"gameTitle": "REALLY AWESOME COMP2120 GAME",
 "player": {
-    "health": 100,
-    "weapons": ["sword", "bow"]
+    "health": 100
   },
 "enemies": {
   "1": {
@@ -42,34 +41,6 @@
     "attack": 90
     }
   },
-"weapons": {
-    "sword": {
-      "damage": 10,
-      "range": 1,
-      "name": "sword"
-    },
-    "bow": {
-    "damage": 5,
-    "range": 3,
-    "name": "bow"
-    }
-  },
-"items":
- {
-  "potion": {
-    "health_recovery": 20,
-    "price": 10,
-    "name": "potion"
-    }
-  },
-"shop":{
-  "inventory": {
-    "potion": {
-      "quantity": 5
-    }
-  }
-},
-
 "floors": [
   {
     "id": 1,

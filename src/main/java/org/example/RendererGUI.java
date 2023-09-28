@@ -1,6 +1,8 @@
 package org.example;
 
 
+import org.example.configuration.GameConfiguration;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -769,7 +771,8 @@ public class RendererGUI extends JFrame implements Renderer {
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 48));
 
-        String titleMsg = "REALLY AWESOME COMP2120 GAME";
+        String titleMsg = GameState.getInstance().getGameConfig().getTitle();
+
 
         /*
          * Need to save this here, as changing the font to the small one will change the font metrics.

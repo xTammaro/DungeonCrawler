@@ -755,8 +755,8 @@ public class GameState {
         this.difficulty = difficulty;
     }
 
-    public String getDifficulty() {
-        return difficulty;
+    public GameConfiguration getGameConfig() {
+        return this.gameConfiguration;
     }
 
     /**
