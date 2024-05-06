@@ -34,7 +34,7 @@ public enum Action {
      * Given an Action, coverts it into the integer corresponding to the number key that was pressed. If the
      * key pressed was not a number, -1 is returned.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      * @return The integer corresponding to the key pressed to generate this action, or -1 if it was non-numeric.
      */
     public int translateToNumeric() {
@@ -50,7 +50,7 @@ public enum Action {
     }
 
     /**
-     * @author Tal Shy-Tielen
+     * @author Jake Tammaro
      * @return the direction of the move in the Direction form.
      * If the action has no direction, it will return null.
      */

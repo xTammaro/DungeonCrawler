@@ -33,7 +33,7 @@ abstract public class Actor {
      * Constructor for an Actor. As this is an abstract class, it cannot be
      * directly invoked.
      *
-     * @author Alex Boxall
+     * @author Ja
      *
      * @param x The initial X position
      * @param y The initial Y position
@@ -56,8 +56,7 @@ abstract public class Actor {
      * Determines whether this actor can move in a certain direction. If there is a wall
      * blocking the way, it should return false.
      * There is also a check, if the player tries to move off the map it will return false.
-     * @author Alex Boxall
-     * @author Tal Shy-Tielen
+     * @author Jake Tammaro
      *
      * @param direction The direction to move in.
      * @return Whether the actor can move in this direction.
@@ -81,7 +80,7 @@ abstract public class Actor {
      * Moves the actor in a given direction. Assumes that the call to canMoveInDirection has
      * already been made, and that a valid direction is passed in.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      *
      * @param direction The direction to move the player in.
      */
@@ -96,7 +95,7 @@ abstract public class Actor {
     }
 
     /**
-     * @author Alex Boxall
+     * @author Jake Tammaro
      * @return The player's current direction.
      */
     public Direction getDirection() {
@@ -106,8 +105,7 @@ abstract public class Actor {
     /**
      * Called when the actor uses a sword attack.
      * This is also called when the enemies attack the player
-     * @author Alex Boxall
-     * @author Tal Shy-Tielen
+     * @author Jake Tammaro
      */
     void useSword() {
         int x = this.x;
@@ -143,7 +141,6 @@ abstract public class Actor {
     /**
      * Called when this actor dies. It should handle any cleanup (e.g. for enemies, it removes
      * then from the GameState, for the Player it displays a game over screen).
-     *
      *
      * @author Alex Boxall
      */

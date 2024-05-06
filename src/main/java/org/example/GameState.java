@@ -118,7 +118,7 @@ public class GameState {
     }
 
     /**
-     * @author Alex Boxall
+     * @author Jake Tammaro
      * empties the players  inventory
      * used for testing
      */
@@ -127,7 +127,7 @@ public class GameState {
     }
 
     /**
-     * @author Alex Boxall
+     * @author Jake Tammaro
      * makes a String message to be displayed to the player listing
      * all the Items in the players inventory has in it
      * @return String list of ShopItems
@@ -145,7 +145,7 @@ public class GameState {
         return s.toString();
     }
      /**
-     * @author Alex Boxall
+     * @author Jake Tammaro
      * @return a list of the players Items
      */
     public List<ShopItem> getInventory() {
@@ -153,7 +153,7 @@ public class GameState {
     }
 
     /**
-     * @author Alex Boxall
+     * @author Jake Tammaro
      * @return the players gold
      */
 
@@ -162,7 +162,7 @@ public class GameState {
     }
 
     /**
-     * @author Alex Boxall
+     * @author Jake Tammaro
      * sets the players gold to new int
      * @param gold the new amount of gold
      */
@@ -171,7 +171,7 @@ public class GameState {
     }
 
     /**
-     * @author Alex Boxall
+     * @author Jake Tammaro
      * adds an item to the players inventory
      * @param shopItem the item to be added
      */
@@ -187,8 +187,8 @@ public class GameState {
      * gives the player starting weapons
      * adds Items to gameItems
      *
-     * @author Alex Boxall
-     * @author Alex Boxall
+     * @author Jake Tammaro
+     * @author Jake Tammaro
      */
     private GameState() {
         inventory = new ArrayList<>();
@@ -237,7 +237,7 @@ public class GameState {
      * Returns the global GameState object. It creates the object if it hasn't
      * been created yet.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      *
      * @return The global GameState object.
      */
@@ -265,7 +265,7 @@ public class GameState {
      *
      * @param num The level number to load
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      */
     void loadFloor(int num) {
         // TODO: load level
@@ -279,7 +279,7 @@ public class GameState {
     /**
      * Determines if an actor in on a given tile. Used in part of collision detection.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      *
      * @param x The x coordinate, in tiles
      * @param y The y coordinate, in tiles
@@ -345,7 +345,7 @@ public class GameState {
      * Called at the end of the player's turn. Handles logic such as finishing a level, or picking up a
      * key, and then makes all of the enemies move.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      * @author Tal Shy-Tielen
      */
     void endOfPlayerTurn() {
@@ -395,7 +395,7 @@ public class GameState {
     /**
      * Returns the current shop that the player is in. If the player isn't in a shop, null is returned.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      *
      * @return The Shop object, or null if the player isn't in a shop.
      */
@@ -409,8 +409,8 @@ public class GameState {
     /**
      * Returns the current chest that the player is in. If the player isn't in a chest, null is returned.
      *
-     * @author Alex Boxall
-     * @author Alex Boxall
+     * @author Jake Tammaro
+     * @author Jake Tammaro
      *
      * @return The chest object, or null if the player isn't in a chest.
      */
@@ -425,7 +425,7 @@ public class GameState {
      * Action handler for when in regular gameplay. Used to allow the player to move,
      * open inventory/shops, etc.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      * @author Tal Shy-Tielen
      * @param action The action that the user should take.
      */
@@ -465,7 +465,7 @@ public class GameState {
     /**
      * Action handler for the title screen. Used to start and load games.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      *
      * @param action The action that the user should take.
      */
@@ -501,7 +501,7 @@ public class GameState {
      * Action handler for the shop. Allows users to buy items, and/or exit
      * the shop.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      *
      * @param action The action that the user should take.
      */
@@ -521,8 +521,8 @@ public class GameState {
      * Action handler for the chest. Allows users to take Items, and/or exit
      * the shop.
      *
-     * @author Alex Boxall
-     * @author Alex Boxall
+     * @author Jake Tammaro
+     * @author Jake Tammaro
      *
      * @param action The action that the user should take.
      */
@@ -541,8 +541,8 @@ public class GameState {
      * Action handler for the inventory screen. Allows users to swap weapons, and/or use
      * health potions.
      *
-     * @author Alex Boxall
-     * @author Alex Boxall
+     * @author Jake Tammaro
+     * @author Jake Tammaro
      *
      * @param action The action that the user should take.
      */
@@ -588,7 +588,7 @@ public class GameState {
      * Action handler for the game over screen. Allows the player to move back to the title
      * screen after they lose.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      *
      * @param action The action that the user should take.
      */
@@ -621,7 +621,7 @@ public class GameState {
      * Makes the player take an action. This should be called by the keyboard handler.
      * Depending on the action, time may progress (i.e. enemies will act afterwards).
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      * @author Tal Shy-Tielen
      * @param action The action that the user should take.
      */
@@ -692,7 +692,7 @@ public class GameState {
     }
 
     /**
-     * @author Alex Boxall
+     * @author Jake Tammaro
      * @return The player's current melee weapon.
      */
     public MeleeWeapon getCurrentMeleeWeapon() {
@@ -711,7 +711,7 @@ public class GameState {
 
 
     /**
-     * @author Alex Boxall
+     * @author Jake Tammaro
      * @param newMeleeWeapon The melee weapon that the player will equip.
      */
     public void setCurrentMeleeWeapon(MeleeWeapon newMeleeWeapon) {
@@ -719,7 +719,7 @@ public class GameState {
     }
 
     /**
-     * @author Alex Boxall
+     * @author Jake Tammaro
      * @return The player's current ranged weapon.
      */
     public RangedWeapon getCurrentRangedWeapon() {
@@ -727,7 +727,7 @@ public class GameState {
     }
 
     /**
-     * @author Alex Boxall
+     * @author Jake Tammaro
      * @param newRangedWeapon The ranged weapon that the player will equip.
      */
     public void setCurrentRangedWeapon(RangedWeapon newRangedWeapon) {
