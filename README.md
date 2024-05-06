@@ -4,4 +4,23 @@ This is a basic 2D dungeon game that I and a few friends developed during 2023 w
 
 The wiki has a lot of useful information for how it was designed and implemented, if you are interested.
 
+## Home Screen
 ![Home Screen](/images/homescreen.png)
+
+## Map
+![Map](/images/map.png)
+
+## Enemy attacks
+![Enemy attacks](/images/attacks.png)
+
+## Ranged Attacks
+![Ranged attacks](/images/rangedattack.png)
+
+## Shop
+![Shop](/images/shop.png)
+
+## Inventory
+![Inventory](/images/inventory.png)
+
+## Gameover
+![Gameover](/images/gameover.png)
