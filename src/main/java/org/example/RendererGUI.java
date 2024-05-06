@@ -41,7 +41,7 @@ public class RendererGUI extends JFrame implements Renderer {
      * The private constructor for the singleton Renderer object. Only gets called once.
      * Initialises the window and adds any required event listeners.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      */
     private RendererGUI() {
         setSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
@@ -118,7 +118,7 @@ public class RendererGUI extends JFrame implements Renderer {
     private boolean hudChanged = false;
 
     /**
-     * @author Alex Boxall
+     * @author Jake Tammaro
      * @return whether the HUD has updated since the last render
      */
     private boolean didHUDChange() {
@@ -126,7 +126,7 @@ public class RendererGUI extends JFrame implements Renderer {
     }
 
     /**
-     * @author Alex Boxall
+     * @author Jake Tammaro
      * @return whether the level has changed since the last render
      */
     private boolean didLevelChange() {
@@ -138,7 +138,7 @@ public class RendererGUI extends JFrame implements Renderer {
      * was redrawn. Should be called at the start of the redraw routine, and then
      * didHUDChange and didLevelChange will work correctly.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      */
     private void calculateChanges() {
         hudChanged = false;
@@ -169,7 +169,7 @@ public class RendererGUI extends JFrame implements Renderer {
     /**
      * Given a Tile, it gives the colour that it should be rendered as.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      *
      * @param tile The tile type.
      * @return The Color that the tile should be rendered as.
@@ -188,7 +188,7 @@ public class RendererGUI extends JFrame implements Renderer {
     /**
      * Returns how many tiles across the current board is.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      *
      * @return The width, in tiles.
      */
@@ -199,7 +199,7 @@ public class RendererGUI extends JFrame implements Renderer {
     /**
      * Returns how many tiles tall the current board is.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      *
      * @return The height, in tiles.
      */
@@ -211,7 +211,7 @@ public class RendererGUI extends JFrame implements Renderer {
      * Returns the size of a tile, in pixels. A tile is square, and so this value
      * is both the width and height of a tile.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      *
      * @return The width/height of a tile, in pixels.
      */
@@ -224,7 +224,7 @@ public class RendererGUI extends JFrame implements Renderer {
     /**
      * Given a tile's x location, returns its x coordinate it should be drawn in pixels.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      *
      * @param x The x coordinate in tiles
      * @param tileSize The width/height of a tile, in pixels
@@ -237,7 +237,7 @@ public class RendererGUI extends JFrame implements Renderer {
     /**
      * Given a tile's y location, returns its y coordinate it should be drawn in pixels.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      *
      * @param y The x coordinate in tiles
      * @param tileSize The width/height of a tile, in pixels
@@ -250,7 +250,7 @@ public class RendererGUI extends JFrame implements Renderer {
     /**
      * Draws the graphic for the key on the screen at the given position
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      *
      * @param g The Graphics object we use to draw to the screen.
      * @param px The x pixel to draw the key
@@ -272,7 +272,7 @@ public class RendererGUI extends JFrame implements Renderer {
     /**
      * Draws a tile.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      *
      * @param g The Graphics object we use to draw to the screen.
      * @param x The x position of tile, as a tile offset.
@@ -323,7 +323,7 @@ public class RendererGUI extends JFrame implements Renderer {
     /**
      * Draws the player.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      *
      * @param g The Graphics object we use to draw to the screen.
      * @param x The x position of the player, as a tile offset.
@@ -368,7 +368,7 @@ public class RendererGUI extends JFrame implements Renderer {
     /**
      * Draws an enemy.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      *
      * @param g The Graphics object we use to draw to the screen.
      * @param x The x position of the enemy, as a tile offset.
@@ -409,7 +409,7 @@ public class RendererGUI extends JFrame implements Renderer {
      * Draws the heads-up display (HUD). Shows the level number, the player's health,
      * and inventory.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      */
     private void renderHUD(Graphics g) {
         g.setColor(Color.BLACK);
@@ -427,7 +427,7 @@ public class RendererGUI extends JFrame implements Renderer {
     /**
      * Draws a specified attack animation onscreen.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      * @param g The graphics object
      * @param aa The attack animation to draw
      */
@@ -460,7 +460,7 @@ public class RendererGUI extends JFrame implements Renderer {
     /**
      * Adds a line to show that a ranged attack has taken place. Should be called when the attack is made.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      *
      * @param player The player making the attack
      * @param minX The leftmost tile that is being attacked
@@ -488,7 +488,7 @@ public class RendererGUI extends JFrame implements Renderer {
      * Draws the game, when we are in gameplay mode (as opposed to e.g., in the inventory
      * or in a shop).
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      *
      * @param g The graphics object
      */
@@ -530,7 +530,7 @@ public class RendererGUI extends JFrame implements Renderer {
      * An attack animation is simply at thin rectangle that looks like either a horizontal
      * or vertical line.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      */
     static class AttackAnimation {
         /*
@@ -588,7 +588,7 @@ public class RendererGUI extends JFrame implements Renderer {
     /**
      * The screen to be displayed when the player dies (i.e. loses all of their health).
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      *
      * @param g The graphics object
      */
@@ -641,7 +641,7 @@ public class RendererGUI extends JFrame implements Renderer {
     /**
      * A screen that appears when the user beats the game.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      *
      * @param g The graphics object
      */
@@ -659,7 +659,7 @@ public class RendererGUI extends JFrame implements Renderer {
      * Draws a screen of text on a plain background. Useful for shops, chests, and messages.
      * Handles newlines in the text correctly.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      *
      * @param g The graphics object
      * @param background The colour of the background
@@ -716,7 +716,7 @@ public class RendererGUI extends JFrame implements Renderer {
 
     /**
      * Draws the shop screen when the player is in a shop.
-     * @author Alex Boxall
+     * @author Jake Tammaro
      * @param g The graphics object
      */
     private void renderShop(Graphics g) {
@@ -725,7 +725,7 @@ public class RendererGUI extends JFrame implements Renderer {
 
     /**
      * Draws the inventory screen when the player has their inventory open.
-     * @author Alex Boxall
+     * @author Jake Tammaro
      * @param g The graphics object
      */
     private void renderInventory(Graphics g) {
@@ -743,7 +743,7 @@ public class RendererGUI extends JFrame implements Renderer {
      * Draws the chest screen when the player is in a chest.
      *
      * @author Will Baird
-     * @author Alex Boxall
+     * @author Jake Tammaro
      *
      * @param g The graphics object
      */
@@ -754,7 +754,7 @@ public class RendererGUI extends JFrame implements Renderer {
     /**
      * Draws the game's title screen.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      *
      * @param g The graphics object
      */
@@ -818,7 +818,7 @@ public class RendererGUI extends JFrame implements Renderer {
      * Redraws the window. Will be automatically called by the system/window manager when
      * required.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      *
      * @param g the specified Graphics window
      */
@@ -864,7 +864,7 @@ public class RendererGUI extends JFrame implements Renderer {
     /**
      * Causes the game to be re-rendered.
      *
-     * @author Alex Boxall
+     * @author Jake Tammaro
      */
     public void render() {
         /*

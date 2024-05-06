@@ -118,7 +118,7 @@ public class GameState {
     }
 
     /**
-     * @author Will Baird
+     * @author Alex Boxall
      * empties the players  inventory
      * used for testing
      */
@@ -127,7 +127,7 @@ public class GameState {
     }
 
     /**
-     * @author Will Baird
+     * @author Alex Boxall
      * makes a String message to be displayed to the player listing
      * all the Items in the players inventory has in it
      * @return String list of ShopItems
@@ -145,7 +145,7 @@ public class GameState {
         return s.toString();
     }
      /**
-     * @author Will Baird
+     * @author Alex Boxall
      * @return a list of the players Items
      */
     public List<ShopItem> getInventory() {
@@ -153,7 +153,7 @@ public class GameState {
     }
 
     /**
-     * @author Will Baird
+     * @author Alex Boxall
      * @return the players gold
      */
 
@@ -162,7 +162,7 @@ public class GameState {
     }
 
     /**
-     * @author Will Baird
+     * @author Alex Boxall
      * sets the players gold to new int
      * @param gold the new amount of gold
      */
@@ -171,7 +171,7 @@ public class GameState {
     }
 
     /**
-     * @author Will Baird
+     * @author Alex Boxall
      * adds an item to the players inventory
      * @param shopItem the item to be added
      */
@@ -188,7 +188,7 @@ public class GameState {
      * adds Items to gameItems
      *
      * @author Alex Boxall
-     * @author Will Baird
+     * @author Alex Boxall
      */
     private GameState() {
         inventory = new ArrayList<>();
@@ -409,7 +409,7 @@ public class GameState {
     /**
      * Returns the current chest that the player is in. If the player isn't in a chest, null is returned.
      *
-     * @author Will Baird
+     * @author Alex Boxall
      * @author Alex Boxall
      *
      * @return The chest object, or null if the player isn't in a chest.
@@ -521,7 +521,7 @@ public class GameState {
      * Action handler for the chest. Allows users to take Items, and/or exit
      * the shop.
      *
-     * @author Will Baird
+     * @author Alex Boxall
      * @author Alex Boxall
      *
      * @param action The action that the user should take.
@@ -542,7 +542,7 @@ public class GameState {
      * health potions.
      *
      * @author Alex Boxall
-     * @author Will Baird
+     * @author Alex Boxall
      *
      * @param action The action that the user should take.
      */
@@ -692,7 +692,7 @@ public class GameState {
     }
 
     /**
-     * @author Will Baird
+     * @author Alex Boxall
      * @return The player's current melee weapon.
      */
     public MeleeWeapon getCurrentMeleeWeapon() {
@@ -711,7 +711,7 @@ public class GameState {
 
 
     /**
-     * @author Will Baird
+     * @author Alex Boxall
      * @param newMeleeWeapon The melee weapon that the player will equip.
      */
     public void setCurrentMeleeWeapon(MeleeWeapon newMeleeWeapon) {
@@ -719,7 +719,7 @@ public class GameState {
     }
 
     /**
-     * @author Will Baird
+     * @author Alex Boxall
      * @return The player's current ranged weapon.
      */
     public RangedWeapon getCurrentRangedWeapon() {
@@ -727,7 +727,7 @@ public class GameState {
     }
 
     /**
-     * @author Will Baird
+     * @author Alex Boxall
      * @param newRangedWeapon The ranged weapon that the player will equip.
      */
     public void setCurrentRangedWeapon(RangedWeapon newRangedWeapon) {
