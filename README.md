@@ -1,19 +1,7 @@
-# COMP2120-Assignment-3-Workshop-XX-Group-X
+# Welcome to DungeonCrawler
 
-## Make sure to read the Instructions on the course page before starting!
+This is a basic 2D dungeon game that I and a few friends developed during 2023 while at ANU. It achieved HD in COMP2310 (Software Engineering) and was developed over the course of 5 weeks. If you would like to try it for yourself head over to the initlization section of the wiki. Otherwise, there is a demo video which showcases the game.
 
-## [https://comp.anu.edu.au/courses/comp2120/assignments/assignment3/#instructions](https://comp.anu.edu.au/courses/comp2120/assignments/assignment3/#instructions)
+The wiki has a lot of useful information for how it was designed and implemented, if you are interested.
 
-## [https://comp.anu.edu.au/courses/comp2120/assignments/assignment3/#submission](https://comp.anu.edu.au/courses/comp2120/assignments/assignment3/#submission)
-
----
-
-**[https://comp.anu.edu.au/courses/comp2120/assignments/assignment3/#activity0](https://comp.anu.edu.au/courses/comp2120/assignments/assignment3/#activity0)**
-
-**[https://comp.anu.edu.au/courses/comp2120/assignments/assignment3/#activity1](https://comp.anu.edu.au/courses/comp2120/assignments/assignment3/#activity1)**
-
-**[https://comp.anu.edu.au/courses/comp2120/assignments/assignment3/#activity2](https://comp.anu.edu.au/courses/comp2120/assignments/assignment3/#activity2)**
-
-**[https://comp.anu.edu.au/courses/comp2120/assignments/assignment3/#activity3](https://comp.anu.edu.au/courses/comp2120/assignments/assignment3/#activity3)**
-
-**[https://comp.anu.edu.au/courses/comp2120/assignments/assignment3/#activity4](https://comp.anu.edu.au/courses/comp2120/assignments/assignment3/#activity4)**
+![Home Screen](/images/homescreen.png)
