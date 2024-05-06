@@ -24,3 +24,6 @@ The wiki has a lot of useful information for how it was designed and implemented
 
 ## Gameover
 ![Gameover](/images/gameover.png)
+
+## Map design
+![Map Design](/images/mapdesign.png)
